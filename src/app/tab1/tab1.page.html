@@ -1,0 +1,43 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      pullingText="Thả tay để tải lại dữ liệu"
+      refreshingSpinner="circles"
+      refreshingText="Đang tải...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="sticky-header">
+    <ion-row class="info-row" #hideheader>
+      <ion-col size="10">
+        <ion-text color="dark" *ngIf="userInfo">
+          <strong style="font-size: 18px">{{userInfo.fullname}}</strong><br>
+          <span style="font-size: 12px;color:lightslategray">Ngày {{ now | date:'dd/MM/yyyy'}}</span>
+        </ion-text>
+      </ion-col>
+      <ion-col size="2" class="ion-padding-start">
+        <ion-button fill="clear" id="trigger-button" class="ion-no-padding">
+          <ion-icon name="person-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-popover trigger="trigger-button" [isOpen]="isPopoverOpen">
+    <ng-template>
+      <ion-list scroll="false" class="ion-no-padding">
+        <ion-item class="ion-no-border ion-no-padding" (click)="showProfile()">
+          <ion-avatar class="size15" slot="start">
+            <ion-icon size="small" name="person-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>Thông tin</ion-label>
+        </ion-item>
+        <ion-item lines="none" class="last ion-no-padding" (click)="logout()">
+          <ion-avatar class="size15" slot="start">
+            <ion-icon name="log-out-outline" size="small"></ion-icon>
+          </ion-avatar>
+          <ion-label class="btn">Đăng xuất</ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-popover>
+</ion-content>

@@ -1,0 +1,21 @@
+ion-item{
+  border: solid 1px var(--ion-color-border-light);
+  /*margin-bottom: 10px;*/
+  border-radius: 4px;
+}
+.item-inner{
+  border: none !important;
+}
+.my-custom-class{
+  background: red;
+}
+.footer-bg{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 127px;
+  background: url('/assets/images/login_bg_bot.png');
+  background-repeat: no-repeat;
+  z-index: -1;
+}

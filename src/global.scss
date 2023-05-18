@@ -1,0 +1,204 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import "swiper/css/bundle";
+.ion-no-box-shadow {
+  box-shadow: none !important;
+}
+
+body {
+}
+
+ion-button {
+}
+ion-content{
+  background: #FFF;
+}
+.ion-content-detail {
+  ion-card {
+    box-shadow: none;
+  }
+
+  ion-card-header {
+    padding-bottom: var(--ion-padding, 8px);
+  }
+
+  .ion-imgs ion-img {
+    margin-bottom: 10px;
+    margin-top: 5px;
+    border-radius: 4px !important;;
+
+    img {
+      border-radius: 6px !important;
+      overflow: hidden;
+    }
+  }
+
+  ion-card-subtitle {
+    display: flex;
+    align-items: center;
+
+    ion-icon {
+      margin-right: 5px;
+    }
+  }
+
+  ion-card-title {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+iframe {
+  border: none !important;
+}
+
+.ion-content-contact {
+  ion-list-header {
+    font-size: 16px;
+  }
+
+  .m-avatar {
+    line-height: 35px;
+    text-align: center;
+    margin-right: 15px;
+    margin-left: 15px;
+    color: #FFF;
+  }
+
+  ion-label h2 {
+    font-size: 15px;
+  }
+
+  ion-label h3 {
+    font-size: 14px;
+  }
+
+  ion-list-header {
+    line-height: 40px;
+  }
+}
+
+.ion-list-filter {
+  display: flex;
+  align-items: center;
+  border-bottom: solid 5px #F3F6FF;
+  padding-bottom: 6px;
+
+  ion-select {
+    width: 40%;
+    padding: 0;
+    height: 28px;
+    border: solid 1px #e7f0fd;
+    border-radius: 5px;
+    padding: 2px 10px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    background: #f3f6ff;
+    font-size: 14px;
+
+  }
+
+  ion-label {
+    font-size: 14px;
+    width: 60%;
+    border: solid 1px #e7f0fd;
+    background: #f3f6ff;
+    text-align: center;
+    border-radius: 6px;
+    margin: 0 10px;
+    padding: 3px 10px;
+    cursor: pointer;
+    height: 28px;
+  }
+}
+
+.list-has-checkbox {
+  ion-checkbox {
+    margin-right: 10px;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.m-fab-button {
+  ion-fab-button {
+    font-size: 16px;
+    height: 50px;
+    width: 50px;
+
+    ion-icon {
+      font-size: 20px;
+    }
+  }
+}
+
+ion-item {
+  /*--border-color: #e6e7e9;*/
+}
+ion-label.ion-label-flex{
+  align-items: center;
+  ion-icon{
+    margin-right: 5px;
+  }
+}
+ion-modal.ion-date-picker {
+  --background: rgba(44, 39, 45, 0.2);
+  &::part(content){
+    backdrop-filter: blur(6px);
+  }
+  ion-content{
+    background: transparent;
+    --padding-top: 25vh;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --background: transparent;
+    ion-datetime{
+      border-radius: 8px;
+    }
+  }
+  .calendar-day{
+    font-size: 16px;
+  }
+}
+.ion-content-detail{
+  ion-chip{
+    font-size: 16px;
+    height: auto;
+  }
+}
+ion-segment {
+  margin: 5px auto;
+  width: 90%;
+  background: #F3F6FF;
+  border: solid 1px #EEE;
+}
+ion-avatar{
+  margin-right: 5px;
+  margin-left: 10px;
+}
+ion-refresher{
+  background: #FFF;
+  z-index: 2;
+  margin-top: 22px;
+}

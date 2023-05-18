@@ -1,0 +1,37 @@
+<ion-content>
+  <img style="position: absolute;right: 0" src="/assets/images/login_bg_top.png">
+  <ion-card style="margin-top: 150px" class="ion-no-margin ion-no-padding ion-no-box-shadow">
+    <ion-card-header class="ion-no-padding">
+      <ion-card-title class="ion-cen">
+        <ion-img style="max-width: 100%;width: 125px;margin: 5px auto;" src="/assets/images/invivo.png"></ion-img>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none" class="ion-margin-bottom">
+        <ion-icon size="small" color="primary" name="person-outline"></ion-icon>
+        <ion-label></ion-label>
+        <ion-input [(ngModel)]="username" placeholder="Tên đăng nhập"></ion-input>
+      </ion-item>
+      <ion-item lines="none" class="ion-margin-bottom">
+        <ion-icon size="small"  color="primary" name="key-outline"></ion-icon>
+        <ion-label></ion-label>
+        <ion-input [(ngModel)]="password" type="password" placeholder="Mật khẩu"></ion-input>
+      </ion-item>
+      <div class="ion-margin-bottom">
+        <ion-label (click)="showAlertPassword()" color="primary">Quên mật khẩu</ion-label>
+      </div>
+      <div class="ion-margin-bottom">
+        <ion-button (click)="doLogin()" style="width: 100%" color="primary">Đăng nhập</ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <div class="footer-bg">
+    <label style="font-size: 12px;background: transparent" color="primary" class="ion-text-center">
+      <p style="margin: 5px 0;color: #555;font-size: 14px;">Phiên bản: 1.0.1</p>
+      <p style="margin: 5px 0;color: #555;font-size: 14px;">© Copyright Mesoco</p>
+    </label>
+  </div>
+</ion-content>
+<!--<ion-footer class="ion-no-border">
+    <ion-title style="font-size: 12px;background: transparent" color="primary" class="ion-text-center">Version: 6.2</ion-title>
+</ion-footer>-->

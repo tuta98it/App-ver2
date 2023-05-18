@@ -1,0 +1,21 @@
+<ion-tabs #tabs (ionTabsDidChange)="tabClicked($event)" (ionViewDidLeave)="ionViewDidLeave()">
+  <ion-tab-bar slot="bottom" class="tab-bottom">
+    <ion-tab-button  tab="tab1" color="secondary" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'tab1' ? 'medium' : 'primary'" [name]="selectedTab !== 'tab1' ? 'home-outline' : 'home'" name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="tab2" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'tab2' ? 'medium' : 'primary'" [name]="selectedTab !== 'tab2' ? 'notifications-outline' : 'notifications'"></ion-icon>
+      <ion-label>Tab 1</ion-label>
+      <ion-badge color="danger">8</ion-badge>
+    </ion-tab-button>
+    <ion-tab-button tab="tab3" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'tab3' ? 'medium' : 'primary'" [name]="selectedTab !== 'tab3' ? 'call-outline' : 'call'"></ion-icon>
+      <ion-label>Tab 2</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="feed" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'feed' ? 'medium' : 'primary'" [name]="selectedTab !== 'feed' ? 'newspaper-outline' : 'newspaper'" ></ion-icon>
+      <ion-label>Tab 3</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

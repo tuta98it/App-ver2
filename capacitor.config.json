@@ -1,0 +1,11 @@
+{
+  "appId": "com.lamanh.mschool",
+  "appName": "mSchool",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  }
+}

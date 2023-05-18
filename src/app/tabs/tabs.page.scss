@@ -1,0 +1,30 @@
+/*ion-tab-button ion-icon{
+  height: 25px !important;
+}*/
+
+.tab-bottom {
+  ion-icon {
+    font-size: 26px !important;
+  }
+
+  ion-label {
+    font-size: 12px;
+  }
+
+  .button-native {
+    padding: 0 !important;
+  }
+
+  a.button-native {
+    padding-start: 0;
+    padding-end: 0;
+  }
+}
+
+.button-native {
+  padding: 0 !important;
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+  background: red;
+}
+
