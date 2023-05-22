@@ -108,12 +108,39 @@ export class TabsPage {
 
 
   logoutAccount() {
+    this.localStorage.logout();
     this.router.navigate(['/login']);
   }
 
 
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Đăng xuất khỏi tài khoản của bạn?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            // this.handlerMessage = 'Alert canceled';
+          },
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            this.logoutAccount();
+            // this.handlerMessage = 'Alert confirmed';
+          },
+        },
+      ],
+    });
 
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    // this.roleMessage = `Dismissed with role: ${role}`;
+  }
 
 
 
