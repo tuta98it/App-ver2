@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../../explore-container/explore
 import { LaboratoryPageRoutingModule } from './laboratory-routing.module';
 import {AppVersion} from '@ionic-native/app-version/ngx';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
+import { SharedModule } from 'src/app/shared/modules/share.module';
 
 @NgModule({
   imports: [
@@ -15,9 +16,10 @@ import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    LaboratoryPageRoutingModule
+    LaboratoryPageRoutingModule,
+    SharedModule
   ],
   providers: [AppVersion],
-  declarations: [LaboratoryPage, IsEmptyPipe]
+  declarations: [LaboratoryPage]
 })
 export class LaboratoryPageModule {}

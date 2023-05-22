@@ -1,0 +1,37 @@
+<ion-content class="ion-padding">
+  <!-- Nội dung -->
+  <div>
+    <!-- Khu vực tìm kiếm -->
+    <div>
+      <!-- Tìm liếm - lọc -->
+      <div style="display: flex;">
+        <!-- Tìm kiếm -->
+        <ion-searchbar placeholder="Search"></ion-searchbar>
+
+        <!-- Lọc dữ liệu -->
+        <ion-buttons slot="start">
+          <ion-button>
+            <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+    </div>
+
+    <!-- Nội dung -->
+    <div class="content-service">
+      <!-- Danh sách các dịch vụ -->
+      <ion-list lines="inset">
+        <!-- Tiêu đề -->
+        <ion-item>
+          <ion-label><strong>Chỉ định</strong> </ion-label>
+          <ion-label slot="end"> <strong>Giá</strong> </ion-label>
+        </ion-item>
+        <!-- Dịch vụ -->
+        <ion-item *ngFor="let item of listService; let i = index">
+          <ion-label>{{item.designation}}</ion-label>
+          <ion-label slot="end">{{item.price | currency : 'VND'}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

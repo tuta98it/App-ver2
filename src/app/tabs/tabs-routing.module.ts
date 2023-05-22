@@ -12,11 +12,11 @@ const routes: Routes = [
       },
       {
         path: 'services',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('./services/services.module').then(m => m.ServicesModule)
       },
       {
         path: 'notifications',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('./notifications/notifications.module').then(m => m.NotificationsModule)
       },
       {
         path: 'tab1',
