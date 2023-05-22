@@ -7,16 +7,15 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
 import { AlertController } from '@ionic/angular';
-import { SharedModule } from 'src/shared/modules/share.module';
+import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 
 @NgModule({
   imports: [
     IonicModule.forRoot({ mode: 'ios' }),
     CommonModule,
     FormsModule,
-    SharedModule,
-    TabsPageRoutingModule
+    TabsPageRoutingModule,
   ],
-  declarations: [TabsPage],
+  declarations: [TabsPage, IsEmptyPipe],
 })
 export class TabsPageModule {}

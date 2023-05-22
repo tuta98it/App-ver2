@@ -4,7 +4,7 @@ import { BadgeService } from '../services/badge.service';
 import { StorageService } from '../services/storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { IsEmptyPipe } from 'src/pipes/is-empty.pipe';
+import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 
 @Component({
   selector: 'app-tabs',

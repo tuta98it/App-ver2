@@ -21,7 +21,7 @@ import {AppVersion} from '@ionic-native/app-version/ngx';
 
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { IsEmptyPipe } from 'src/app/pipes/is-empty.pipe';
+import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 @Component({
   selector: 'app-laboratory',
   templateUrl: 'laboratory.page.html',
