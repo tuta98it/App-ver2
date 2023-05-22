@@ -28,3 +28,17 @@
   background: red;
 }
 
+.title-menu-partner {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.logout-button-wrapper{
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+}

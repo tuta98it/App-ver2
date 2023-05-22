@@ -73,7 +73,7 @@ export class LoginPage implements OnInit {
       this.storage.set(Constant.STORAGE_USERINFO, res).then((res3) => {
         loading.dismiss();
         // this.router.navigate(['/main']);
-        this.navCtrl.navigateRoot(['/main/tab1']);
+        this.navCtrl.navigateRoot(['/main/laboratory']);
       });
     }, error => {
       console.log(error);

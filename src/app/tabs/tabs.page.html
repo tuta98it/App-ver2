@@ -1,6 +1,76 @@
 <ion-tabs #tabs (ionTabsDidChange)="tabClicked($event)" (ionViewDidLeave)="ionViewDidLeave()">
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <!-- Tiêu đề Menu -->
+        <!-- <ion-title>Menu Content</ion-title> -->
+        <div class="title-menu-partner">
+          <ion-chip id="open-modal-user">
+            <ion-avatar>
+              <img alt="Avatar của bạn" [src]="accCurrent?.avatar?  accCurrent.avatar : linkAvatarDefault" />
+            </ion-avatar>
+            <ion-label>{{accCurrent?.username? accCurrent.username : 'Anonymous' }}</ion-label>
+          </ion-chip>
+        </div>
+        <!-- Nội dung menu -->
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item button detail="true">
+          <ion-icon slot="start" name="call-outline"></ion-icon>
+          <ion-label>Liên hệ</ion-label>
+        </ion-item>
+        <ion-item button detail="true">
+          <ion-icon slot="start" name="information-outline"></ion-icon>
+          <ion-label>Thông tin dịch vụ</ion-label>
+        </ion-item>
+        <ion-item button detail="true">
+          <ion-icon slot="start" name="ellipsis-horizontal-outline"></ion-icon>
+          <ion-label>About</ion-label>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-icon slot="start" name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-item> -->
+        <!-- <ion-item>
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-item> -->
+        <!-- <ion-item>
+          <ion-icon slot="start" name="settings-outline"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-item> -->
+      </ion-list>
+
+      <!-- Nút "Đăng xuất" -->
+      <div class="logout-button-wrapper">
+        <ion-button size="medium" color="light" id="comfirm-alert">Đăng xuất<ion-icon slot="end" name="log-out-outline"
+            color="danger"></ion-icon>
+        </ion-button>
+        <!-- <ion-alert trigger="comfirm-alert" header="Đăng xuất khỏi tài khoản của bạn?" [buttons]="alertConfirmButtons"
+          (didDismiss)="setResult($event)">
+        </ion-alert> -->
+      </div>
+    </ion-content>
+  </ion-menu>
+  <!-- Header -->
+  <ion-header>
+    <div class="ion-page" id="main-content"></div>
+    <!-- Toolbar -->
+    <ion-toolbar class="toolbar-app" color="primary">
+      <!-- Icon Menu -->
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+
+      <!-- Tiêu đề -->
+      <ion-title>{{titleApp}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <ion-tab-bar slot="bottom" class="tab-bottom">
-    <ion-tab-button  tab="tab1" color="secondary" class="ion-no-padding">
+
+    <!-- <ion-tab-button  tab="tab1" color="secondary" class="ion-no-padding">
       <ion-icon [color]="selectedTab !== 'tab1' ? 'medium' : 'primary'" [name]="selectedTab !== 'tab1' ? 'home-outline' : 'home'" name="home-outline"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
@@ -16,6 +86,121 @@
     <ion-tab-button tab="feed" class="ion-no-padding">
       <ion-icon [color]="selectedTab !== 'feed' ? 'medium' : 'primary'" [name]="selectedTab !== 'feed' ? 'newspaper-outline' : 'newspaper'" ></ion-icon>
       <ion-label>Tab 3</ion-label>
+    </ion-tab-button> -->
+
+    <ion-tab-button tab="laboratory" color="secondary" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'laboratory' ? 'medium' : 'primary'"
+        [name]="selectedTab !== 'laboratory' ? 'clipboard-outline' : 'clipboard'" name="clipboard-outline"></ion-icon>
+      <ion-label>Xét nghiệm</ion-label>
     </ion-tab-button>
+
+    <ion-tab-button tab="services" color="secondary" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'services' ? 'medium' : 'primary'"
+        [name]="selectedTab !== 'services' ? 'prism-outline' : 'prism'" name="prism-outline"></ion-icon>
+      <ion-label>Dịch vụ</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="notifications" color="secondary" class="ion-no-padding">
+      <ion-icon [color]="selectedTab !== 'notifications' ? 'medium' : 'primary'"
+        [name]="selectedTab !== 'notifications' ? 'notifications-outline' : 'notifications'"
+        name="notifications-outline"></ion-icon>
+      <ion-label>Thông báo</ion-label>
+    </ion-tab-button>
+
+
   </ion-tab-bar>
 </ion-tabs>
+
+
+<!--  -->
+<ion-modal trigger="open-modal-user" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <!-- Tiêu đề -->
+    <ion-header>
+      <ion-toolbar>
+        <!-- Nút huỷ modal -->
+        <ion-buttons slot="end" (click)="closeModalInforAcc()">
+          <ion-button>
+            Đóng
+            <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
+          </ion-button>
+        </ion-buttons>
+
+        <!-- Tiêu đề Modal -->
+        <ion-title>{{accCurrent?.username? accCurrent.username : ''}}</ion-title>
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ion-content class="ion-padding">
+
+      <div style="display: flex; justify-content: center;">
+        <ion-avatar style="height: fit-content; width: fit-content;">
+          <ion-img [src]="accCurrent?.avatar? accCurrent.avatar : linkAvatarDefault"
+            style="width: 6rem; height: 6rem;"></ion-img>
+        </ion-avatar>
+      </div>
+
+
+
+      <ion-list *ngIf="!(accCurrent | isEmpty)">
+        <ion-item button *ngIf="accCurrent.name">
+          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Họ và tên</h3>
+            <p>{{accCurrent.name}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.code">
+          <ion-icon name="barcode-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Mã KH</h3>
+            <p>{{accCurrent.code}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.phone">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Số điện thoại</h3>
+            <p>{{accCurrent.phone}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.address">
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Địa chỉ</h3>
+            <p style="white-space: break-spaces;">{{accCurrent.address}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.facebook">
+          <ion-icon name="logo-facebook" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Facebook</h3>
+            <p>{{accCurrent.socialNetwork.facebook}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.zalo">
+          <ion-icon name="megaphone-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Zalo</h3>
+            <p>{{accCurrent.socialNetwork.zalo}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.telegram">
+          <ion-icon name="camera-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Telegram</h3>
+            <p>{{accCurrent.socialNetwork.telegram}}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item button *ngIf="accCurrent.tiwtter">
+          <ion-icon name="newspaper-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Twitter</h3>
+            <p>{{accCurrent.socialNetwork.tiwtter}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
