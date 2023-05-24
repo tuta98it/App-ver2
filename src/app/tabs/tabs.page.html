@@ -5,7 +5,7 @@
         <!-- Tiêu đề Menu -->
         <!-- <ion-title>Menu Content</ion-title> -->
         <div class="title-menu-partner">
-          <ion-chip id="open-modal-user">
+          <ion-chip (click)="setOpenModalUser(true)">
             <ion-avatar>
               <img alt="Avatar của bạn" [src]="accCurrent?.avatar?  accCurrent.avatar : linkAvatarDefault" />
             </ion-avatar>
@@ -45,8 +45,8 @@
 
       <!-- Nút "Đăng xuất" -->
       <div class="logout-button-wrapper">
-        <ion-button size="medium" color="light" (click)="presentAlert()">Đăng xuất<ion-icon slot="end" name="log-out-outline"
-            color="danger"></ion-icon>
+        <ion-button size="medium" color="light" (click)="presentAlert()">Đăng xuất<ion-icon slot="end"
+            name="log-out-outline" color="danger"></ion-icon>
         </ion-button>
       </div>
     </ion-content>
@@ -91,20 +91,20 @@
 
     <ion-tab-button tab="laboratory" color="secondary" class="ion-no-padding" (click)="titleApp = 'Xét nghiệm'">
       <ion-icon [color]="selectedTab !== 'laboratory' ? 'medium' : 'primary'"
-        [name]="selectedTab !== 'laboratory' ? 'clipboard-outline' : 'clipboard'" name="clipboard-outline" ></ion-icon>
+        [name]="selectedTab !== 'laboratory' ? 'clipboard-outline' : 'clipboard'" name="clipboard-outline"></ion-icon>
       <ion-label>Xét nghiệm</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="services" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông tin dịch vụ'">
       <ion-icon [color]="selectedTab !== 'services' ? 'medium' : 'primary'"
-        [name]="selectedTab !== 'services' ? 'prism-outline' : 'prism'" name="prism-outline" ></ion-icon>
+        [name]="selectedTab !== 'services' ? 'prism-outline' : 'prism'" name="prism-outline"></ion-icon>
       <ion-label>Dịch vụ</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="notifications" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông báo'">
       <ion-icon [color]="selectedTab !== 'notifications' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'notifications' ? 'notifications-outline' : 'notifications'"
-        name="notifications-outline" ></ion-icon>
+        name="notifications-outline"></ion-icon>
       <ion-label>Thông báo</ion-label>
     </ion-tab-button>
 
@@ -113,14 +113,14 @@
 </ion-tabs>
 
 
-<!--  -->
-<ion-modal trigger="open-modal-user" (willDismiss)="onWillDismiss($event)">
+<!-- Thông tin user -->
+<ion-modal [isOpen]="isModalOpenUser">
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
       <ion-toolbar>
         <!-- Nút huỷ modal -->
-        <ion-buttons slot="end" (click)="closeModalInforAcc()">
+        <ion-buttons slot="end" (click)="setOpenModalUser(false)">
           <ion-button>
             Đóng
             <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
@@ -128,7 +128,7 @@
         </ion-buttons>
 
         <!-- Tiêu đề Modal -->
-        <ion-title>{{accCurrent?.username? accCurrent.username : ''}}</ion-title>
+        <ion-title>{{accCurrent?.username? accCurrent.username : 'Anonymous'}}</ion-title>
       </ion-toolbar>
 
     </ion-header>
@@ -142,9 +142,7 @@
         </ion-avatar>
       </div>
 
-
-
-      <ion-list *ngIf="!(accCurrent | isEmpty)">
+      <ion-list *ngIf="!(accCurrent | isEmpty) || true">
         <ion-item button *ngIf="accCurrent.name">
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           <ion-label>
@@ -201,7 +199,119 @@
             <p>{{accCurrent.socialNetwork.tiwtter}}</p>
           </ion-label>
         </ion-item>
+
+
+        <ion-buttons slot="start">
+          <ion-button size="large" fill="clear" (click)="setOpenModalSales(true)">Doanh số</ion-button>
+        </ion-buttons>
       </ion-list>
+
+
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<!-- Thông tin Doanh số -->
+<ion-modal [isOpen]="isModalOpenSales">
+  <ng-template>
+    <!-- Tiêu đề -->
+    <ion-header>
+      <ion-toolbar>
+        <!-- Nút huỷ modal -->
+        <ion-buttons slot="end" (click)="setOpenModalSales(false)">
+          <ion-button>
+            Đóng
+            <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
+          </ion-button>
+        </ion-buttons>
+
+        <!-- Tiêu đề Modal -->
+        <ion-title>Doanh số</ion-title>
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ion-content class="ion-padding">
+
+      <ion-list>
+        <ion-item style="font-weight: bold;">
+          <ion-label>Hạng:</ion-label>
+          <ion-text>Platium</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Doanh số:</ion-label>
+          <ion-text>{{2038800 | currency : 'VND'}}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Chiếu khấu:</ion-label>
+          <ion-text>{{5050000 | currency : 'VND'}}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Chưa thanh toán:</ion-label>
+          <ion-text>{{10549000 | currency : 'VND'}}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
+          <ion-select aria-label="Fruit" interface="popover" placeholder="Chọn khoảng thời gian lọc">
+            <ion-select-option value="all">
+              --Tất Cả--
+            </ion-select-option>
+            <ion-select-option value="today">
+              Hôm nay
+            </ion-select-option>
+            <ion-select-option value="yesterday">
+              Hôm qua
+            </ion-select-option>
+            <ion-select-option value="this_week">
+              Tuần này
+            </ion-select-option>
+            <ion-select-option value="7_day_ago">
+              7 ngày trước
+            </ion-select-option>
+            <ion-select-option value="this_month">
+              Tháng này
+            </ion-select-option>
+            <ion-select-option value="30_days_ago">
+              30 ngày trước
+            </ion-select-option>
+            <ion-select-option value="from_day_to_date">
+              Từ ngày đến ngày
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label>Bệnh lý:</ion-label>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Nhóm sản phẩm chiến lược:</ion-label>
+
+        </ion-item>
+      </ion-list>
+
+      <!-- <canvas #barChart></canvas> -->
+      <!-- <div #barChart></div> -->
+
+      <app-pie-chart></app-pie-chart>
+
+      <!-- Hạng -->
+      <div></div>
+
+      <!-- Doanh số -->
+      <div></div>
+
+      <!-- Chiết khẩu -->
+      <div></div>
+
+      <!-- Chưa thanh toán -->
+      <div></div>
+
+
+
+
     </ion-content>
   </ng-template>
 </ion-modal>

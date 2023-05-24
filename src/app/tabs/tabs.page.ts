@@ -1,11 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AlertController, IonModal, IonTabs, ModalController, NavController } from '@ionic/angular';
 import { BadgeService } from '../services/badge.service';
 import { StorageService } from '../services/storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
-
+import { Chart } from 'chart.js';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -13,8 +13,9 @@ import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 })
 export class TabsPage {
 
+  @ViewChild('barChart', { static: false }) barChart: ElementRef;
   @ViewChild('tabs', { static: false }) tabs: IonTabs;
-  @ViewChild(IonModal) modal!: IonModal;
+  // @ViewChild(IonModal) modal!: IonModal;
   linkAvatarDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
   public alertConfirmButtons = [
     {
@@ -39,6 +40,8 @@ export class TabsPage {
   selectedTab = 'tab1';
   tabHomeClickEvent: any;
   userInfo: any;
+  isModalOpenUser = false;
+  isModalOpenSales = false;
 
   constructor(
     public navCtrl: NavController,
@@ -90,7 +93,41 @@ export class TabsPage {
     this.localStorage.getSelectedUser().then((res) => {
       this.userInfo = res;
     });
+
   }
+
+  ionViewDidEnter() {
+    console.log('this.barChart: ', this.barChart);
+    console.log('this.tabs: ', this.tabs);
+    this.createBarChart();
+  }
+
+  createBarChart() {
+    new Chart(this.barChart.nativeElement.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
+        datasets: [{
+          label: 'Viewers in millions',
+          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
+          backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
+          borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+
+
   tabClicked($event) {
     this.selectedTab = $event.tab;
   }
@@ -166,11 +203,11 @@ export class TabsPage {
   // }
 
   closeModalInforAcc() {
-    this.modal.dismiss(null, 'close');
+    // this.modal.dismiss(null, 'close');
   }
 
   confirm() {
-    this.modal.dismiss('', 'confirm');
+    // this.modal.dismiss('', 'confirm');
   }
 
   onWillDismiss(event: Event) {
@@ -179,6 +216,16 @@ export class TabsPage {
       // this.message = `Hello, ${ev.detail.data}!`;
     }
   }
+
+  setOpenModalUser(isOpen) {
+    this.isModalOpenUser = isOpen;
+
+  }
+
+  setOpenModalSales(isOpen) {
+    this.isModalOpenSales = isOpen;
+  }
+
 
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);

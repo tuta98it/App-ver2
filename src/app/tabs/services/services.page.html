@@ -9,11 +9,25 @@
         <ion-searchbar placeholder="Search"></ion-searchbar>
 
         <!-- Lọc dữ liệu -->
-        <ion-buttons slot="start">
+        <!-- <ion-buttons slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
+
+
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <ion-list>
+            <ion-item>
+              <ion-select interface="popover" placeholder="Lọc" >
+                <ion-select-option  value="dealthcare">Nhóm BP</ion-select-option>
+                <ion-select-option  value="products">Nhóm SP</ion-select-option>
+              </ion-select>
+              <ion-icon slot="start" name="funnel-outline" color="primary"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </div>
+
       </div>
     </div>
 

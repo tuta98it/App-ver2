@@ -9,6 +9,7 @@ import { TabsPage } from './tabs.page';
 import { AlertController } from '@ionic/angular';
 import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 import { SharedModule } from '../shared/modules/share.module';
+import { PieChartComponent } from '../shared/components/pie-chart';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { SharedModule } from '../shared/modules/share.module';
     TabsPageRoutingModule,
     SharedModule
   ],
-  declarations: [TabsPage],
+  declarations: [TabsPage, PieChartComponent],
 })
 export class TabsPageModule {}
