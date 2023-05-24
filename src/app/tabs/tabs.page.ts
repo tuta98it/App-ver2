@@ -13,7 +13,6 @@ import { Chart } from 'chart.js';
 })
 export class TabsPage {
 
-  @ViewChild('barChart', { static: false }) barChart: ElementRef;
   @ViewChild('tabs', { static: false }) tabs: IonTabs;
   // @ViewChild(IonModal) modal!: IonModal;
   linkAvatarDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
@@ -36,12 +35,13 @@ export class TabsPage {
   ];
   accCurrent: any = {};
   titleApp = 'Xét nghiệm';
-
+  titleContact = 'Liên hệ';
   selectedTab = 'tab1';
   tabHomeClickEvent: any;
   userInfo: any;
   isModalOpenUser = false;
   isModalOpenSales = false;
+  isModalOpenContact = false;
 
   constructor(
     public navCtrl: NavController,
@@ -97,35 +97,8 @@ export class TabsPage {
   }
 
   ionViewDidEnter() {
-    console.log('this.barChart: ', this.barChart);
-    console.log('this.tabs: ', this.tabs);
-    this.createBarChart();
   }
 
-  createBarChart() {
-    new Chart(this.barChart.nativeElement.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8'],
-        datasets: [{
-          label: 'Viewers in millions',
-          data: [2.5, 3.8, 5, 6.9, 6.9, 7.5, 10, 17],
-          backgroundColor: 'rgb(38, 194, 129)', // array should have same number of elements as number of dataset
-          borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
-  }
 
 
   tabClicked($event) {
@@ -151,7 +124,7 @@ export class TabsPage {
 
 
 
-  async presentAlert() {
+  async presentAlertLogout() {
     const alert = await this.alertController.create({
       header: 'Đăng xuất khỏi tài khoản của bạn?',
       buttons: [
@@ -179,7 +152,61 @@ export class TabsPage {
     // this.roleMessage = `Dismissed with role: ${role}`;
   }
 
+  async presentAlertContactSalesStaff() {
+    this.titleContact = 'Liên hệ NVKD';
+    const alert = await this.alertController.create({
+      header: 'Thông báo',
+      subHeader: 'Nhân viên CSKH của bạn là Trần Thị Mỹ Linh. SĐT: 0987548294.',
+      message: 'Bạn có muốn gặp Trần Thị Mỹ Linh không?',
+      buttons: [
+        {
+          text: 'Không',
+          role: 'cancel',
+          handler: () => {
+            this.titleContact = 'Liên hệ';
+            // this.handlerMessage = 'Alert canceled';
+          },
+        },
+        {
+          text: 'Có',
+          role: 'confirm',
+          handler: () => {
+            this.titleContact = 'Liên hệ';
+            this.presentAlertNotification();
+            // this.logoutAccount();
+            // this.handlerMessage = 'Alert confirmed';
+          },
+        },
+      ],
+    });
 
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+
+  async presentAlertNotification() {
+    // this.titleContact = 'Liên hệ NVKD';
+    const alert = await this.alertController.create({
+      header: 'Thông báo',
+      subHeader: '',
+      message:'Cảm ơn bạn đã gửi yêu cầu, Trần Thị Mỹ Linh sẽ liên hệ lại với bạn trong thời gian gần nhất.',
+      buttons: [
+        {
+          text: 'Đóng',
+          role: 'cancel',
+          handler: () => {
+            this.titleContact = 'Liên hệ';
+            // this.handlerMessage = 'Alert canceled';
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
 
   // async showConfirmation() {
   //   const alert = await this.alertController.create({
@@ -226,6 +253,9 @@ export class TabsPage {
     this.isModalOpenSales = isOpen;
   }
 
+  setOpenModalContact(isOpen) {
+    this.isModalOpenContact = isOpen;
+  }
 
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);

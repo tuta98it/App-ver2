@@ -1,11 +1,11 @@
 <ion-tabs #tabs (ionTabsDidChange)="tabClicked($event)" (ionViewDidLeave)="ionViewDidLeave()">
   <ion-menu contentId="main-content">
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <!-- Tiêu đề Menu -->
         <!-- <ion-title>Menu Content</ion-title> -->
         <div class="title-menu-partner">
-          <ion-chip (click)="setOpenModalUser(true)">
+          <ion-chip color="dark" (click)="setOpenModalUser(true)">
             <ion-avatar>
               <img alt="Avatar của bạn" [src]="accCurrent?.avatar?  accCurrent.avatar : linkAvatarDefault" />
             </ion-avatar>
@@ -17,7 +17,7 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list>
-        <ion-item button detail="true">
+        <ion-item button detail="true" (click)="setOpenModalContact(true)">
           <ion-icon slot="start" name="call-outline"></ion-icon>
           <ion-label>Liên hệ</ion-label>
         </ion-item>
@@ -45,7 +45,7 @@
 
       <!-- Nút "Đăng xuất" -->
       <div class="logout-button-wrapper">
-        <ion-button size="medium" color="light" (click)="presentAlert()">Đăng xuất<ion-icon slot="end"
+        <ion-button size="medium" color="light" (click)="presentAlertLogout()">Đăng xuất<ion-icon slot="end"
             name="log-out-outline" color="danger"></ion-icon>
         </ion-button>
       </div>
@@ -118,7 +118,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalUser(false)">
           <ion-button>
@@ -202,7 +202,7 @@
 
 
         <ion-buttons slot="start">
-          <ion-button size="large" fill="clear" (click)="setOpenModalSales(true)">Doanh số</ion-button>
+          <ion-button size="medium" fill="clear" (click)="setOpenModalSales(true)">Doanh số</ion-button>
         </ion-buttons>
       </ion-list>
 
@@ -216,7 +216,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalSales(false)">
           <ion-button>
@@ -292,25 +292,48 @@
         </ion-item>
       </ion-list>
 
-      <!-- <canvas #barChart></canvas> -->
-      <!-- <div #barChart></div> -->
 
-      <app-pie-chart></app-pie-chart>
-
-      <!-- Hạng -->
-      <div></div>
-
-      <!-- Doanh số -->
-      <div></div>
-
-      <!-- Chiết khẩu -->
-      <div></div>
-
-      <!-- Chưa thanh toán -->
-      <div></div>
+      <!-- <app-pie-chart></app-pie-chart> -->
 
 
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
+
+<!-- Liên hệ-->
+<ion-modal [isOpen]="isModalOpenContact">
+  <ng-template>
+    <!-- Tiêu đề -->
+    <ion-header>
+      <ion-toolbar color="primary">
+        <!-- Nút huỷ modal -->
+        <ion-buttons slot="end" (click)="setOpenModalContact(false)">
+          <ion-button>
+            Đóng
+            <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
+          </ion-button>
+        </ion-buttons>
+
+        <!-- Tiêu đề Modal -->
+        <ion-title>{{titleContact}}</ion-title>
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ion-content class="ion-padding">
+
+      <ion-list>
+        <ion-item>
+          <ion-button size="medium" color="medium" expand="block" fill="outline" style="width: 100%;" (click)="presentAlertContactSalesStaff()">Nhân viên kinh doanh</ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-button size="medium" color="medium" expand="block" fill="outline" style="width: 100%;" (click)="presentAlertContactSalesStaff()">Tổng đài</ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-button size="medium"  color="medium" expand="block" fill="outline" style="width: 100%;" (click)="presentAlertContactSalesStaff()">Bộ phận thanh toán</ion-button>
+        </ion-item>
+      </ion-list>
 
     </ion-content>
   </ng-template>

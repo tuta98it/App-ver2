@@ -10,14 +10,13 @@ import { AlertController } from '@ionic/angular';
 import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 import { SharedModule } from '../shared/modules/share.module';
 import { PieChartComponent } from '../shared/components/pie-chart';
-
 @NgModule({
   imports: [
     IonicModule.forRoot({ mode: 'ios' }),
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [TabsPage, PieChartComponent],
 })
