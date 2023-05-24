@@ -171,8 +171,10 @@ export class TabsPage {
           text: 'Có',
           role: 'confirm',
           handler: () => {
-            this.titleContact = 'Liên hệ';
-            this.presentAlertNotification();
+            this.presentAlertNotification(
+              'Thông báo',
+              '',
+              'Cảm ơn bạn đã gửi yêu cầu, Trần Thị Mỹ Linh sẽ liên hệ lại với bạn trong thời gian ngắn nhất.');
             // this.logoutAccount();
             // this.handlerMessage = 'Alert confirmed';
           },
@@ -185,12 +187,76 @@ export class TabsPage {
     const { role } = await alert.onDidDismiss();
   }
 
-  async presentAlertNotification() {
-    // this.titleContact = 'Liên hệ NVKD';
+  async presentAlertContactSwitchboard() {
+    this.titleContact = 'Liên hệ Tổng đài';
     const alert = await this.alertController.create({
       header: 'Thông báo',
-      subHeader: '',
-      message:'Cảm ơn bạn đã gửi yêu cầu, Trần Thị Mỹ Linh sẽ liên hệ lại với bạn trong thời gian gần nhất.',
+      subHeader: 'Tổng đài sẽ phụ trách các công việc lên đơn, phản ánh tình trạng kết quả muộn, ...',
+      message: 'Bạn có muốn gặp tổng đài không?',
+      buttons: [
+        {
+          text: 'Không',
+          role: 'cancel',
+          handler: () => {
+            this.titleContact = 'Liên hệ';
+          },
+        },
+        {
+          text: 'Có',
+          role: 'confirm',
+          handler: () => {
+            this.presentAlertNotification(
+              'Thông báo',
+              '',
+              'Cảm ơn bạn đã gửi yêu cầu, Trần Thị Mỹ Linh sẽ liên hệ lại với bạn trong thời gian gần nhất.',);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+
+  async presentAlertContactPaymentDepartment() {
+    this.titleContact = 'Liên hệ Bộ phận thanh toán';
+    const alert = await this.alertController.create({
+      header: 'Thông báo',
+      subHeader: 'Không có gì đâu',
+      message: 'Đừng liên hệ',
+      buttons: [
+        {
+          text: 'Không',
+          role: 'cancel',
+          handler: () => {
+            this.titleContact = 'Liên hệ';
+          },
+        },
+        {
+          text: 'Có',
+          role: 'confirm',
+          handler: () => {
+            this.presentAlertNotification(
+              'Thông báo',
+              'Liên hệ bộ phận thanh toán',
+              'Thôi đừng liên hệ nữa');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+
+  async presentAlertNotification(header, subHeader, message) {
+    // this.titleContact = 'Liên hệ NVKD';
+    const alert = await this.alertController.create({
+      header,
+      subHeader,
+      message,
       buttons: [
         {
           text: 'Đóng',
