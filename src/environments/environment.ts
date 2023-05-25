@@ -5,7 +5,8 @@
 // http://lienlacdientu.vn
 export const environment = {
   production: false,
-  baseUrl: 'https://betestinvivover2.pmr.vn',
+  // baseUrl: 'https://betestinvivover2.pmr.vn',
+  baseUrl: 'https://listest.stc.vn:8643',
   webUrl: 'https://listest.stc.vn',
   jitsiUrl: 'https://meet.pmr.vn/'
 };

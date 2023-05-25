@@ -183,7 +183,8 @@ export class BaseService {
   }
   public createHeaders() {
     // Why 'authorization': see CustomLogoutSuccessHandler on server
-    return new HttpHeaders();//.set('Authorization', 'Bearer ' + this.getToken()).set('Language', this.getLanguage());
+    // return new HttpHeaders();
+    return new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken()).set('Language', this.getLanguage());
   }
   public createHeadersIncaseUpload() {
     // Why 'authorization': see CustomLogoutSuccessHandler on server

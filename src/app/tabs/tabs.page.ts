@@ -33,12 +33,12 @@ export class TabsPage {
       },
     },
   ];
-  accCurrent: any = {};
+  // accCurrent: any = {};
+  userInfo: any;
   titleApp = 'Xét nghiệm';
   titleContact = 'Liên hệ';
   selectedTab = 'tab1';
   tabHomeClickEvent: any;
-  userInfo: any;
   isModalOpenUser = false;
   isModalOpenSales = false;
   isModalOpenContact = false;
@@ -91,6 +91,7 @@ export class TabsPage {
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   async ngOnInit() {
     this.localStorage.getSelectedUser().then((res) => {
+      console.log('getSelectedUser', res);
       this.userInfo = res;
     });
 

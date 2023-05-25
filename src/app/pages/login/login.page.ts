@@ -7,6 +7,7 @@ import {Storage} from '@ionic/storage';
 import {LoadingController, NavController, Platform, ToastController} from '@ionic/angular';
 import {StorageService} from '../../services/storage.service';
 import {NotificationService} from '../../services/notification.service';
+import { GeneralService } from 'src/app/services/general-service';
 
 @Component({
   selector: 'app-login',
@@ -28,13 +29,14 @@ export class LoginPage implements OnInit {
     private localStorage: StorageService,
     private notificationService: NotificationService,
     protected platform: Platform,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private generalService: GeneralService,
   ) {
   }
   ngOnInit() {
     this.localStorage.getSelectedUser().then((res) => {
       if (res) {
-        this.navCtrl.navigateRoot(['/main/tab1']);
+        this.navCtrl.navigateRoot(['/main/laboratory']);
       }
     });
     this.localStorage.get('deviceInfo').then(res => {
@@ -70,11 +72,24 @@ export class LoginPage implements OnInit {
         this.notificationService.showMessage('danger', 'Sai tên đăng nhập hoặc mật khẩu');
         return;
       }
+      console.log('Constant.STORAGE_USERINFO, = ', Constant.STORAGE_USERINFO, res);
       this.storage.set(Constant.STORAGE_USERINFO, res).then((res3) => {
         loading.dismiss();
         // this.router.navigate(['/main']);
+        localStorage.setItem(Constant.TOKEN, res3.token);
+        console.log('res3: ', res3);
         this.navCtrl.navigateRoot(['/main/laboratory']);
       });
+
+      // Set INIT_DATA for local-storage
+      this.generalService.getInitialData().subscribe(resData => {
+        if (resData !== null) {
+          localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
+        }
+      }, error => {
+
+      });
+
     }, error => {
       console.log(error);
       if (error.error.message){

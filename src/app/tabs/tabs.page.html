@@ -7,9 +7,9 @@
         <div class="title-menu-partner">
           <ion-chip color="dark" (click)="setOpenModalUser(true)">
             <ion-avatar>
-              <img alt="Avatar của bạn" [src]="accCurrent?.avatar?  accCurrent.avatar : linkAvatarDefault" />
+              <img alt="Avatar của bạn" [src]="userInfo?.avatar?  userInfo.avatar : linkAvatarDefault" />
             </ion-avatar>
-            <ion-label>{{accCurrent?.username? accCurrent.username : 'Anonymous' }}</ion-label>
+            <ion-label>{{userInfo?.username? userInfo.username : 'Anonymous' }}</ion-label>
           </ion-chip>
         </div>
         <!-- Nội dung menu -->
@@ -128,7 +128,7 @@
         </ion-buttons>
 
         <!-- Tiêu đề Modal -->
-        <ion-title>{{accCurrent?.username? accCurrent.username : 'Anonymous'}}</ion-title>
+        <ion-title>{{userInfo?.username? userInfo.username : 'Anonymous'}}</ion-title>
       </ion-toolbar>
 
     </ion-header>
@@ -137,66 +137,66 @@
 
       <div style="display: flex; justify-content: center;">
         <ion-avatar style="height: fit-content; width: fit-content;">
-          <ion-img [src]="accCurrent?.avatar? accCurrent.avatar : linkAvatarDefault"
+          <ion-img [src]="userInfo?.avatar? userInfo.avatar : linkAvatarDefault"
             style="width: 6rem; height: 6rem;"></ion-img>
         </ion-avatar>
       </div>
 
-      <ion-list *ngIf="!(accCurrent | isEmpty) || true">
-        <ion-item button *ngIf="accCurrent.name">
+      <ion-list *ngIf="!(userInfo | isEmpty) || true">
+        <ion-item button *ngIf="userInfo.fullname">
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Họ và tên</h3>
-            <p>{{accCurrent.name}}</p>
+            <p>{{userInfo.fullname}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.code">
+        <ion-item button *ngIf="userInfo.code">
           <ion-icon name="barcode-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Mã KH</h3>
-            <p>{{accCurrent.code}}</p>
+            <p>{{userInfo.code}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.phone">
+        <ion-item button *ngIf="userInfo.phone">
           <ion-icon name="call-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Số điện thoại</h3>
-            <p>{{accCurrent.phone}}</p>
+            <p>{{userInfo.phone}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.address">
+        <ion-item button *ngIf="userInfo.address">
           <ion-icon name="location-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Địa chỉ</h3>
-            <p style="white-space: break-spaces;">{{accCurrent.address}}</p>
+            <p style="white-space: break-spaces;">{{userInfo.address}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.facebook">
+        <ion-item button *ngIf="userInfo.facebook">
           <ion-icon name="logo-facebook" slot="start"></ion-icon>
           <ion-label>
             <h3>Facebook</h3>
-            <p>{{accCurrent.socialNetwork.facebook}}</p>
+            <p>{{userInfo.socialNetwork.facebook}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.zalo">
+        <ion-item button *ngIf="userInfo.zalo">
           <ion-icon name="megaphone-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Zalo</h3>
-            <p>{{accCurrent.socialNetwork.zalo}}</p>
+            <p>{{userInfo.socialNetwork.zalo}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.telegram">
+        <ion-item button *ngIf="userInfo.telegram">
           <ion-icon name="camera-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Telegram</h3>
-            <p>{{accCurrent.socialNetwork.telegram}}</p>
+            <p>{{userInfo.socialNetwork.telegram}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="accCurrent.tiwtter">
+        <ion-item button *ngIf="userInfo.tiwtter">
           <ion-icon name="newspaper-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Twitter</h3>
-            <p>{{accCurrent.socialNetwork.tiwtter}}</p>
+            <p>{{userInfo.socialNetwork.tiwtter}}</p>
           </ion-label>
         </ion-item>
 

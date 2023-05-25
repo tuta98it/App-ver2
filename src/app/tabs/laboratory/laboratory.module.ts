@@ -9,6 +9,7 @@ import { LaboratoryPageRoutingModule } from './laboratory-routing.module';
 import {AppVersion} from '@ionic-native/app-version/ngx';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { SharedModule } from 'src/app/shared/modules/share.module';
+import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { SharedModule } from 'src/app/shared/modules/share.module';
     SharedModule
   ],
   providers: [AppVersion],
-  declarations: [LaboratoryPage]
+  declarations: [LaboratoryPage, OrderStatusPipe]
 })
 export class LaboratoryPageModule {}

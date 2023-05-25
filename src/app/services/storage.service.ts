@@ -24,8 +24,8 @@ export class StorageService {
   public get(key: string) {
     return this.storage?.get(key);
   }
-  setSelectedUser(student: any): any {
-    return this.storage.set(Constant.STORAGE_USERINFO, student);
+  setSelectedUser(user: any): any {
+    return this.storage.set(Constant.STORAGE_USERINFO, user);
   }
   logout(){
     this.storage.remove(Constant.STORAGE_USERINFO);

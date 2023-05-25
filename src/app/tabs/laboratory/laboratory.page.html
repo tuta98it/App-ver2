@@ -113,38 +113,39 @@
       <ion-list>
 
         <!-- Danh các đối tác -->
-        <ion-item *ngFor="let item of listPatientLab; let i = index">
+        <ion-item *ngFor="let item of listOrder; let i = index">
           <!-- Thông tin bệnh nhân -->
           <ion-label>
             <!-- Tên bệnh nhân -->
-            <h2 class="name-Patient">{{item.name}}</h2>
+            <h3 *ngIf="!(item.code | isEmpty)" class="name-patient">{{item.dateCreated| date: "ddMMyy"}}-{{item.code}} {{item.patient.name}}</h3>
+
             <!-- Số điện thoại -->
-            <div *ngIf="!(item.phone | isEmpty)" class="info">
+            <div *ngIf="!(item.patient.phoneNo | isEmpty)" class="info">
               <div>
                 <ion-icon name="call-outline"></ion-icon>
               </div>
-              <h3 class="text">{{item.phone}}</h3>
+              <h3 class="text">{{item.patient.phoneNo}}</h3>
             </div>
 
             <!-- Địa chỉ -->
-            <div *ngIf="!(item.address | isEmpty)" class="info">
+            <div *ngIf="!(item.patient.address | isEmpty)" class="info">
               <div>
                 <ion-icon name="location-outline"></ion-icon>
               </div>
-              <h3 class="text">{{item.address}}</h3>
+              <h3 class="text">{{item.patient.address}}</h3>
             </div>
 
             <!-- Chỉ định -->
-            <div *ngIf="!(item.conditon | isEmpty)" class="info">
+            <div *ngIf="!(item.chanDoan | isEmpty)" class="info">
               <div>
                 <ion-icon name="pulse-outline"></ion-icon>
               </div>
-              <h3 class="text">{{item.conditon}}</h3>
+              <h3 class="text">{{item.chanDoan}}</h3>
             </div>
 
             <!-- Tình trạng mẫu xét nghiệm -->
             <div *ngIf="!(item.status | isEmpty)" class="status">
-              <h3>{{item.status}}</h3>
+              <h3>{{item.status | orderStatus : initDatas.orderStatus}}</h3>
             </div>
           </ion-label>
         </ion-item>

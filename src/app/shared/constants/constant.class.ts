@@ -10,6 +10,7 @@ export class Constant {
   public static readonly ERROR = 'error';
   public static readonly WARNING = 'warning';
   public static readonly TOKEN = 'token';
+  public static readonly INIT_DATA = "initial_data";
   public static readonly ACTION = 'action';
   public static readonly USER_INFO = 'userinfo';
   public static readonly USER_LIST = 'loginusers';

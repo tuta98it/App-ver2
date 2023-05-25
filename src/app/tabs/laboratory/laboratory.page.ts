@@ -1,8 +1,9 @@
 /* eslint-disable max-len */
-import {Component, ViewChild} from '@angular/core';
-import {PhotoService} from '../../services/photo.service';
-import {Storage} from '@ionic/storage';
-import {Router} from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { PhotoService } from '../../services/photo.service';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
+
 import {
   ActionSheetController,
   AlertController,
@@ -11,17 +12,18 @@ import {
   Platform,
   PopoverController
 } from '@ionic/angular';
-import {Constant} from '../../shared/constants/constant.class';
-import {StorageService} from '../../services/storage.service';
-import {NotificationService} from '../../services/notification.service';
-import {MainService} from '../../services/main.service';
-import {environment} from '../../../environments/environment';
-import {BadgeService} from '../../services/badge.service';
-import {AppVersion} from '@ionic-native/app-version/ngx';
+import { Constant } from '../../shared/constants/constant.class';
+import { StorageService } from '../../services/storage.service';
+import { NotificationService } from '../../services/notification.service';
+import { MainService } from '../../services/main.service';
+import { environment } from '../../../environments/environment';
+import { BadgeService } from '../../services/badge.service';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
+import { OrderService } from 'src/app/services/order.service';
 @Component({
   selector: 'app-laboratory',
   templateUrl: 'laboratory.page.html',
@@ -79,21 +81,28 @@ export class LaboratoryPage {
     }
   ];
 
+  // Chức dữ liệu cơ sở, khởi tạo ban đầu.
+  initDatas: any;
+
+  // Danh sách các Phiểu xét nghiếm
+  listOrder: any[] = [];
+
 
   constructor(public photoService: PhotoService,
-              private popoverController: PopoverController,
-              private router: Router,
-              private platform: Platform,
-              private localStorage: StorageService,
-              private storage: Storage,
-              public navCtrl: NavController,
-              private pickerCtrl: PickerController,
-              private actionSheetCtrl: ActionSheetController,
-              private notificationService: NotificationService,
-              private mainService: MainService,
-              public badgeService: BadgeService,
-              private appVersion: AppVersion,
-              private alertController: AlertController
+    private popoverController: PopoverController,
+    private router: Router,
+    private platform: Platform,
+    private localStorage: StorageService,
+    private storage: Storage,
+    public navCtrl: NavController,
+    private pickerCtrl: PickerController,
+    private actionSheetCtrl: ActionSheetController,
+    private notificationService: NotificationService,
+    private mainService: MainService,
+    public badgeService: BadgeService,
+    private appVersion: AppVersion,
+    private alertController: AlertController,
+    private orderService: OrderService
   ) {
     this.now = new Date();
 
@@ -148,12 +157,47 @@ export class LaboratoryPage {
     console.log('ionViewDidEnter');
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.localStorage.getSelectedUser().then((res) => {
-      console.log('getSelectedStudent', res);
       this.userInfo = res;
     });
+
+    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+
+    await this.getListOrder();
+
   }
+
+  getListOrder() {
+    const payload = {
+      barcode: '',
+      patient: '',
+      status: 0,
+      fromDate: '',
+      toDate: '',
+      assignToUserId: 0,
+      counselors: null,
+      partnerId: 0,
+      isSendSMS: null,
+      isPrintResult: null,
+      patientAge: null,
+      phoneNo: null,
+      keyword: '',
+      pageSize: 20,
+      page: 1
+    };
+    this.orderService.getOrders(payload).subscribe(
+      (res) => {
+        if (res != null) {
+          this.listOrder = res.data;
+          console.log('this.listOrder : ', this.listOrder);
+        }
+      },
+      (error) => {
+      });
+
+  }
+
 
   showProfile() {
 
@@ -170,7 +214,7 @@ export class LaboratoryPage {
   }
 
 
-   setOpenModalAddPatient(isOpen: boolean) {
+  setOpenModalAddPatient(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
