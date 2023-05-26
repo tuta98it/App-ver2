@@ -1,0 +1,23 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_383_46917)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M42.424 6.60533C38.2587 2.46933 32.304 2 25 2C17.696 2 11.712 2.46933 7.576 6.60533C3.44 10.7413 3 16.7253 3 24.0293C3 31.3333 3.41067 37.288 7.576 41.4533C11.7413 45.6187 17.696 46 25 46C32.304 46 38.288 45.5893 42.424 41.424C46.56 37.2587 47 31.304 47 24C47 16.696 46.56 10.7413 42.424 6.60533Z" fill="url(#paint0_linear_383_46917)"/>
+<path d="M33.5 28.9509C33.5 27.694 31.8369 27.0288 31.8369 25.7718V21.7255C31.8369 17.735 28.7663 14.5 24.9786 14.5C21.1908 14.5 18.1203 17.735 18.1203 21.7255V25.8181C18.1203 27.0495 16.5 27.7195 16.5 28.9509C16.5 29.4497 16.8838 29.8541 17.3573 29.8541H32.6427C33.1162 29.8541 33.5 29.4497 33.5 28.9509Z" fill="white"/>
+<path d="M22.0501 30.8777C22.0501 31.2221 22.127 31.5631 22.2766 31.8812C22.4261 32.1994 22.6452 32.4885 22.9215 32.732C23.1977 32.9755 23.5257 33.1686 23.8866 33.3004C24.2476 33.4322 24.6344 33.5 25.0251 33.5C25.4158 33.5 25.8026 33.4322 26.1636 33.3004C26.5245 33.1686 26.8525 32.9755 27.1287 32.732C27.405 32.4885 27.6241 32.1994 27.7736 31.8812C27.9231 31.5631 28.0001 31.2221 28.0001 30.8777H22.0501Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_383_46917" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0117647 0 0 0 0 0.32549 0 0 0 0 0.705882 0 0 0 0.15 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_383_46917"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_383_46917" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_383_46917" x1="9" y1="6.5" x2="39" y2="46" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3290FE"/>
+<stop offset="1" stop-color="#0368DF"/>
+</linearGradient>
+</defs>
+</svg>
