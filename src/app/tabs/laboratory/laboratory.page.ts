@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PhotoService } from '../../services/photo.service';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
@@ -29,7 +29,7 @@ import { OrderService } from 'src/app/services/order.service';
   templateUrl: 'laboratory.page.html',
   styleUrls: ['laboratory.page.scss']
 })
-export class LaboratoryPage {
+export class LaboratoryPage implements OnInit{
   @ViewChild(IonModal) modal!: IonModal;
 
   now: any;
@@ -158,6 +158,13 @@ export class LaboratoryPage {
   }
 
   async ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+
+
+  }
+
+  async ngOnInit() {
+    console.log('ngOnInit');
     this.localStorage.getSelectedUser().then((res) => {
       this.userInfo = res;
     });
@@ -165,7 +172,6 @@ export class LaboratoryPage {
     this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
 
     await this.getListOrder();
-
   }
 
   getListOrder() {

@@ -54,8 +54,8 @@ export class GeneralService extends BaseService {
   }
 
   //upload
-  upload(FormData: any): Observable<any> {
-    return this.post('/file/upload', FormData);
+  upload(formData: any): Observable<any> {
+    return this.post('/file/upload', formData);
   }
 
   //Role
@@ -375,8 +375,8 @@ export class GeneralService extends BaseService {
     const userInfo = JSON.parse(localStorage.getItem(Constant.USER_INFO));
     if (userInfo.roles) {
       // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < userInfo.roles.length; i++) {
-        listPermission.add(userInfo.roles[i]);
+      for (const role of userInfo.roles) {
+        listPermission.add(role);
       }
     }
     return listPermission.has(per);
@@ -601,7 +601,7 @@ export class GeneralService extends BaseService {
     return this.post(UrlConstant.LIST_SPECIMEN + '/Query', payload);
   }
 
-  getSpecimenBarcode(code, width, height): any {
+  getSpecimenBarcode(code: any, width: any, height: any): any {
     return this.get(
       UrlConstant.LIST_SPECIMEN +
         '/BarCode?code=' +
@@ -615,25 +615,25 @@ export class GeneralService extends BaseService {
     );
   }
 
-  takeSpecimen(payload): any {
+  takeSpecimen(payload: any): any {
     return this.put(
       UrlConstant.LIST_SPECIMEN + '/TakeSpecimen/' + payload.id,
       payload
     );
   }
 
-  cancelSpecimen(Specimenid): any {
+  cancelSpecimen(specimenid: any): any {
     return this.put(
-      UrlConstant.LIST_SPECIMEN + '/CancelSpecimen/' + Specimenid,
+      UrlConstant.LIST_SPECIMEN + '/CancelSpecimen/' + specimenid,
       null
     );
   }
 
-  deleteStorageSpecimen(id): any {
+  deleteStorageSpecimen(id: any): any {
     return this.delete(`/SpecimenStorage/${id}`, null);
   }
 
-  rejectSpecimen(specimenId, payload): any {
+  rejectSpecimen(specimenId: any, payload: any): any {
     return this.put(
       UrlConstant.LIST_SPECIMEN + '/RejectSpecimen/' + specimenId,
       payload
@@ -670,7 +670,7 @@ export class GeneralService extends BaseService {
   }
 
   exportReportReceiveSpecimen(payload): any {
-    let responseType = 'blob';
+    const responseType = 'blob';
     return this.post(
       UrlConstant.LIST_SPECIMEN + '/ReportExcelReceiveSpecimen',
       payload,
@@ -1656,7 +1656,7 @@ export class GeneralService extends BaseService {
   ): Observable<any> {
     return this.post(
       `/Upload/UploadFileOutsource?orderId=${orderId}&resultTypeId=${resultTypeId}&orderTypeId=${orderTypeId}`,
-      FormData
+      formData
     );
   }
 

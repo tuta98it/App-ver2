@@ -12,6 +12,7 @@ import {NgxIonicImageViewerModule} from "ngx-ionic-image-viewer";
 /*import { PhotoViewer } from '@ionic-native/photo-viewer';*/
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import {DatePipe} from "@angular/common";
+import { GeneralService } from 'src/app/services/general-service';
 /*https://www.npmjs.com/package/ngx-ionic-image-viewer*/
 
 // @ts-ignore
@@ -25,7 +26,7 @@ import {DatePipe} from "@angular/common";
     AppRoutingModule,
     NgxIonicImageViewerModule
   ],
-  providers: [DatePipe, {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AppVersion],
+  providers: [DatePipe, {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AppVersion, GeneralService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

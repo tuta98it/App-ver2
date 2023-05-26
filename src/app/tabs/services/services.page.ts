@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { GeneralService } from 'src/app/services/general-service';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
+import { InfiniteScrollCustomEvent } from '@ionic/angular';
 @Component({
   selector: 'app-services',
   templateUrl: './services.page.html',
@@ -11,11 +13,9 @@ export class ServicesPage implements OnInit {
 
 
   listService: any[] = [];
-  constructor() {
-
-  }
-
-  ngOnInit() {
+  items = [];
+  listOrderType: any[] = [];
+  constructor(private generalService: GeneralService,) {
     this.listService = [
       {
         designation: 'Nhóm máu ABO RH',
@@ -81,9 +81,44 @@ export class ServicesPage implements OnInit {
     ];
   }
 
+
+
+  async ngOnInit() {
+    await this.getOrderType();
+
+  }
+
+  onIonInfinite(ev) {
+    this.generateItems();
+    setTimeout(() => {
+      (ev as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+
+
+  getOrderType() {
+    this.generalService.getOrderType().subscribe(
+      (res) => {
+        if (res !== null) {
+          this.listOrderType = res;
+          this.generateItems();
+          console.log('this.listOrderType', this.listOrderType);
+        }
+      },
+      (error) => { }
+    );
+  }
+
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);
   }
 
+
+  private generateItems() {
+    const count = this.items.length;
+    for (let i = 0; i < 50; i++) {
+      this.items.push(this.listOrderType[count + i]);
+    }
+  }
 }
 

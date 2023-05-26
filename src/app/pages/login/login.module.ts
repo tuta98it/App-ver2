@@ -8,7 +8,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { HttpClientModule } from '@angular/common/http';
-import { GeneralService } from 'src/app/services/general-service';
+
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { GeneralService } from 'src/app/services/general-service';
     LoginPageRoutingModule,
     HttpClientModule
   ],
-  providers: [GeneralService],
+  providers: [],
   declarations: [LoginPage]
 })
 export class LoginPageModule {}

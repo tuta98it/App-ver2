@@ -1,27 +1,21 @@
 <ion-content class="ion-padding">
   <!-- Nội dung -->
-  <div>
+  <div class="service-header">
     <!-- Khu vực tìm kiếm -->
-    <div>
+    <div class="service-search">
       <!-- Tìm liếm - lọc -->
-      <div style="display: flex;">
+      <div class="search-filter">
+
         <!-- Tìm kiếm -->
         <ion-searchbar placeholder="Search"></ion-searchbar>
 
-        <!-- Lọc dữ liệu -->
-        <!-- <ion-buttons slot="start">
-          <ion-button>
-            <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons> -->
-
-
-        <div style="display: flex; justify-content: center; align-items: center;">
+        <!-- Lọc -->
+        <div class="filter">
           <ion-list>
             <ion-item>
-              <ion-select interface="popover" placeholder="Lọc" >
-                <ion-select-option  value="dealthcare">Nhóm BP</ion-select-option>
-                <ion-select-option  value="products">Nhóm SP</ion-select-option>
+              <ion-select interface="popover" placeholder="Lọc">
+                <ion-select-option value="dealthcare">Nhóm BP</ion-select-option>
+                <ion-select-option value="products">Nhóm SP</ion-select-option>
               </ion-select>
               <ion-icon slot="start" name="funnel-outline" color="primary"></ion-icon>
             </ion-item>
@@ -30,22 +24,29 @@
 
       </div>
     </div>
+    <!-- Tiêu đề -->
+    <ion-item class="title-service">
+      <ion-label class="title-designation"><strong>Chỉ định</strong> </ion-label>
+      <ion-label class="title-price" slot="end"> <strong>Giá</strong> </ion-label>
+    </ion-item>
+  </div>
 
-    <!-- Nội dung -->
-    <div class="content-service">
-      <!-- Danh sách các dịch vụ -->
-      <ion-list lines="inset">
-        <!-- Tiêu đề -->
-        <ion-item>
-          <ion-label><strong>Chỉ định</strong> </ion-label>
-          <ion-label slot="end"> <strong>Giá</strong> </ion-label>
-        </ion-item>
-        <!-- Dịch vụ -->
-        <ion-item *ngFor="let item of listService; let i = index">
-          <ion-label>{{item.designation}}</ion-label>
-          <ion-label slot="end">{{item.price | currency : 'VND'}}</ion-label>
+  <!-- Nội dung -->
+  <div class="service-content">
+    <div class="service-list-content">
+      <ion-list>
+        <!-- DS Dịch vụ -->
+        <ion-item *ngFor="let item of items; let i = index" class="service-item">
+          <ion-label class="service-designation">{{item.name}}</ion-label>
+          <ion-label class="service-price" slot="end">{{item.price | currency :
+            'VND'}}</ion-label>
         </ion-item>
       </ion-list>
+      <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" style="height: 0.5rem;">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
     </div>
   </div>
+
 </ion-content>

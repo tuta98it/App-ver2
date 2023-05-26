@@ -1,34 +1,61 @@
-.content-service {
-  overflow: auto;
-  max-height: 30rem;
+ion-content {
+  div.service-header {
+    position: sticky;
+    top: -1rem;
+    z-index: 1;
+    background-color: white;
 
-  ion-list {
-    ion-item {
-      display: flex;
-      flex-direction: column;
+    div.service-search {
+      div.search-filter {
+        display: flex;
 
-      ion-label {
-        h2.name-partner {
-          font-weight: 600;
-        }
-
-        div.info {
+        div.filter {
           display: flex;
-          padding: 0.25rem;
-
-          h3.text {
-            margin-left: 0.25rem;
-          }
+          justify-content: center;
+          align-items: center;
         }
+      }
 
-        div.status {
-          display: inline-block;
-          padding: 0.25rem;
-          margin-top: 0.25rem;
-          border-radius: 0.25rem;
-          background-color: #b5e0ff;
+    }
+
+    ion-item.title-service {
+      font-size: 1rem;
+    }
+
+  }
+
+  div.service-content {
+    div.service-list-content {
+
+      // overflow: auto;
+      // max-height: calc(100vh - 17rem);
+
+      ion-list {
+
+        ion-item.service-item {
+          display: flex;
+          flex-direction: column;
+          background-color: #f1f1f1;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease;
+
+          ion-label {
+            &.service-designation {
+              font-size: 0.75rem;
+              white-space: break-spaces;
+            }
+
+            &.service-price {
+              font-size: 0.75rem;
+            }
+          }
+
+          &:hover {
+            transform: translateY(-5px);
+          }
         }
       }
     }
+
   }
 }

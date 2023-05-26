@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {MainService} from '../../services/main.service';
-import {Constant} from '../../shared/constants/constant.class';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {Storage} from '@ionic/storage';
-import {LoadingController, NavController, Platform, ToastController} from '@ionic/angular';
-import {StorageService} from '../../services/storage.service';
-import {NotificationService} from '../../services/notification.service';
+import { Component, OnInit } from '@angular/core';
+import { MainService } from '../../services/main.service';
+import { Constant } from '../../shared/constants/constant.class';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+import { LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
+import { StorageService } from '../../services/storage.service';
+import { NotificationService } from '../../services/notification.service';
 import { GeneralService } from 'src/app/services/general-service';
 
 @Component({
@@ -33,7 +33,8 @@ export class LoginPage implements OnInit {
     private generalService: GeneralService,
   ) {
   }
-  ngOnInit() {
+
+  async ngOnInit() {
     this.localStorage.getSelectedUser().then((res) => {
       if (res) {
         this.navCtrl.navigateRoot(['/main/laboratory']);
@@ -43,13 +44,26 @@ export class LoginPage implements OnInit {
       this.deviceInfo = res;
       console.log(this.deviceInfo);
     });
+
+    // Set INIT_DATA for local-storage
+    await this.setInitData();
   }
-  showAlertPassword(){
+
+  setInitData() {
+    this.generalService.getInitialData().subscribe((resData: any) => {
+      if (resData !== null) {
+        localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
+      }
+    }, error => {
+      console.log('error Set INIT_DATA for local-storage');
+    });
+  }
+
+  showAlertPassword() {
     this.notificationService.showMessage('warning', 'Vui lòng liên hệ quản trị viên để cấp lại mật khẩu');
   }
   async doLogin() {
-    if (!this.username)
-    {
+    if (!this.username) {
       this.notificationService.showMessage('danger', 'Tên đăng nhập không được để trống');
       return;
     }
@@ -81,18 +95,9 @@ export class LoginPage implements OnInit {
         this.navCtrl.navigateRoot(['/main/laboratory']);
       });
 
-      // Set INIT_DATA for local-storage
-      this.generalService.getInitialData().subscribe(resData => {
-        if (resData !== null) {
-          localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
-        }
-      }, error => {
-
-      });
 
     }, error => {
-      console.log(error);
-      if (error.error.message){
+      if (error.error.message) {
         this.notificationService.showMessage('danger', 'Sai tên đăng nhập hoặc mật khẩu');
       }
       else {
