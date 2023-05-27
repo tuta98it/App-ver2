@@ -50,7 +50,7 @@
     <div>
       <!-- Tìm liếm - lọc [debounce]="100"-->
       <div style="display: flex;">
-        <ion-searchbar  (ionChange)="handleChange($event)" (keyup.enter)="onSearchByKeyword()"
+        <ion-searchbar (ionChange)="handleChange($event)" (keyup.enter)="onSearchByKeyword()"
           placeholder="Tìm kiếm ..."></ion-searchbar>
         <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
           <ion-button>
@@ -91,6 +91,11 @@
                   </ion-select>
                 </ion-item>
               </ion-list>
+              <ion-buttons style="display: flex; justify-content: space-evenly ; margin-top: 0.5rem;">
+                <ion-button size="small" fill="outline" color="medium"><ion-icon name="close-outline"></ion-icon></ion-button>
+                <ion-button size="small" fill="outline" color="danger"><ion-icon size="small" name="trash-outline"></ion-icon></ion-button>
+                <ion-button size="small" fill="solid" ><ion-icon size="small" name="search-outline"></ion-icon></ion-button>
+              </ion-buttons>
             </ion-content>
           </ng-template>
         </ion-popover>
