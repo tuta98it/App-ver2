@@ -48,14 +48,52 @@
   <div>
     <!-- Khu vực tìm kiếm -->
     <div>
-      <!-- Tìm liếm - lọc -->
+      <!-- Tìm liếm - lọc [debounce]="100"-->
       <div style="display: flex;">
-        <ion-searchbar placeholder="Search"></ion-searchbar>
-        <ion-buttons slot="start">
+        <ion-searchbar  (ionChange)="handleChange($event)" (keyup.enter)="onSearchByKeyword()"
+          placeholder="Tìm kiếm ..."></ion-searchbar>
+        <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
+        <ion-popover #popover [isOpen]="isPopoverOpenFillter" (didDismiss)="isPopoverOpenFillter = false">
+          <ng-template>
+            <ion-content class="ion-padding">
+              <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label>
+              <ion-list>
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="person-outline"></ion-icon>
+                    Tên bệnh nhân
+                  </ion-label>
+                  <ion-input placeholder="Nhập tên bệnh nhân ..."></ion-input>
+                </ion-item>
+
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="call-outline"></ion-icon>
+                    Số điện thoại
+                  </ion-label>
+                  <ion-input type="number" placeholder="Nhập SĐT ..."></ion-input>
+                </ion-item>
+
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="send-outline"></ion-icon>
+                    Trạng thái Đơn hàng
+                  </ion-label>
+                  <ion-select style="font-size: small;" label="Trạng thái Đơn hàng"
+                    [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
+                    placeholder="Trạng thái đơn hàng">
+                    <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
+                      [value]="order.id">{{order.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
         <!-- <ion-item>
         </ion-item> -->
 
@@ -77,8 +115,12 @@
         <ion-list>
           <ion-item>
             <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
-            <ion-select aria-label="Fruit" interface="popover" placeholder="Chọn khoảng thời gian lọc">
-              <ion-select-option value="all">
+            <ion-select aria-label="times" interface="alert" placeholder="Chọn khoảng thời gian lọc ...">
+
+              <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [value]="time.id">
+                {{time.name}}
+              </ion-select-option>
+              <!-- <ion-select-option value="all">
                 --Tất Cả--
               </ion-select-option>
               <ion-select-option value="today">
@@ -101,7 +143,7 @@
               </ion-select-option>
               <ion-select-option value="from_day_to_date">
                 Từ ngày đến ngày
-              </ion-select-option>
+              </ion-select-option> -->
             </ion-select>
           </ion-item>
         </ion-list>
@@ -117,7 +159,8 @@
           <!-- Thông tin bệnh nhân -->
           <ion-label>
             <!-- Tên bệnh nhân -->
-            <h3 *ngIf="!(item.code | isEmpty)" class="name-patient">{{item.dateCreated| date: "ddMMyy"}}-{{item.code}} {{item.patient.name}}</h3>
+            <h3 *ngIf="!(item.code | isEmpty)" class="name-patient">{{item.dateCreated| date: "ddMMyy"}}-{{item.code}}
+              {{item.patient.name}}</h3>
 
             <!-- Số điện thoại -->
             <div *ngIf="!(item.patient.phoneNo | isEmpty)" class="info">

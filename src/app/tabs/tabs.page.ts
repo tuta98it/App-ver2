@@ -119,9 +119,10 @@ export class TabsPage {
 
 
   logoutAccount() {
-    this.localStorage.logout();
+    this.localStorage.clearAll();
     this.router.navigate(['/login']);
   }
+
 
 
 

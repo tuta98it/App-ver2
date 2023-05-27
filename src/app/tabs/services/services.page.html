@@ -7,28 +7,46 @@
       <div class="search-filter">
 
         <!-- Tìm kiếm -->
-        <ion-searchbar placeholder="Search"></ion-searchbar>
+        <ion-searchbar placeholder="Tìm kiếm ..."></ion-searchbar>
 
         <!-- Lọc -->
-        <div class="filter">
-          <ion-list>
-            <ion-item>
-              <ion-select interface="popover" placeholder="Lọc">
-                <ion-select-option value="dealthcare">Nhóm BP</ion-select-option>
-                <ion-select-option value="products">Nhóm SP</ion-select-option>
-              </ion-select>
-              <ion-icon slot="start" name="funnel-outline" color="primary"></ion-icon>
-            </ion-item>
-          </ion-list>
-        </div>
+        <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
+          <ion-button>
+            <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-popover #popover [isOpen]="isPopoverOpenFillter" (didDismiss)="isPopoverOpenFillter = false">
+          <ng-template>
+            <ion-content class="ion-padding">
+              <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label>
+              <ion-item style="font-size: small;">
+                <ion-label position="stacked">
+                  <ion-icon name="trail-sign-outline" slot="start"></ion-icon>
+                  Nhóm bệnh phẩm
+                </ion-label>
+                <ion-select style="font-size: small;" label="Nhóm bệnh phẩm" [interfaceOptions]="customPopoverOptions"
+                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ...">
 
+                  <!-- <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
+                    [value]="order.id">{{order.name}}</ion-select-option> -->
+                  <ion-select-option style="font-size: small;" [value]="">Nhóm bệnh</ion-select-option>
+                  <ion-select-option style="font-size: small;" [value]="">Nhóm sản Phẩm</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
       </div>
+
+
     </div>
     <!-- Tiêu đề -->
     <ion-item class="title-service">
       <ion-label class="title-designation"><strong>Chỉ định</strong> </ion-label>
       <ion-label class="title-price" slot="end"> <strong>Giá</strong> </ion-label>
     </ion-item>
+    <!-- <ion-progress-bar [value]="progress" color="medium"></ion-progress-bar> -->
+
   </div>
 
   <!-- Nội dung -->

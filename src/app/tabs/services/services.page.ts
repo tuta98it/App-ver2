@@ -1,21 +1,33 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonModal } from '@ionic/angular';
+import { IonModal, LoadingController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { GeneralService } from 'src/app/services/general-service';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { Constant } from 'src/app/shared/constants/constant.class';
 @Component({
   selector: 'app-services',
   templateUrl: './services.page.html',
   styleUrls: ['./services.page.scss'],
 })
 export class ServicesPage implements OnInit {
-
-
+  @ViewChild('popover') popover;
+  isPopoverOpenFillter = false;
   listService: any[] = [];
   items = [];
   listOrderType: any[] = [];
-  constructor(private generalService: GeneralService,) {
+  customPopoverOptions = {
+    // header: 'Trạng thái đơn hàng',
+    subHeader: 'Chọn nhóm cần lọc',
+    // message: 'Chỉ chọn một TTĐH',
+  };
+  // Chức dữ liệu cơ sở, khởi tạo ban đầu.
+  initDatas: any;
+  public progress = 0;
+  constructor(
+    private generalService: GeneralService,
+    private loadingCtrl: LoadingController
+  ) {
     this.listService = [
       {
         designation: 'Nhóm máu ABO RH',
@@ -79,29 +91,55 @@ export class ServicesPage implements OnInit {
         price: '0',
       },
     ];
+
+
+
   }
 
+  loadingDataOrderType() {
+    setInterval(() => {
+      this.progress += 0.01;
 
+      // Reset the progress bar when it reaches 100%
+      // to continuously show the demo
+      if (this.progress > 1) {
+        setTimeout(() => {
+          this.progress = 0;
+        }, 1000);
+      }
+    }, 50);
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Dữ liệu đang tải lên sau 1 giây ...',
+      duration: 1000,
+    });
+
+    loading.present();
+  }
 
   async ngOnInit() {
+    this.showLoading();
+    this.getListInitialData();
     await this.getOrderType();
-
   }
 
   onIonInfinite(ev) {
-    this.generateItems();
+    this.generateItemsOrderType();
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);
   }
 
-
   getOrderType() {
+    // this.loadingDataOrderType();
     this.generalService.getOrderType().subscribe(
       (res) => {
         if (res !== null) {
+
           this.listOrderType = res;
-          this.generateItems();
+          this.generateItemsOrderType();
           console.log('this.listOrderType', this.listOrderType);
         }
       },
@@ -109,12 +147,22 @@ export class ServicesPage implements OnInit {
     );
   }
 
+  getListInitialData() {
+    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+  }
+
+  presentPopoverFillter(e: Event) {
+    this.popover.event = e;
+    this.isPopoverOpenFillter = true;
+  }
+
+
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);
   }
 
 
-  private generateItems() {
+  private generateItemsOrderType() {
     const count = this.items.length;
     for (let i = 0; i < 50; i++) {
       this.items.push(this.listOrderType[count + i]);

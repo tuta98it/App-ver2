@@ -77,7 +77,7 @@ export class Tab1Page {
   }
 
   logout() {
-    this.localStorage.logout();
+    this.localStorage.clearAll();
     this.popoverController.dismiss();
     this.router.navigate(['/']);
   }

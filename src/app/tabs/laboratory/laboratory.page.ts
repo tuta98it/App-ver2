@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import {
   ActionSheetController,
   AlertController,
+  LoadingController,
   NavController,
   PickerController,
   Platform,
@@ -29,19 +30,25 @@ import { OrderService } from 'src/app/services/order.service';
   templateUrl: 'laboratory.page.html',
   styleUrls: ['laboratory.page.scss']
 })
-export class LaboratoryPage implements OnInit{
+export class LaboratoryPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
-
+  @ViewChild('popover') popover;
   now: any;
   userInfo: any;
-  isPopoverOpen = false;
-
+  isPopoverOpenFillter = false;
+  keywordSearch: any;
 
 
   titleModalAddPatient = 'Thêm yêu cầu';
   instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
   numberOfNewPatients = 0;
   isModalOpen = false;
+
+  customPopoverOptions = {
+    // header: 'Trạng thái đơn hàng',
+    subHeader: 'Chọn trạng thái đơn hàng cần lọc',
+    // message: 'Chỉ chọn một TTĐH',
+  };
 
   itemPatientFormModalLab = {
     name: '',
@@ -102,7 +109,8 @@ export class LaboratoryPage implements OnInit{
     public badgeService: BadgeService,
     private appVersion: AppVersion,
     private alertController: AlertController,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private loadingCtrl: LoadingController
   ) {
     this.now = new Date();
 
@@ -169,9 +177,23 @@ export class LaboratoryPage implements OnInit{
       this.userInfo = res;
     });
 
-    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+    // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
+    this.getListInitialData();
 
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    this.showLoading();
+
+    // Lấy dữ liệu danh sách phiếu xét nghiệm
     await this.getListOrder();
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Dữ liệu đang tải lên sau 2 giây ...',
+      duration: 2000,
+    });
+
+    loading.present();
   }
 
   getListOrder() {
@@ -189,8 +211,8 @@ export class LaboratoryPage implements OnInit{
       patientAge: null,
       phoneNo: null,
       keyword: '',
-      pageSize: 20,
-      page: 1
+      pageSize: 50,
+      page: 1,
     };
     this.orderService.getOrders(payload).subscribe(
       (res) => {
@@ -200,17 +222,27 @@ export class LaboratoryPage implements OnInit{
         }
       },
       (error) => {
+        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
       });
 
   }
 
+
+  getListInitialData() {
+    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+  }
+
+  presentPopoverFillter(e: Event) {
+    this.popover.event = e;
+    this.isPopoverOpenFillter = true;
+  }
 
   showProfile() {
 
   }
 
   logout() {
-    this.localStorage.logout();
+    this.localStorage.clearAll();
     this.popoverController.dismiss();
     this.router.navigate(['/']);
   }
@@ -295,6 +327,41 @@ export class LaboratoryPage implements OnInit{
       status: '',
       notes: '',
     };
+  }
+
+
+  handleChange(event: any) {
+    this.keywordSearch = event.target.value;
+  }
+
+  onSearchByKeyword() {
+    const payload = {
+      barcode: '',
+      patient: '',
+      status: 0,
+      fromDate: '',
+      toDate: '',
+      assignToUserId: 0,
+      counselors: null,
+      partnerId: 0,
+      isSendSMS: null,
+      isPrintResult: null,
+      patientAge: null,
+      phoneNo: null,
+      keyword: this.keywordSearch,
+      pageSize: 50,
+      page: 1,
+    };
+    this.orderService.getOrders(payload).subscribe(
+      (res) => {
+        if (res != null) {
+          this.listOrder = res.data;
+          console.log('this.listOrder Search: ', this.listOrder);
+        }
+      },
+      (error) => {
+        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+      });
   }
 
   isEmpty(value: any) {

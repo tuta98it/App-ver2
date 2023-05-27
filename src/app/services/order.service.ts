@@ -18,7 +18,7 @@ export class OrderService extends BaseService {
   // }
   serviceUrl: string = UrlConstant.URL_ORDER;
   getOrders(payload: any): Observable<any> {
-    return this.post(this.serviceUrl + "/GetOrders", payload);
+    return this.post(this.serviceUrl + '/GetOrders', payload);
   }
   // search(data: any): Observable<any> {
   //   return this.post(`/${this.url}/Search`, data);

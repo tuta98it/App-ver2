@@ -9,7 +9,7 @@ ion-content {
       div.search-filter {
         display: flex;
 
-        div.filter {
+        ion-list.filter {
           display: flex;
           justify-content: center;
           align-items: center;
