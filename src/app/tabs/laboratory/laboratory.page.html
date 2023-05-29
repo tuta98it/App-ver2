@@ -42,22 +42,31 @@
   </ion-popover>
 </ion-content> -->
 
-
+<!-- <ion-label>formFilterTestSheet value: {{ formFilterTestSheet | json }}</ion-label> -->
 <ion-content class="ion-padding">
   <!-- Nội dung -->
   <div>
     <!-- Khu vực tìm kiếm -->
     <div>
-      <!-- Tìm liếm - lọc [debounce]="100"-->
+      <!-- Tìm liếm - lọc [debounce]="100" id="popover-search" (keyup.enter)="onSearchByKeyword()" -->
       <div style="display: flex;">
-        <ion-searchbar (ionChange)="handleChange($event)" (keyup.enter)="onSearchByKeyword()"
+        <ion-searchbar autocomplete="on" (ionChange)="handleChangeSearch($event)"
           placeholder="Tìm kiếm ..."></ion-searchbar>
-        <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
+
+        <!--    <ion-list style="position: absolute; z-index: 100000;">
+          <ion-item *ngFor="let name of listOrder">
+            <ion-label>{{ name }}</ion-label>
+          </ion-item>
+        </ion-list> -->
+
+
+        <ion-buttons (click)="presentPopoverFilter($event)" slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
-        <ion-popover #popover [isOpen]="isPopoverOpenFillter" (didDismiss)="isPopoverOpenFillter = false">
+
+        <ion-popover #popoverFormFilter size="auto" [isOpen]="isPopoverOpenFilter" (didDismiss)="isPopoverOpenFilter = false">
           <ng-template>
             <ion-content class="ion-padding">
               <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label>
@@ -67,7 +76,7 @@
                     <ion-icon name="person-outline"></ion-icon>
                     Tên bệnh nhân
                   </ion-label>
-                  <ion-input placeholder="Nhập tên bệnh nhân ..."></ion-input>
+                  <ion-input placeholder="Nhập tên bệnh nhân ..." [(ngModel)]="formFilterTestSheet.namePatient"></ion-input>
                 </ion-item>
 
                 <ion-item style="font-size: small;">
@@ -75,7 +84,7 @@
                     <ion-icon name="call-outline"></ion-icon>
                     Số điện thoại
                   </ion-label>
-                  <ion-input type="number" placeholder="Nhập SĐT ..."></ion-input>
+                  <ion-input type="tel" placeholder="Nhập SĐT ..." [(ngModel)]="formFilterTestSheet.phoneNoPatient"></ion-input>
                 </ion-item>
 
                 <ion-item style="font-size: small;">
@@ -83,18 +92,24 @@
                     <ion-icon name="send-outline"></ion-icon>
                     Trạng thái Đơn hàng
                   </ion-label>
-                  <ion-select style="font-size: small;" label="Trạng thái Đơn hàng"
+                  <ion-select  #orderStatusSelect style="font-size: small;" label="Trạng thái Đơn hàng"
                     [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
-                    placeholder="Trạng thái đơn hàng">
+                    placeholder="Trạng thái đơn hàng" (ionChange)="handleChangeSelectOrderStatus($event)">
                     <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
                       [value]="order.id">{{order.name}}</ion-select-option>
+                    <!-- <ion-select-option  style="font-size: small;" value="0">Chưa nhận yêu cầu</ion-select-option>
+                    <ion-select-option  style="font-size: small;" value="1">Đã nhận yêu cầu và đang xử lý</ion-select-option>
+                    <ion-select-option  style="font-size: small;" value="2">Đã trả kết quả</ion-select-option> -->
                   </ion-select>
                 </ion-item>
               </ion-list>
               <ion-buttons style="display: flex; justify-content: space-evenly ; margin-top: 0.5rem;">
-                <ion-button size="small" fill="outline" color="medium"><ion-icon name="close-outline"></ion-icon></ion-button>
-                <ion-button size="small" fill="outline" color="danger"><ion-icon size="small" name="trash-outline"></ion-icon></ion-button>
-                <ion-button size="small" fill="solid" ><ion-icon size="small" name="search-outline"></ion-icon></ion-button>
+                <ion-button size="small" fill="outline" color="medium" title="Huỷ" (click)="cancelFormFilter()"><ion-icon
+                    name="close-outline"></ion-icon></ion-button>
+                <ion-button size="small" fill="outline" color="danger" title="Xoá lọc" (click)="restartFormFilter()"><ion-icon size="small"
+                    name="trash-outline"></ion-icon></ion-button>
+                <ion-button size="small" fill="solid" (click)="onSearchByFormFilter()" title="Lọc dữ liệu ..."><ion-icon size="small"
+                    name="search-outline"></ion-icon></ion-button>
               </ion-buttons>
             </ion-content>
           </ng-template>
@@ -120,7 +135,8 @@
         <ion-list>
           <ion-item>
             <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
-            <ion-select aria-label="times" interface="alert" placeholder="Chọn khoảng thời gian lọc ...">
+            <ion-select aria-label="times" interface="alert" placeholder="Chọn khoảng thời gian lọc ..."
+            (ionChange)="handleChangeFilterInterval($event)">
 
               <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [value]="time.id">
                 {{time.name}}
@@ -253,7 +269,7 @@
             <ion-icon name="call-outline"></ion-icon>
             Số điện thoại <span style="color:red">*</span>
           </ion-label>
-          <ion-input [(ngModel)]="itemPatientFormModalLab.phone" type="number" placeholder="Nhập SĐT ..."></ion-input>
+          <ion-input [(ngModel)]="itemPatientFormModalLab.phone" type="tel" placeholder="Nhập SĐT ..."></ion-input>
         </ion-item>
 
         <!-- Nhập địa chỉ bệnh nhân -->
