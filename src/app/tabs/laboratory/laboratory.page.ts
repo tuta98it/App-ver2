@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PhotoService } from '../../services/photo.service';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-
+import { DatePipe } from '@angular/common';
 import {
   ActionSheetController,
   AlertController,
@@ -26,6 +26,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { OrderService } from 'src/app/services/order.service';
+
 @Component({
   selector: 'app-laboratory',
   templateUrl: 'laboratory.page.html',
@@ -45,6 +46,10 @@ export class LaboratoryPage implements OnInit {
   instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
   numberOfNewPatients = 0;
   isModalOpen = false;
+
+
+
+
 
   customPopoverOptions = {
     // header: 'Trạng thái đơn hàng',
@@ -97,6 +102,7 @@ export class LaboratoryPage implements OnInit {
   listOrder: any[] = [];
 
 
+  // Form lọc theo filter
   formFilterTestSheet = {
     namePatient: '',
     phoneNoPatient: '',
@@ -104,6 +110,12 @@ export class LaboratoryPage implements OnInit {
   };
 
 
+
+  filterInterval = {
+    isShow: false,
+    presentTime: '',
+    pastTime: '',
+  };
 
   constructor(public photoService: PhotoService,
     private popoverController: PopoverController,
@@ -120,7 +132,8 @@ export class LaboratoryPage implements OnInit {
     private appVersion: AppVersion,
     private alertController: AlertController,
     private orderService: OrderService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private datePipe: DatePipe
   ) {
     this.now = new Date();
 
@@ -233,7 +246,12 @@ export class LaboratoryPage implements OnInit {
         }
       },
       (error) => {
-        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+        if (error.status === 403) {
+          this.notificationService.showMessage('danger', `Người dùng có quyền truy cập`);
+          this.router.navigate(['/login']);
+        } else {
+          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+        }
       });
 
   }
@@ -382,51 +400,63 @@ export class LaboratoryPage implements OnInit {
 
   handleChangeFilterInterval(event: any) {
     const value = event.target.value;
-    const presentTime = new Date();
+    // let isShowFilterInterval = this.filterInterval.isShow;
     const pastTime = new Date();
+    const presentTime = new Date();
+
     pastTime.setHours(0, 0, 0, 0);
+
     // Get the current day of the week (0-6, where Sunday is 0)
     const currentDay = presentTime.getDay();
     // Subtract the number of days elapsed in the current week
     let daysToSubtract: any;
     switch (value) {
       case 1:
+        this.filterInterval.isShow = false;
         daysToSubtract = 0;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         console.log('Đầu ngày hôm nay', pastTime);
         break;
       case 2:
         // Subtract 1 day
+        this.filterInterval.isShow = false;
         daysToSubtract = 1;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         console.log('Cách đây 1 ngày trước', pastTime);
         break;
       case 3:
         // Subtract 7 day
+        this.filterInterval.isShow = false;
         daysToSubtract = 7;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         console.log('Cách đây 7 ngày', pastTime);
         break;
       case 4:
         // Subtract 14 day
+        this.filterInterval.isShow = false;
         daysToSubtract = 14;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         console.log('Cácg đây 14 ngày', pastTime);
         break;
       case 5:
         // Subtract 30 day
+        this.filterInterval.isShow = false;
         daysToSubtract = 30;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         console.log('Cách đây 30 ngày', pastTime);
         break;
       case 6:
         // Đầu tuần này
+        this.filterInterval.isShow = false;
+
         daysToSubtract = currentDay === 0 ? 6 : currentDay - 1;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         console.log('Đầu tuần này', pastTime);
         break;
       case 7:
         // Đầu tuần trước
+        this.filterInterval.isShow = false;
+
         daysToSubtract = currentDay + 7 - 1;
         console.log('daysToSubtract', daysToSubtract);
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
@@ -434,11 +464,15 @@ export class LaboratoryPage implements OnInit {
         break;
       case 8:
         // Đầu tháng này
+        this.filterInterval.isShow = false;
+
         pastTime.setDate(1);
         console.log('Đầu tháng này', pastTime);
         break;
       case 9:
         // Đầu tháng trước
+        this.filterInterval.isShow = false;
+
         // Set the date to the first day of the current mounth
         pastTime.setDate(1);
 
@@ -448,54 +482,92 @@ export class LaboratoryPage implements OnInit {
         console.log('Đầu tháng trước ', pastTime);
         break;
       case 10:
+        // Hiện calender cho hai thời điểm lọc dữ liệu.
+        this.filterInterval.isShow = true;
 
+        // Đặt dữ liệu ban đầu cho khoảng thời gian lọc dữ liệu
+        // Bắt đầu - Thời điểm 0h ngày hôm nay
+        // console.log('pastTime: ', pastTime);
+        this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
+        // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime );
+
+
+        // Kết thúc - Thời điểm hiện tại
+        this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
         break;
       default:
         break;
     }
 
-    // [
-    //   {
-    //       "id": 1,
-    //       "name": "Hôm nay"
-    //   },
-    //   {
-    //       "id": 2,
-    //       "name": "Hôm qua"
-    //   },
-    //   {
-    //       "id": 3,
-    //       "name": "7 ngày qua"
-    //   },
-    //   {
-    //       "id": 4,
-    //       "name": "14 ngày qua"
-    //   },
-    //   {
-    //       "id": 5,
-    //       "name": "30 ngày qua"
-    //   },
-    //   {
-    //       "id": 6,
-    //       "name": "Tuần này"
-    //   },
-    //   {
-    //       "id": 7,
-    //       "name": "Tuần trước"
-    //   },
-    //   {
-    //       "id": 8,
-    //       "name": "Tháng này"
-    //   },
-    //   {
-    //       "id": 9,
-    //       "name": "Tháng trước"
-    //   },
-    //   {
-    //       "id": 10,
-    //       "name": "Từ ngày đến ngày"
-    //   }
-    // ]
+
+
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    this.showLoading();
+    const payload = {
+      barcode: '',
+      patient: '',
+      status: 0,
+      fromDate: pastTime,
+      toDate: presentTime,
+      assignToUserId: 0,
+      counselors: null,
+      partnerId: 0,
+      isSendSMS: null,
+      isPrintResult: null,
+      patientAge: null,
+      phoneNo: '',
+      keyword: '',
+      pageSize: 100,
+      page: 1,
+    };
+    this.orderService.getOrders(payload).subscribe(
+      (res) => {
+        if (res != null) {
+          this.listOrder = res.data;
+          console.log('onSearchByFormFilter this.listOrder : ', this.listOrder);
+        }
+      },
+      (error) => {
+        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+      });
+  }
+
+  handleChangeFilterIntervalCustomByUser(event: any) {
+    console.log('handleChangeFilterIntervalCustomByUser event', event);
+    const pastTime = this.filterInterval.pastTime;
+    // console.log('pastTime: ',pastTime);
+    const presentTime = this.filterInterval.presentTime;
+    // console.log('presentTime: ',presentTime);
+
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    this.showLoading();
+    const payload = {
+      barcode: '',
+      patient: '',
+      status: 0,
+      fromDate: pastTime,
+      toDate: presentTime,
+      assignToUserId: 0,
+      counselors: null,
+      partnerId: 0,
+      isSendSMS: null,
+      isPrintResult: null,
+      patientAge: null,
+      phoneNo: '',
+      keyword: '',
+      pageSize: 100,
+      page: 1,
+    };
+    this.orderService.getOrders(payload).subscribe(
+      (res) => {
+        if (res != null) {
+          this.listOrder = res.data;
+          console.log('onSearchByFormFilter this.listOrder : ', this.listOrder);
+        }
+      },
+      (error) => {
+        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+      });
   }
 
 

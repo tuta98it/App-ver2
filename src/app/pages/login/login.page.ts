@@ -8,6 +8,7 @@ import { LoadingController, NavController, Platform, ToastController } from '@io
 import { StorageService } from '../../services/storage.service';
 import { NotificationService } from '../../services/notification.service';
 import { GeneralService } from 'src/app/services/general-service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -31,18 +32,49 @@ export class LoginPage implements OnInit {
     protected platform: Platform,
     public navCtrl: NavController,
     private generalService: GeneralService,
+    private authService: AuthService,
   ) {
   }
 
   async ngOnInit() {
-    this.localStorage.getSelectedUser().then((res) => {
-      if (res) {
-        this.navCtrl.navigateRoot(['/main/laboratory']);
-      }
-    });
+    // this.localStorage.getSelectedUser().then((res) => {
+    //   if (res) {
+    //     this.navCtrl.navigateRoot(['/main/laboratory']);
+    //   }
+    // });
     this.localStorage.get('deviceInfo').then(res => {
       this.deviceInfo = res;
       console.log(this.deviceInfo);
+    });
+
+
+    // Xác thực người dùng
+    this.authService.checkToken().subscribe((res: any) => {
+      console.log('this.authService.checkToken() res : ', res);
+      const objRes = res.ret[0];
+      const codeRes = objRes.code;
+      if (res.ret) {
+        if (codeRes === 0) {
+          // Success
+          this.router.navigate(['/main/laboratory']);
+        } else if (codeRes === 401) {
+          // Code 401: Không xác thực được người dùng;
+          localStorage.removeItem(Constant.TOKEN);
+          localStorage.removeItem(Constant.USER_INFO);
+          this.router.navigate(['/']);
+          this.notificationService.showMessage('darge', `${codeRes}: Hệ thống không xác thực được người dùng`);
+        } else if (codeRes === 403) {
+          // Code 403: Người dùng không có quyền truy cập vào hệ thống.
+          localStorage.removeItem(Constant.TOKEN);
+          localStorage.removeItem(Constant.USER_INFO);
+          this.router.navigate(['/']);
+          this.notificationService.showMessage('darge', `${codeRes}: Người dùng không có quyền truy cập`);
+        } else {
+          this.notificationService.showMessage('darge', `${codeRes}: Lỗi hệ thống, vui lòng liên hệ quản trị viên`);
+        }
+      } else {
+        this.notificationService.showMessage('darge', 'Lỗi hệ thống, vui lòng liên hệ quản trị viên');
+      }
     });
 
     // Set INIT_DATA for local-storage
@@ -55,7 +87,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
       }
     }, error => {
-      console.log('error Set INIT_DATA for local-storage');
+      console.log('Error Set INIT_DATA for local-storage');
     });
   }
 
@@ -80,7 +112,7 @@ export class LoginPage implements OnInit {
       deviceId: this.deviceInfo.uuid,
       deviceName: this.platform.is('ios') ? 'IOS' : this.deviceInfo.model
     };
-    this.mainService.login(this.username, this.password).subscribe(res => {
+    this.mainService.login(this.username, this.password).subscribe((res: any) => {
       if (+res.result === 0) {
         loading.dismiss();
         this.notificationService.showMessage('danger', 'Sai tên đăng nhập hoặc mật khẩu');
@@ -96,7 +128,8 @@ export class LoginPage implements OnInit {
       });
 
 
-    }, error => {
+    }, (error: any) => {
+      console.log('error : ', error);
       if (error.error.message) {
         this.notificationService.showMessage('danger', 'Sai tên đăng nhập hoặc mật khẩu');
       }
