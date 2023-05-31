@@ -61,13 +61,13 @@ export class LoginPage implements OnInit {
           // Code 401: Không xác thực được người dùng;
           localStorage.removeItem(Constant.TOKEN);
           localStorage.removeItem(Constant.USER_INFO);
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
           this.notificationService.showMessage('darge', `${codeRes}: Hệ thống không xác thực được người dùng`);
         } else if (codeRes === 403) {
           // Code 403: Người dùng không có quyền truy cập vào hệ thống.
           localStorage.removeItem(Constant.TOKEN);
           localStorage.removeItem(Constant.USER_INFO);
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
           this.notificationService.showMessage('darge', `${codeRes}: Người dùng không có quyền truy cập`);
         } else {
           this.notificationService.showMessage('darge', `${codeRes}: Lỗi hệ thống, vui lòng liên hệ quản trị viên`);
