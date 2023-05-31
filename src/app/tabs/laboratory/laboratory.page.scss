@@ -215,6 +215,14 @@
 //   }
 // }
 
+.m-error {
+  position: relative;
+  z-index: 1;
+  margin-left: 0.8rem;
+  min-height: 18px;
+  font-size: small;
+  color: var(--ion-color-danger);
+}
 
 
 .content-laboratory {

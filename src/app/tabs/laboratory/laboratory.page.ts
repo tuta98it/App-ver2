@@ -26,6 +26,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { OrderService } from 'src/app/services/order.service';
+import { GeneralService } from 'src/app/services/general-service';
 
 @Component({
   selector: 'app-laboratory',
@@ -45,9 +46,15 @@ export class LaboratoryPage implements OnInit {
   titleModalAddPatient = 'Thêm yêu cầu';
   instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
   numberOfNewPatients = 0;
-  isModalOpen = false;
+  isModalOpenFormPatient = false;
 
 
+  validFormInput = {
+    isEmptyFullName: false,
+    isEmptyNumberPhone: false,
+    isEmptyAdress: false,
+    isEmptyInfoPartner: false,
+  };
 
 
 
@@ -64,6 +71,7 @@ export class LaboratoryPage implements OnInit {
     conditon: '',
     status: '',
     notes: '',
+    partner: '',
   };
 
   listPatientLab = [
@@ -133,7 +141,8 @@ export class LaboratoryPage implements OnInit {
     private alertController: AlertController,
     private orderService: OrderService,
     private loadingCtrl: LoadingController,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private generalService: GeneralService,
   ) {
     this.now = new Date();
 
@@ -166,6 +175,28 @@ export class LaboratoryPage implements OnInit {
         notes: '',
       }
     ];
+  }
+
+
+  onKeyUpInputNamePatient() {
+    // Set is show message error Fullname
+    this.validFormInput.isEmptyFullName = this.isEmpty(this.itemPatientFormModalLab.name);
+  }
+
+  onKeyUpInputNumberPhone() {
+    // Set is show message error Numberphone
+    this.validFormInput.isEmptyNumberPhone = this.isEmpty(this.itemPatientFormModalLab.phone);
+  }
+
+
+  onKeyUpInputAddress() {
+    // Set is show message error Address
+    this.validFormInput.isEmptyAdress = this.isEmpty(this.itemPatientFormModalLab.address);
+  }
+
+  selectPartner() {
+    // Set is show message error Address
+    this.validFormInput.isEmptyInfoPartner = this.isEmpty(this.itemPatientFormModalLab.partner);
   }
 
   ionViewDidLoad() {
@@ -282,7 +313,7 @@ export class LaboratoryPage implements OnInit {
 
 
   setOpenModalAddPatient(isOpen: boolean) {
-    this.isModalOpen = isOpen;
+    this.isModalOpenFormPatient = isOpen;
   }
 
   openModalPatientLab() {
@@ -301,8 +332,17 @@ export class LaboratoryPage implements OnInit {
 
   confirmPatientModal() {
     const isName = !this.isEmpty(this.itemPatientFormModalLab.name);
+    if (!isName) {
+      this.validFormInput.isEmptyFullName = true;
+    }
     const isPhone = !this.isEmpty(this.itemPatientFormModalLab.phone);
+    if (!isPhone) {
+      this.validFormInput.isEmptyNumberPhone = true;
+    }
     const isAddress = !this.isEmpty(this.itemPatientFormModalLab.address);
+    if (!isAddress) {
+      this.validFormInput.isEmptyAdress = true;
+    }
     return (isName && isPhone && isAddress);
   }
 
@@ -311,11 +351,92 @@ export class LaboratoryPage implements OnInit {
       // Thêm mới một item Patient
       this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
 
-      // Reset form model lab
-      this.resetFormModalPatient();
+      const item = {
+        id: 0,
+        patientId: 0,
+        code: '',
+        name: '',
+        orderDoctor: '',
+        orderDate: '',
+        visitCode: '',
+        visiteDate: '',
+        chanDoan: '',
+        khoa: '',
+        buong: '',
+        giuong: '',
+        status: 0,
+        phoneNo: '',
+        address: '',
+        note: this.itemPatientFormModalLab.notes,
+        partnerId: 0,
+        details: [
+          {
+            orderTypeId: 0,
+            price: 0
+          }
+        ],
+        paymentType: 1,
+        patient: {
+          id: 0,
+          code: '',
+          name: this.itemPatientFormModalLab.name,
+          sex: 0,
+          dob: '',
+          yob: 0,
+          cmnd: '',
+          address: this.itemPatientFormModalLab.address,
+          phoneNo: this.itemPatientFormModalLab.phone,
+          email: ''
+        },
+        momWeight: 0,
+        momHeightCM: 0,
+        ultrasoundDate: '',
+        gestationalWeek: 0,
+        gestationalDay: 0,
+        pregnancyNo: 0,
+        fetusAmount: 0,
+        nt: 0,
+        crl: 0,
+        expectedDateOfBirth: '',
+        requestId: 0,
+        lat: 0,
+        lng: 0,
+        assignToUserId: 0,
+        specimenID: '',
+        privateNote: '',
+        discountPaymentType: 0,
+        extraDiscountPaymentType: 0,
+        bsdiscountPaymentType: 0,
+        paidType: 0,
+        utmSource: '',
+        dateTakenSpecimen: '',
+        addressLongitude: 0,
+        addressLatitude: 0
+      };
+      // this.orderService.
+      this.generalService.createOrder(item).subscribe(
+        (res: any) => {
+          if (res.isValid) {
+            console.log('generalService res', res );
+            // Reset form model lab
+            this.resetFormModalPatient();
+            this.notificationService.showMessage(Constant.SUCCESS, `Đã tạo phiếu xét nghiệm cho BN ${this.itemPatientFormModalLab.name}`);
+            // Đóng modal
+            this.setOpenModalAddPatient(false);
+          } else {
+            this.notificationService.showMessage(Constant.ERROR, `Đã có lỗi : ${res.errors[0].errorMessage}`);
+          }
+        },
+        (error: any) => {
 
-      // Đóng modal
-      this.setOpenModalAddPatient(false);
+        }
+      );
+
+
+
+
+    } else {
+
     }
 
   }
@@ -356,6 +477,7 @@ export class LaboratoryPage implements OnInit {
       conditon: '',
       status: '',
       notes: '',
+      partner: ''
     };
   }
 

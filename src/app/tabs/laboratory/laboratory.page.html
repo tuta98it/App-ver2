@@ -90,6 +90,7 @@
                     [(ngModel)]="formFilterTestSheet.phoneNoPatient"></ion-input>
                 </ion-item>
 
+
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="send-outline"></ion-icon>
@@ -235,9 +236,9 @@
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
 
-                <ion-datetime #toDatetime  [(ngModel)]="this.filterInterval.presentTime" [showDefaultTitle]="true"
+                <ion-datetime #toDatetime [(ngModel)]="this.filterInterval.presentTime" [showDefaultTitle]="true"
                   [showDefaultButtons]="true" locale="vi-VI" id="toDatetime" [showClearButton]="true"
-                  (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
+                  [min]="filterInterval.pastTime" (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
                   <span slot="title">Chọn thời gian bắt đầu</span>
                   <!-- <ion-buttons slot="buttons">
                     <ion-button color="danger" (click)="toDatetime.reset()">Reset</ion-button>
@@ -311,7 +312,7 @@
 
 
 <!-- Form modal add end edit a Patient  -->
-<ion-modal [isOpen]="isModalOpen">
+<ion-modal [isOpen]="isModalOpenFormPatient">
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
@@ -326,7 +327,7 @@
 
         <!-- Nút thêm mới xét nghiệm -->
         <ion-buttons slot="end">
-          <ion-button (click)="openModalPatientLab()">Lưu</ion-button>
+          <ion-button (click)="saveModalAddPatient()">Lưu</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -338,36 +339,62 @@
       <!-- Khôi nhập dữ liệu -->
       <div>
         <!-- Nhập tên bệnh nhân -->
-        <ion-item>
-          <ion-label position="floating">
-            <ion-icon name="person-outline"></ion-icon>
-            Tên bệnh nhân <span style="color:red">*</span>
-          </ion-label>
-          <ion-input [(ngModel)]="itemPatientFormModalLab.name" type="text"
-            placeholder="Nhập tên bệnh nhân ..."></ion-input>
-        </ion-item>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="person-outline"></ion-icon>
+              Tên bệnh nhân <span style="color:red">*</span>
+            </ion-label>
+            <ion-input [(ngModel)]="itemPatientFormModalLab.name" type="text" placeholder="Nhập tên bệnh nhân ..."
+              (keyup)="onKeyUpInputNamePatient()"></ion-input>
+          </ion-item>
+          <span class="m-error" *ngIf="validFormInput.isEmptyFullName">*Tên bệnh nhân không được để trống!</span>
+        </ion-col>
 
         <!-- Nhập số điện thoại -->
-        <ion-item>
-          <ion-label position="floating">
-            <ion-icon name="call-outline"></ion-icon>
-            Số điện thoại <span style="color:red">*</span>
-          </ion-label>
-          <ion-input [(ngModel)]="itemPatientFormModalLab.phone" type="tel" placeholder="Nhập SĐT ..."></ion-input>
-        </ion-item>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="call-outline"></ion-icon>
+              Số điện thoại <span style="color:red">*</span>
+            </ion-label>
+            <ion-input type="tel" placeholder="888-888-8888" [(ngModel)]="itemPatientFormModalLab.phone"
+              (keyup)="onKeyUpInputNumberPhone()"></ion-input>
+          </ion-item>
+          <span class="m-error" *ngIf="validFormInput.isEmptyNumberPhone">*Số điện thoại không được để trống!</span>
+        </ion-col>
 
         <!-- Nhập địa chỉ bệnh nhân -->
-        <ion-item>
-          <ion-label position="floating">
-            <ion-icon name="location-outline"></ion-icon>
-            Địa chỉ <span style="color:red">*</span>
-          </ion-label>
-          <ion-input [(ngModel)]="itemPatientFormModalLab.address" type="text"
-            placeholder="Nhập địa chỉ ..."></ion-input>
-        </ion-item>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="location-outline"></ion-icon>
+              Địa chỉ <span style="color:red">*</span>
+            </ion-label>
+            <ion-input [(ngModel)]="itemPatientFormModalLab.address" type="text" (keyup)="onKeyUpInputAddress()"
+              placeholder="Nhập địa chỉ ..."></ion-input>
+          </ion-item>
+          <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*Địa chỉ không được để trống!</span>
+        </ion-col>
+
+
+        <!-- Nhập đối tác -->
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="location-outline"></ion-icon>
+              TT Đối tác <span style="color:red">*</span>
+            </ion-label>
+            <ion-input [(ngModel)]="itemPatientFormModalLab.partner" type="text" (keyup)="onKeyUpInputAddress()"
+              placeholder="Nhập TT Đối tác ..."></ion-input>
+          </ion-item>
+          <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*TT Đối tác không được để trống!</span>
+        </ion-col>
 
 
         <!-- Nhập địa chỉ Ghi chú-->
+        <!-- <ion-input id="custom-input" label="Custom Counter Format" labelPlacement="floating" [counter]="true"
+          maxlength="20" [counterFormatter]="customCounterFormatter"></ion-input> -->
         <ion-item>
           <ion-label position="floating">
             <ion-icon name="pencil-outline"></ion-icon>
