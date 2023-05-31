@@ -20,6 +20,10 @@ export class OrderService extends BaseService {
   getOrders(payload: any): Observable<any> {
     return this.post(this.serviceUrl + '/GetOrders', payload);
   }
+
+  createOrder(item: any): any {
+    return this.post(UrlConstant.LIST_ORDER, item);
+  }
   // search(data: any): Observable<any> {
   //   return this.post(`/${this.url}/Search`, data);
   // }

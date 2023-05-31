@@ -7,7 +7,7 @@
       <div class="search-filter">
 
         <!-- Tìm kiếm -->
-        <ion-searchbar placeholder="Tìm kiếm ..."></ion-searchbar>
+        <ion-searchbar placeholder="Tìm kiếm ..." (ionChange)="handleChangeSearch($event)"></ion-searchbar>
 
         <!-- Lọc -->
         <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
@@ -25,12 +25,12 @@
                   Nhóm bệnh phẩm
                 </ion-label>
                 <ion-select style="font-size: small;" label="Nhóm bệnh phẩm" [interfaceOptions]="customPopoverOptions"
-                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ...">
+                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ..." (ionChange)="handleChangeTypeGroup($event)">
 
                   <!-- <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
                     [value]="order.id">{{order.name}}</ion-select-option> -->
-                  <ion-select-option style="font-size: small;" [value]="">Nhóm bệnh</ion-select-option>
-                  <ion-select-option style="font-size: small;" [value]="">Nhóm sản Phẩm</ion-select-option>
+                  <ion-select-option style="font-size: small;" [value]="0">Nhóm bệnh</ion-select-option>
+                  <ion-select-option style="font-size: small;" [value]="1">Nhóm sản Phẩm</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-content>

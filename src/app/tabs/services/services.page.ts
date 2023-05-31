@@ -5,6 +5,7 @@ import { GeneralService } from 'src/app/services/general-service';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { Constant } from 'src/app/shared/constants/constant.class';
+import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'app-services',
   templateUrl: './services.page.html',
@@ -16,6 +17,7 @@ export class ServicesPage implements OnInit {
   listService: any[] = [];
   items = [];
   listOrderType: any[] = [];
+  listGroupOrderType: any[] = [];
   customPopoverOptions = {
     // header: 'Trạng thái đơn hàng',
     subHeader: 'Chọn nhóm cần lọc',
@@ -23,10 +25,14 @@ export class ServicesPage implements OnInit {
   };
   // Chức dữ liệu cơ sở, khởi tạo ban đầu.
   initDatas: any;
+
+  // Key search
+  keywordSearch: any;
   public progress = 0;
   constructor(
     private generalService: GeneralService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private notificationService: NotificationService,
   ) {
     this.listService = [
       {
@@ -120,7 +126,6 @@ export class ServicesPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.showLoading();
     this.getListInitialData();
     await this.getOrderType();
   }
@@ -134,16 +139,55 @@ export class ServicesPage implements OnInit {
 
   getOrderType() {
     // this.loadingDataOrderType();
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    this.showLoading();
+
     this.generalService.getOrderType().subscribe(
       (res) => {
         if (res !== null) {
 
           this.listOrderType = res;
+
+          // Restar biến item về emplu để chuẩn cho quá trình quét dữ liệu
+          this.items = [];
+
+          // Bắt đầu danh sách với 50 phần tử
           this.generateItemsOrderType();
           console.log('this.listOrderType', this.listOrderType);
         }
       },
-      (error) => { }
+      (errorRes: any) => {
+        if (errorRes) {
+          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+        }
+      }
+    );
+  }
+
+  getOrderTypeGroup() {
+    // this.loadingDataOrderType();
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    this.showLoading();
+
+    this.generalService.listOrderGroup().subscribe(
+      (res) => {
+        if (res !== null) {
+
+          this.listGroupOrderType = res;
+
+          // Restar biến item về emplu để chuẩn cho quá trình quét dữ liệu
+          this.items = [];
+
+          // Bắt đầu danh sách với 50 phần tử
+          this.generateItemsOrderType();
+          console.log('this.listGroupOrderType', this.listGroupOrderType);
+        }
+      },
+      (errorRes: any) => {
+        if (errorRes) {
+          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+        }
+      }
     );
   }
 
@@ -157,16 +201,81 @@ export class ServicesPage implements OnInit {
   }
 
 
+  handleChangeSearch(event: any) {
+    this.keywordSearch = event.target.value;
+
+    // payload dữ liệu chuyền đi
+    const payload = {
+      search: this.keywordSearch,
+      partnerId: 0,
+      orderTypeGroupId: 0,
+      page: 1,
+      pageSize: 250,
+      showDisable: true,
+      showPrice0: true
+    };
+
+    this.generalService.getOrderTypeFilter(payload).subscribe(
+      (res: any) => {
+        if (res != null) {
+          this.listOrderType = res.data;
+          console.log('this.listOrderType: ', this.listOrderType);
+          // Restar biến item về emplu để chuẩn cho quá trình quét dữ liệu
+          this.items = [];
+          this.generateItemsOrderType();
+        }
+      },
+      (errorRes: any) => {
+        if (errorRes) {
+          this.notificationService.showMessage('danger', `Đã có lỗi xảy ra khi hệ thống trả dữ liệu về`);
+        }
+      });
+  }
+
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);
   }
 
+  handleChangeTypeGroup(event: any) {
+    const value = event.target.value;
+
+    switch (value) {
+      case 0:
+        // this.getOrderType();
+        break;
+
+      case 1:
+        // this.getOrderTypeGroup();
+        break;
+    }
+
+
+
+  }
 
   private generateItemsOrderType() {
-    const count = this.items.length;
-    for (let i = 0; i < 50; i++) {
-      this.items.push(this.listOrderType[count + i]);
-    }
+
+    // Lượng phần tử tối đa.
+    const maxLength = 50;
+
+    // index của phần tử đầu tiền từ chuỗi cần thêm
+    const index = this.items.length;
+
+    // Lượng phần tử có thể thêm vào
+    const sub = this.listOrderType.length - this.items.length;
+    const count = Math.min(maxLength, sub);
+
+
+    // Lấy mảng con từ mảng this.listOrderType.length bắt đầu từ vị trí index và có độ dài count
+    const subArray = this.listOrderType.slice(index, index + count);
+
+    // Nối thêm vào mảng this.items
+    this.items = this.items.concat(subArray);
+
+    console.log('this.items', this.items);
+
   }
 }
+
+
 
