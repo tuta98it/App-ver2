@@ -10,6 +10,7 @@ import {AppVersion} from '@ionic-native/app-version/ngx';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { SharedModule } from 'src/app/shared/modules/share.module';
 import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
+import { StatusRequest } from 'src/app/shared/pipe/status-request';
 
 @NgModule({
   imports: [
@@ -21,6 +22,6 @@ import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
     SharedModule
   ],
   providers: [AppVersion],
-  declarations: [LaboratoryPage, OrderStatusPipe]
+  declarations: [LaboratoryPage, OrderStatusPipe, StatusRequest]
 })
 export class LaboratoryPageModule {}

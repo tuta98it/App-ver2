@@ -109,6 +109,14 @@ export class LaboratoryPage implements OnInit {
   // Danh sách các Phiểu xét nghiếm
   listOrder: any[] = [];
 
+  // Danh sách yêu cầu Xét nghiệm
+  listRequest: any[] = [];
+
+  // Danh sách đối tác
+  listPartner = [];
+
+  // Danh sách các loại yêu cầu
+  listTypeOrder = [];
 
   // Form lọc theo filter
   formFilterTestSheet = {
@@ -116,8 +124,6 @@ export class LaboratoryPage implements OnInit {
     phoneNoPatient: '',
     orderStatus: 0,
   };
-
-
 
   filterInterval = {
     isShow: false,
@@ -232,11 +238,38 @@ export class LaboratoryPage implements OnInit {
     });
 
     // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
-    this.getListInitialData();
+    await this.getListInitialData();
 
 
     // Lấy dữ liệu danh sách phiếu xét nghiệm
-    await this.getListOrder();
+    // await this.getListOrder();
+
+    // Lấy dữ liệu danh sách yêu cầu xét nghiệm
+    const payload = {
+      page: 1,
+      pageSize: 100,
+      fromDate: null,
+      toDate: null,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
+    };
+    await this.getListRequestByPayload(payload, true);
+
+    // Lấy danh sách loại yêu cầu
+    await this.getListOrderType();
+
+
+    // Lấy dữ liệu danh sách các đối tác
+    // await this.getListPartner();
   }
 
   async showLoading() {
@@ -287,6 +320,42 @@ export class LaboratoryPage implements OnInit {
 
   }
 
+  getListOrderType() {
+    this.generalService.getListRequestType().subscribe(
+      (res) => {
+        if (res !== null) {
+          console.log('getListOrderType res: ', res);
+          this.listTypeOrder = res.filter(en => en.requestTypeCode === 'LM' || en.requestTypeCode === 'TM');
+        }
+      },
+      (error) => {
+      }
+    );
+  }
+
+  getListRequestByPayload(payload: any, isLoading: boolean) {
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    if (isLoading) {
+      this.showLoading();
+    }
+
+    this.generalService.getRequest(payload).subscribe(
+      (res: any) => {
+        if (res != null) {
+          this.listRequest = res.data;
+          console.log('this.listRequest : ', this.listRequest);
+        }
+      },
+      (error) => {
+        if (error.status === 403) {
+          this.notificationService.showMessage('danger', `Người dùng có quyền truy cập`);
+          this.router.navigate(['/login']);
+        } else {
+          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+        }
+      });
+
+  }
 
   getListInitialData() {
     this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
@@ -295,6 +364,15 @@ export class LaboratoryPage implements OnInit {
   presentPopoverFilter(e: Event) {
     this.popoverFormFilter.event = e;
     this.isPopoverOpenFilter = true;
+  }
+
+  getListPartner() {
+    this.generalService.getListPartner().subscribe(
+      (res) => {
+        this.listPartner = res;
+      },
+      (error) => { }
+    );
   }
 
   showProfile() {
@@ -321,7 +399,15 @@ export class LaboratoryPage implements OnInit {
     this.instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
     this.numberOfNewPatients = 0;
 
+    this.restartValidFormAddPatient();
     this.setOpenModalAddPatient(true);
+  }
+
+  restartValidFormAddPatient() {
+    this.validFormInput.isEmptyAdress = false;
+    this.validFormInput.isEmptyFullName = false;
+    this.validFormInput.isEmptyNumberPhone = false;
+    this.validFormInput.isEmptyInfoPartner = false;
   }
 
   cancelModalAddPatient() {
@@ -368,7 +454,7 @@ export class LaboratoryPage implements OnInit {
         phoneNo: '',
         address: '',
         note: this.itemPatientFormModalLab.notes,
-        partnerId: 0,
+        partnerId: this.userInfo.id,
         details: [
           {
             orderTypeId: 0,
@@ -417,7 +503,7 @@ export class LaboratoryPage implements OnInit {
       this.generalService.createOrder(item).subscribe(
         (res: any) => {
           if (res.isValid) {
-            console.log('generalService res', res );
+            console.log('generalService res', res);
             // Reset form model lab
             this.resetFormModalPatient();
             this.notificationService.showMessage(Constant.SUCCESS, `Đã tạo phiếu xét nghiệm cho BN ${this.itemPatientFormModalLab.name}`);
@@ -482,40 +568,35 @@ export class LaboratoryPage implements OnInit {
   }
 
 
-  handleChangeSearch(event: any) {
+  async handleChangeSearch(event: any) {
     this.keywordSearch = event.target.value;
 
+
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: this.keywordSearch,
-      pageSize: 50,
       page: 1,
+      pageSize: 100,
+      textSearch: this.keywordSearch,
+      fromDate: null,
+      toDate: null,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    this.orderService.getOrders(payload).subscribe(
-      (res) => {
-        if (res != null) {
-          this.listOrder = res.data;
-          console.log('this.listOrder Search: ', this.listOrder);
-        }
-      },
-      (error) => {
-        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
-      });
+
+    this.getListRequestByPayload(payload, false);
+
   }
 
 
-  handleChangeSelectOrderStatus(event: any) {
+  async handleChangeSelectOrderStatus(event: any) {
     this.formFilterTestSheet.orderStatus = event.target.value;
   }
 
@@ -622,107 +703,83 @@ export class LaboratoryPage implements OnInit {
     }
 
 
-
-    // Show thông báo delay thời gian chờ loading dữ liệu
-    this.showLoading();
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      page: 1,
+      pageSize: 100,
       fromDate: pastTime,
       toDate: presentTime,
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: '',
-      keyword: '',
-      pageSize: 100,
-      page: 1,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    this.orderService.getOrders(payload).subscribe(
-      (res) => {
-        if (res != null) {
-          this.listOrder = res.data;
-          console.log('onSearchByFormFilter this.listOrder : ', this.listOrder);
-        }
-      },
-      (error) => {
-        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
-      });
+    this.getListRequestByPayload(payload, true);
   }
 
-  handleChangeFilterIntervalCustomByUser(event: any) {
+  async handleChangeFilterIntervalCustomByUser(event: any) {
     console.log('handleChangeFilterIntervalCustomByUser event', event);
     const pastTime = this.filterInterval.pastTime;
     // console.log('pastTime: ',pastTime);
     const presentTime = this.filterInterval.presentTime;
     // console.log('presentTime: ',presentTime);
 
-    // Show thông báo delay thời gian chờ loading dữ liệu
-    this.showLoading();
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      page: 1,
+      pageSize: 100,
       fromDate: pastTime,
       toDate: presentTime,
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: '',
-      keyword: '',
-      pageSize: 100,
-      page: 1,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    this.orderService.getOrders(payload).subscribe(
-      (res) => {
-        if (res != null) {
-          this.listOrder = res.data;
-          console.log('onSearchByFormFilter this.listOrder : ', this.listOrder);
-        }
-      },
-      (error) => {
-        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
-      });
+
+    this.getListRequestByPayload(payload, false);
   }
 
+  handleChangeTypeRequest(event: any) {
+
+    console.log('handleChangePartner event: ', event);
+    const value = event.target.value;
+    this.validFormInput.isEmptyInfoPartner = this.isEmpty(value);
+
+  }
 
   onSearchByFormFilter() {
-    // Show thông báo delay thời gian chờ loading dữ liệu
-    this.showLoading();
     const payload = {
-      barcode: '',
-      patient: '',
-      status: this.formFilterTestSheet.orderStatus,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: this.formFilterTestSheet.phoneNoPatient,
-      keyword: this.formFilterTestSheet.namePatient,
-      pageSize: 100,
       page: 1,
+      pageSize: 100,
+      textSearch: this.formFilterTestSheet.namePatient,
+      fromDate: null,
+      toDate: null,
+      phone: this.formFilterTestSheet.phoneNoPatient,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    this.orderService.getOrders(payload).subscribe(
-      (res) => {
-        if (res != null) {
-          this.listOrder = res.data;
-          console.log('onSearchByFormFilter this.listOrder : ', this.listOrder);
-        }
-      },
-      (error) => {
-        this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
-      });
+
+    this.getListRequestByPayload(payload, true);
 
     this.popoverFormFilter.dismiss();
   }
@@ -732,6 +789,10 @@ export class LaboratoryPage implements OnInit {
     this.formFilterTestSheet.namePatient = '';
     this.formFilterTestSheet.phoneNoPatient = '';
     this.orderStatusSelect.value = 0;
+  }
+
+  pushLog(msg) {
+    console.log(msg);
   }
 
   cancelFormFilter() {

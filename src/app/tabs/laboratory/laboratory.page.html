@@ -91,6 +91,9 @@
                 </ion-item>
 
 
+
+
+
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="send-outline"></ion-icon>
@@ -261,40 +264,43 @@
       <ion-list>
 
         <!-- Danh các đối tác -->
-        <ion-item *ngFor="let item of listOrder; let i = index">
+        <ion-item *ngFor="let request of listRequest; let i = index">
           <!-- Thông tin bệnh nhân -->
           <ion-label>
             <!-- Tên bệnh nhân -->
-            <h3 *ngIf="!(item.code | isEmpty)" class="name-patient">{{item.dateCreated| date: "ddMMyy"}}-{{item.code}}
-              {{item.patient.name}}</h3>
+            <!-- <h3 *ngIf="!(request.partner.code | isEmpty)" class="name-patient">{{request.partner.dateCreated| date: "ddMMyy"}}-{{request.partner.code}} -->
+            <h3 *ngIf="(request?.partner?.code)" class="name-patient">
+              {{request.partner?.code}}-{{request.partner?.name}}</h3>
 
             <!-- Số điện thoại -->
-            <div *ngIf="!(item.patient.phoneNo | isEmpty)" class="info">
+            <div *ngIf="(request?.phone)" class="info">
               <div>
                 <ion-icon name="call-outline"></ion-icon>
               </div>
-              <h3 class="text">{{item.patient.phoneNo}}</h3>
+              <h3 class="text">{{request.phone}}</h3>
             </div>
 
             <!-- Địa chỉ -->
-            <div *ngIf="!(item.patient.address | isEmpty)" class="info">
+            <div *ngIf="(request?.address)" class="info">
               <div>
                 <ion-icon name="location-outline"></ion-icon>
               </div>
-              <h3 class="text address">{{item.patient.address}}</h3>
+              <h3 class="text address">{{request.address}}</h3>
             </div>
 
             <!-- Chỉ định -->
-            <div *ngIf="!(item.chanDoan | isEmpty)" class="info">
+            <div *ngIf="(request?.comment)" class="info">
               <div>
                 <ion-icon name="pulse-outline"></ion-icon>
               </div>
-              <h3 class="text">{{item.chanDoan}}</h3>
+              <h3 class="text">{{request.comment}}</h3>
             </div>
 
-            <!-- Tình trạng mẫu xét nghiệm -->
-            <div *ngIf="!(item.status | isEmpty)" class="status">
-              <h3>{{initDatas? (item.status | orderStatus : initDatas?.orderStatus) : item.status}}</h3>
+            <!-- Tình trạng mẫu xét nghiệm *ngIf="(request?.requestType)"-->
+            <div class="status">
+              <!-- <h3>{{initDatas? (request.partner.status | orderStatus : initDatas?.orderStatus) : request.partner.status}}</h3> -->
+              <!-- <h3>{{request.requestType ? request.requestType.requestTypeName : 'Lấy mẫu'}}</h3> -->
+              <h3>{{request | statusRequestPipe}}</h3>
             </div>
           </ion-label>
         </ion-item>
@@ -338,6 +344,23 @@
       <label [innerHTML]="instructionModalPatient"></label>
       <!-- Khôi nhập dữ liệu -->
       <div>
+        <!-- Nhập hình thức thanh toán-->
+        <!-- Đối tác (ionCancel)="pushLog('ionCancel fired')" (ionDismiss)="pushLog('ionDismiss fired')"label="Floating label" label-placement="floating"-->
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="person-outline"></ion-icon>
+              Loại Yêu cầu <span style="color:red">*</span>
+            </ion-label>
+            <ion-select aria-label="parterns" placeholder="Chọn loại yêu cầu ..."
+              (ionChange)="handleChangeTypeRequest($event)">
+              <ion-select-option *ngFor="let typeOrder of listTypeOrder"
+                [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!-- <span class="m-error" *ngIf="validFormInput.isEmptyInfoPartner">*TT Đối tác không được để trống!</span> -->
+        </ion-col>
+
         <!-- Nhập tên bệnh nhân -->
         <ion-col>
           <ion-item>
@@ -377,19 +400,52 @@
           <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*Địa chỉ không được để trống!</span>
         </ion-col>
 
+        <ion-item *ngIf="'true'">
+          <!-- Calenda cho người dùng chọn khoảng thời gian lọc -->
+          <!-- <ion-datetime value="2022-04-21T00:00:00" min="2022-03-01T00:00:00" max="2022-05-31T23:59:59"></ion-datetime> -->
+          <!-- <ion-datetime locale="vi-VI"></ion-datetime> -->
+          <!-- <ion-datetime presentation="date-time" [preferWheel]="true"></ion-datetime> -->
+          <!-- <ion-datetime>
+<span slot="title">Select a Reservation Date</span>
+</ion-datetime> -->
+          <!-- <ion-datetime [showDefaultButtons]="true" doneText="All set" cancelText="Never mind"> </ion-datetime> -->
+          <!-- <ion-datetime #datetime>
+<ion-buttons slot="buttons">
+  <ion-button color="danger" (click)="datetime.reset()">Reset</ion-button>
+  <ion-button color="primary" (click)="datetime.cancel()">Never mind</ion-button>
+  <ion-button color="primary" (click)="datetime.confirm()">All Set</ion-button>
+</ion-buttons>
+</ion-datetime> -->
+          <span>TG Lấy mấu/Thu mẫu: </span>
+          <ion-datetime-button datetime="time"></ion-datetime-button>
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <!-- [(ngModel)]="this.filterInterval.pastTime" -->
+              <ion-datetime #fromDatetime  [showDefaultTitle]="true"
+                [showDefaultButtons]="true" locale="vi-VI" id="time" [showClearButton]="true"
+                (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
+                <span slot="title">TG Lấy mấu/Thu mẫu</span>
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
 
         <!-- Nhập đối tác -->
-        <ion-col>
+        <!-- Đối tác (ionCancel)="pushLog('ionCancel fired')" (ionDismiss)="pushLog('ionDismiss fired')"label="Floating label" label-placement="floating"-->
+        <!-- <ion-col>
           <ion-item>
             <ion-label position="floating">
-              <ion-icon name="location-outline"></ion-icon>
+              <ion-icon name="person-outline"></ion-icon>
               TT Đối tác <span style="color:red">*</span>
             </ion-label>
-            <ion-input [(ngModel)]="itemPatientFormModalLab.partner" type="text" (keyup)="onKeyUpInputAddress()"
-              placeholder="Nhập TT Đối tác ..."></ion-input>
+            <ion-select aria-label="parterns" placeholder="Chọn đối tác ..." (ionChange)="handleChangePartner($event)">
+              <ion-select-option *ngFor="let partner of listPartner" [value]="partner.id">{{partner.code}} -
+                {{partner.name}}</ion-select-option>
+            </ion-select>
           </ion-item>
-          <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*TT Đối tác không được để trống!</span>
-        </ion-col>
+          <span class="m-error" *ngIf="validFormInput.isEmptyInfoPartner">*TT Đối tác không được để trống!</span>
+        </ion-col> -->
 
 
         <!-- Nhập địa chỉ Ghi chú-->
