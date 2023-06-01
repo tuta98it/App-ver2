@@ -49,6 +49,9 @@
             name="log-out-outline" color="danger"></ion-icon>
         </ion-button>
       </div>
+      <!-- <div id="bar-chart-container">
+        <canvas #barCanvas></canvas>
+      </div> -->
     </ion-content>
   </ion-menu>
   <!-- Header -->
@@ -150,56 +153,55 @@
             <p>{{userInfo.fullname}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="userInfo.code">
+        <ion-item button>
           <ion-icon name="barcode-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Mã KH</h3>
-            <p>{{userInfo.code}}</p>
+            <p *ngIf="userInfo.code">{{userInfo.code}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="userInfo.phone">
+        <ion-item button>
           <ion-icon name="call-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Số điện thoại</h3>
-            <p>{{userInfo.phone}}</p>
+            <p *ngIf="userInfo.phone">{{userInfo.phone}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="userInfo.address">
+        <ion-item button>
           <ion-icon name="location-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Địa chỉ</h3>
-            <p style="white-space: break-spaces;">{{userInfo.address}}</p>
+            <p style="white-space: break-spaces;" *ngIf="userInfo.address">{{userInfo.address}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="userInfo.facebook">
+        <ion-item button>
           <ion-icon name="logo-facebook" slot="start"></ion-icon>
           <ion-label>
             <h3>Facebook</h3>
-            <p>{{userInfo.socialNetwork.facebook}}</p>
+            <p *ngIf="userInfo.facebook">{{userInfo.socialNetwork.facebook}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="userInfo.zalo">
+        <ion-item button>
           <ion-icon name="megaphone-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Zalo</h3>
-            <p>{{userInfo.socialNetwork.zalo}}</p>
+            <p *ngIf="userInfo.zalo">{{userInfo.socialNetwork.zalo}}</p>
           </ion-label>
         </ion-item>
-        <ion-item button *ngIf="userInfo.telegram">
+        <ion-item button>
           <ion-icon name="camera-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Telegram</h3>
-            <p>{{userInfo.socialNetwork.telegram}}</p>
+            <p *ngIf="userInfo.telegram">{{userInfo.socialNetwork.telegram}}</p>
           </ion-label>
         </ion-item>
         <ion-item button *ngIf="userInfo.tiwtter">
           <ion-icon name="newspaper-outline" slot="start"></ion-icon>
           <ion-label>
             <h3>Twitter</h3>
-            <p>{{userInfo.socialNetwork.tiwtter}}</p>
+            <p *ngIf="userInfo.telegram">{{userInfo.socialNetwork.tiwtter}}</p>
           </ion-label>
         </ion-item>
-
 
         <ion-buttons slot="start">
           <ion-button size="medium" fill="clear" (click)="setOpenModalSales(true)">Doanh số</ion-button>
@@ -224,15 +226,12 @@
             <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
           </ion-button>
         </ion-buttons>
-
         <!-- Tiêu đề Modal -->
         <ion-title>Doanh số</ion-title>
       </ion-toolbar>
-
     </ion-header>
 
     <ion-content class="ion-padding">
-
       <ion-list>
         <ion-item style="font-weight: bold;">
           <ion-label>Hạng:</ion-label>
@@ -280,22 +279,33 @@
           </ion-select>
         </ion-item>
 
-
         <ion-item>
           <ion-label>Bệnh lý:</ion-label>
+        </ion-item>
 
+        <ion-item>
+          <div class="bar-chart-container">
+            <canvas class="bar-chart" #barCanvas1></canvas>
+          </div>
         </ion-item>
 
         <ion-item>
           <ion-label>Nhóm sản phẩm chiến lược:</ion-label>
-
+        </ion-item>
+        
+        <ion-item>
+          <div class="bar-chart-container">
+            <canvas class="bar-chart" #barCanvas2></canvas>
+          </div>
         </ion-item>
       </ion-list>
 
-
       <!-- <app-pie-chart></app-pie-chart> -->
-
-
+      
+      <!-- <ion-card>
+        <ion-card-content>
+        </ion-card-content>
+      </ion-card> -->
     </ion-content>
   </ng-template>
 </ion-modal>
@@ -314,15 +324,12 @@
             <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
           </ion-button>
         </ion-buttons>
-
         <!-- Tiêu đề Modal -->
         <ion-title>{{titleContact}}</ion-title>
       </ion-toolbar>
-
     </ion-header>
 
     <ion-content class="ion-padding">
-
       <ion-list>
         <ion-item>
           <ion-button size="medium" color="medium" expand="block" fill="outline" style="width: 100%;" (click)="presentAlertContactSalesStaff()">Nhân viên kinh doanh</ion-button>
@@ -334,7 +341,7 @@
           <ion-button size="medium"  color="medium" expand="block" fill="outline" style="width: 100%;" (click)="presentAlertContactPaymentDepartment()">Bộ phận thanh toán</ion-button>
         </ion-item>
       </ion-list>
-
     </ion-content>
   </ng-template>
 </ion-modal>
+

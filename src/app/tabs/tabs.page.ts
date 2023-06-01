@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { AlertController, IonModal, IonTabs, ModalController, NavController } from '@ionic/angular';
 import { BadgeService } from '../services/badge.service';
 import { StorageService } from '../services/storage.service';
@@ -11,9 +11,10 @@ import { Chart } from 'chart.js';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage {
-
+export class TabsPage implements AfterViewInit {
   @ViewChild('tabs', { static: false }) tabs: IonTabs;
+  @ViewChild('barCanvas1', {static: false}) barCanvas1: ElementRef;
+  @ViewChild('barCanvas2', {static: false}) barCanvas2: ElementRef;
   // @ViewChild(IonModal) modal!: IonModal;
   linkAvatarDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
   public alertConfirmButtons = [
@@ -33,6 +34,7 @@ export class TabsPage {
       },
     },
   ];
+  barChart: any;
   // accCurrent: any = {};
   userInfo: any;
   titleApp = 'Xét nghiệm';
@@ -50,7 +52,9 @@ export class TabsPage {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private modalController: ModalController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private changeDetectorRef: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {
 
   }
@@ -94,13 +98,98 @@ export class TabsPage {
       console.log('getSelectedUser', res);
       this.userInfo = res;
     });
+  }
 
+  ngAfterViewInit() {
+    // this.barChartMethod();
+  }
+
+  setOpenModalSales(isOpen) {
+    // this.changeDetectorRef.detectChanges();
+    this.isModalOpenSales = isOpen;
+    // this.barChartMethod();
+    setTimeout(() => this.barChartMethod(), 200);
+  }
+
+  barChartMethod() {
+    console.log(this.barCanvas1);
+    this.barChart = new Chart(this.barCanvas1.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: ['Tuyến giáp', 'Sốt xuất huyết', 'Ung thư', 'Sốt virus', 'Covid', 'NCP'],
+        datasets: [
+          {
+            label: 'Doanh số tổng',
+            data: ['467','576', '572', '79', '92',
+                '574', '573', '576'],
+            backgroundColor: 'blue'
+          },
+          {
+            label: 'Chiết khấu',
+            data: ['542', '542', '536', '327', '17',
+                  '0.00', '538', '541'],
+            backgroundColor: 'limegreen'
+          },
+        {
+            label: 'Chưa thanh toán',
+            data: ['542', '542', '536', '327', '17',
+                  '0.00', '538', '541'],
+            backgroundColor: 'cyan'
+          }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    this.barChart = new Chart(this.barCanvas2.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: ['Tuyến giáp', 'Sốt xuất huyết', 'Ung thư', 'Sốt virus', 'Covid', 'NCP'],
+        datasets: [
+          {
+            label: 'Doanh số tổng',
+            data: ['467','576', '572', '79', '92',
+                '574', '573', '576'],
+            backgroundColor: 'blue'
+          },
+          {
+            label: 'Chiết khấu',
+            data: ['542', '542', '536', '327', '17',
+                  '0.00', '538', '541'],
+            backgroundColor: 'limegreen'
+          },
+        {
+            label: 'Chưa thanh toán',
+            data: ['542', '542', '536', '327', '17',
+                  '0.00', '538', '541'],
+            backgroundColor: 'cyan'
+          }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+    console.log(this.barChart);
+    this.renderer.setProperty(this.barChart, 'width', 500);
   }
 
   ionViewDidEnter() {
   }
-
-
 
   tabClicked($event) {
     this.selectedTab = $event.tab;
@@ -117,14 +206,10 @@ export class TabsPage {
 
   }
 
-
   logoutAccount() {
     this.localStorage.clearAll();
     this.router.navigate(['/login']);
   }
-
-
-
 
   async presentAlertLogout() {
     const alert = await this.alertController.create({
@@ -314,11 +399,6 @@ export class TabsPage {
 
   setOpenModalUser(isOpen) {
     this.isModalOpenUser = isOpen;
-
-  }
-
-  setOpenModalSales(isOpen) {
-    this.isModalOpenSales = isOpen;
   }
 
   setOpenModalContact(isOpen) {
