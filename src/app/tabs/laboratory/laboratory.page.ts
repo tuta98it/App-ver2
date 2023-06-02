@@ -527,8 +527,8 @@ export class LaboratoryPage implements OnInit {
       page: 1,
       pageSize: 100,
       textSearch: this.keywordSearch,
-      fromDate: null,
-      toDate: null,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
       phone: null,
       partnerId: null,
       receiveUserId: null,
@@ -590,7 +590,7 @@ export class LaboratoryPage implements OnInit {
         this.filterInterval.isShow = false;
         daysToSubtract = 14;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Cácg đây 14 ngày', pastTime);
+        console.log('Cách đây 14 ngày', pastTime);
         break;
       case 5:
         // Subtract 30 day
@@ -638,25 +638,23 @@ export class LaboratoryPage implements OnInit {
       case 10:
         // Hiện calender cho hai thời điểm lọc dữ liệu.
         this.filterInterval.isShow = true;
-
-        // Đặt dữ liệu ban đầu cho khoảng thời gian lọc dữ liệu
-        // Bắt đầu - Thời điểm 0h ngày hôm nay
-        // console.log('pastTime: ', pastTime);
-        this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
-        // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime );
-
-
-        // Kết thúc - Thời điểm hiện tại
-        this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
         break;
       default:
         break;
     }
+    // Đặt dữ liệu ban đầu cho khoảng thời gian lọc dữ liệu
+    // Bắt đầu - Thời điểm 0h ngày hôm nay
+    this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
+    // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime );
 
+
+    // Kết thúc - Thời điểm hiện tại
+    this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
 
     const payload = {
       page: 1,
       pageSize: 100,
+      textSearch: this.keywordSearch,
       fromDate: pastTime,
       toDate: presentTime,
       phone: null,
@@ -671,6 +669,7 @@ export class LaboratoryPage implements OnInit {
       userCreated: null,
       canceled: false
     };
+
     this.getListRequestByPayload(payload, true);
   }
 

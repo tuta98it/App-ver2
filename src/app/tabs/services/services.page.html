@@ -25,7 +25,8 @@
                   Nhóm bệnh phẩm
                 </ion-label>
                 <ion-select style="font-size: small;" label="Nhóm bệnh phẩm" [interfaceOptions]="customPopoverOptions"
-                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ..." (ionChange)="handleChangeTypeGroup($event)">
+                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ..."
+                  (ionChange)="handleChangeTypeGroup($event)">
 
                   <!-- <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
                     [value]="order.id">{{order.name}}</ion-select-option> -->
@@ -54,7 +55,8 @@
     <div class="service-list-content">
       <ion-list>
         <!-- DS Dịch vụ -->
-        <ion-item *ngFor="let item of items; let i = index" class="service-item">
+        <ion-item *ngFor="let item of items; let i = index" class="service-item" button
+          (click)="clickItemService(item)">
           <ion-label class="service-designation">{{item.name}}</ion-label>
           <ion-label class="service-price" slot="end">{{item.price | currency :
             'VND'}}</ion-label>
@@ -68,3 +70,73 @@
   </div>
 
 </ion-content>
+
+
+<!-- Liên hệ-->
+<ion-modal [isOpen]="isModalOpenDetailItemService">
+  <ng-template>
+    <!-- Tiêu đề -->
+    <ion-header>
+      <ion-toolbar color="primary">
+        <!-- Nút huỷ modal -->
+        <ion-buttons slot="end" (click)="setOpenModalDetailItemService(false)">
+          <ion-button>
+            Đóng
+            <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
+          </ion-button>
+        </ion-buttons>
+        <!-- Tiêu đề Modal -->
+        <ion-title>{{titleDetailItemService}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item *ngIf="itemService?.name">
+          <ion-text><span style="font-weight: 600;">Tên dịch vụ: </span>{{itemService.name}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.description">
+          <ion-text><span style="font-weight: 600;">Miêu tả: </span>{{itemService.description}}</ion-text>
+        </ion-item>
+
+
+        <ion-item *ngIf="itemService?.orderTypeGroup.name">
+          <ion-text><span style="font-weight: 600;">Thuộc nhóm: </span>{{itemService.orderTypeGroup.name}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.code">
+          <ion-text><span style="font-weight: 600;">Mã: </span>{{itemService.code}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.his">
+          <ion-text><span style="font-weight: 600;">Mã HIS: </span>{{itemService.his}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.appointmentTime">
+          <ion-text><span style="font-weight: 600;">Thời gian trả kết quả:
+            </span>{{itemService.appointmentTime}}</ion-text>
+        </ion-item>
+
+
+        <ion-item *ngIf="itemService?.sampleType">
+          <ion-text><span style="font-weight: 600;">Loại mẫu: </span>{{itemService.sampleType}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.preservationMethod">
+          <ion-text><span style="font-weight: 600;">Phương pháp bảo quản:
+            </span>{{itemService.preservationMethod}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.testMethod">
+          <ion-text><span style="font-weight: 600;">Phương pháp test: </span>{{itemService.testMethod}}</ion-text>
+        </ion-item>
+
+        <ion-item *ngIf="itemService?.price">
+          <ion-text><span style="font-weight: 600;">Giá cả: </span>{{itemService.price | currency : 'VND'}}</ion-text>
+        </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>

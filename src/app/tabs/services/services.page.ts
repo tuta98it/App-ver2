@@ -6,6 +6,7 @@ import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { Constant } from 'src/app/shared/constants/constant.class';
 import { NotificationService } from 'src/app/services/notification.service';
+
 @Component({
   selector: 'app-services',
   templateUrl: './services.page.html',
@@ -14,6 +15,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class ServicesPage implements OnInit {
   @ViewChild('popover') popover;
   isPopoverOpenFillter = false;
+  isModalOpenDetailItemService = false;
   listService: any[] = [];
   items = [];
   listOrderType: any[] = [];
@@ -23,11 +25,15 @@ export class ServicesPage implements OnInit {
     subHeader: 'Chọn nhóm cần lọc',
     // message: 'Chỉ chọn một TTĐH',
   };
+  titleDetailItemService = 'Công thức máu';
   // Chức dữ liệu cơ sở, khởi tạo ban đầu.
   initDatas: any;
 
   // Key search
   keywordSearch: any;
+
+  // dich vụ trong trong danh sách dịch vụ
+  itemService: any;
   public progress = 0;
   constructor(
     private generalService: GeneralService,
@@ -230,6 +236,19 @@ export class ServicesPage implements OnInit {
           this.notificationService.showMessage('danger', `Đã có lỗi xảy ra khi hệ thống trả dữ liệu về`);
         }
       });
+  }
+
+  clickItemService(item: any){
+    this.itemService = item;
+    //  về DV ${item}
+    this.titleDetailItemService = `Thông tin chi tiết`;
+    this.setOpenModalDetailItemService(true);
+  }
+
+
+
+  setOpenModalDetailItemService(isOpen: boolean) {
+    this.isModalOpenDetailItemService = isOpen;
   }
 
   isEmpty(value: any) {
