@@ -193,8 +193,8 @@
     <ion-button color="primary" (click)="datetime.confirm()">All Set</ion-button>
   </ion-buttons>
 </ion-datetime> -->
-            <span>Từ ngày: </span>
-            <ion-datetime-button datetime="from-datetime"></ion-datetime-button>
+            <span style="font-size: small;">Từ ngày: </span>
+            <ion-datetime-button datetime="from-datetime" style="font-size: small;"></ion-datetime-button>
 
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -233,8 +233,8 @@
     <ion-button color="primary" (click)="datetime.confirm()">All Set</ion-button>
   </ion-buttons>
 </ion-datetime> -->
-            <span>Đến ngày: </span>
-            <ion-datetime-button datetime="toDatetime"></ion-datetime-button>
+            <span style="font-size: small;">Đến ngày: </span>
+            <ion-datetime-button style="font-size: small;" datetime="toDatetime"></ion-datetime-button>
 
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
@@ -318,6 +318,7 @@
 
 
 <!-- Form modal add end edit a Patient  -->
+
 <ion-modal [isOpen]="isModalOpenFormPatient">
   <ng-template>
     <!-- Tiêu đề -->
@@ -339,6 +340,7 @@
     </ion-header>
 
     <!-- Nội dung -->
+    <!-- <p>{{itemPatientFormModalLab | json}}</p> -->
     <ion-content class="ion-padding">
       <!-- Label dẫn dắt người dùng-->
       <label [innerHTML]="instructionModalPatient"></label>
@@ -352,19 +354,20 @@
               <ion-icon name="person-outline"></ion-icon>
               Loại Yêu cầu <span style="color:red">*</span>
             </ion-label>
-            <ion-select aria-label="parterns" placeholder="Chọn loại yêu cầu ..."
-              (ionChange)="handleChangeTypeRequest($event)">
+            <ion-select [interfaceOptions]="customAlertOptionsRequestType" aria-label="parterns"
+              placeholder="Chọn loại yêu cầu ..." (ionChange)="handleChangeRequestType($event)"
+              [(ngModel)]="itemPatientFormModalLab.valueRequestType">
               <ion-select-option *ngFor="let typeOrder of listTypeOrder"
                 [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
             </ion-select>
           </ion-item>
-          <!-- <span class="m-error" *ngIf="validFormInput.isEmptyInfoPartner">*TT Đối tác không được để trống!</span> -->
+          <span class="m-error" *ngIf="validFormInput.isEmptyRequestType">*Loại yêu cầu không được để trống!</span>
         </ion-col>
 
         <!-- Nhập tên bệnh nhân -->
         <ion-col>
           <ion-item>
-            <ion-label position="floating">
+            <ion-label position="stacked">
               <ion-icon name="person-outline"></ion-icon>
               Tên bệnh nhân <span style="color:red">*</span>
             </ion-label>
@@ -377,7 +380,7 @@
         <!-- Nhập số điện thoại -->
         <ion-col>
           <ion-item>
-            <ion-label position="floating">
+            <ion-label position="stacked">
               <ion-icon name="call-outline"></ion-icon>
               Số điện thoại <span style="color:red">*</span>
             </ion-label>
@@ -390,7 +393,7 @@
         <!-- Nhập địa chỉ bệnh nhân -->
         <ion-col>
           <ion-item>
-            <ion-label position="floating">
+            <ion-label position="stacked">
               <ion-icon name="location-outline"></ion-icon>
               Địa chỉ <span style="color:red">*</span>
             </ion-label>
@@ -400,36 +403,25 @@
           <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*Địa chỉ không được để trống!</span>
         </ion-col>
 
-        <ion-item *ngIf="'true'">
-          <!-- Calenda cho người dùng chọn khoảng thời gian lọc -->
-          <!-- <ion-datetime value="2022-04-21T00:00:00" min="2022-03-01T00:00:00" max="2022-05-31T23:59:59"></ion-datetime> -->
-          <!-- <ion-datetime locale="vi-VI"></ion-datetime> -->
-          <!-- <ion-datetime presentation="date-time" [preferWheel]="true"></ion-datetime> -->
-          <!-- <ion-datetime>
-<span slot="title">Select a Reservation Date</span>
-</ion-datetime> -->
-          <!-- <ion-datetime [showDefaultButtons]="true" doneText="All set" cancelText="Never mind"> </ion-datetime> -->
-          <!-- <ion-datetime #datetime>
-<ion-buttons slot="buttons">
-  <ion-button color="danger" (click)="datetime.reset()">Reset</ion-button>
-  <ion-button color="primary" (click)="datetime.cancel()">Never mind</ion-button>
-  <ion-button color="primary" (click)="datetime.confirm()">All Set</ion-button>
-</ion-buttons>
-</ion-datetime> -->
-          <span>TG Lấy mấu/Thu mẫu: </span>
-          <ion-datetime-button datetime="time"></ion-datetime-button>
+        <ion-col>
+          <ion-item *ngIf="'true'">
+            <div style="display: flex; flex-direction: column;">
+              <span>TG Lấy mấu/Thu mẫu: <span style="color:red">*</span></span>
+              <ion-datetime-button datetime="time" style="margin-top: 0.5rem; margin-bottom: 0.25rem;"></ion-datetime-button>
+            </div>
 
-          <ion-modal [keepContentsMounted]="true">
-            <ng-template>
-              <!-- [(ngModel)]="this.filterInterval.pastTime" -->
-              <ion-datetime #fromDatetime  [showDefaultTitle]="true"
-                [showDefaultButtons]="true" locale="vi-VI" id="time" [showClearButton]="true"
-                (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
-                <span slot="title">TG Lấy mấu/Thu mẫu</span>
-              </ion-datetime>
-            </ng-template>
-          </ion-modal>
-        </ion-item>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <!-- [(ngModel)]="this.itemPatientFormModalLab.timeSample" -->
+                <ion-datetime [(ngModel)]="this.itemPatientFormModalLab.timeSample" size="small" [showDefaultTitle]="true" [showDefaultButtons]="true"
+                  locale="vi-VI" id="time" [showClearButton]="true"
+                   (ionChange)="handleChangeTimeSample($event)">
+                  <span slot="title">TG Lấy mấu/Thu mẫu</span>
+                </ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </ion-col>
 
         <!-- Nhập đối tác -->
         <!-- Đối tác (ionCancel)="pushLog('ionCancel fired')" (ionDismiss)="pushLog('ionDismiss fired')"label="Floating label" label-placement="floating"-->
