@@ -457,7 +457,7 @@ export class LaboratoryPage implements OnInit {
         returnResultCompleteTime: null,
         address: this.itemPatientFormModalLab.address,
         phone: this.itemPatientFormModalLab.phone,
-        requestTypeId: 0,
+        requestTypeId: this.itemPatientFormModalLab.valueRequestType,
         requestSourceId: 0,
         comment: '',
         receiveUserId: 0,
