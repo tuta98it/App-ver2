@@ -62,18 +62,18 @@ export class LoginPage implements OnInit {
           localStorage.removeItem(Constant.TOKEN);
           localStorage.removeItem(Constant.USER_INFO);
           this.router.navigate(['/login']);
-          this.notificationService.showMessage('darge', `${codeRes}: Hệ thống không xác thực được người dùng`);
+          this.notificationService.showMessage(Constant.DANGER, `${codeRes}: Hệ thống không xác thực được người dùng`);
         } else if (codeRes === 403) {
           // Code 403: Người dùng không có quyền truy cập vào hệ thống.
           localStorage.removeItem(Constant.TOKEN);
           localStorage.removeItem(Constant.USER_INFO);
           this.router.navigate(['/login']);
-          this.notificationService.showMessage('darge', `${codeRes}: Người dùng không có quyền truy cập`);
+          this.notificationService.showMessage(Constant.DANGER, `${codeRes}: Người dùng không có quyền truy cập`);
         } else {
-          this.notificationService.showMessage('darge', `${codeRes}: Lỗi hệ thống, vui lòng liên hệ quản trị viên`);
+          this.notificationService.showMessage(Constant.DANGER, `${codeRes}: Lỗi hệ thống, vui lòng liên hệ quản trị viên`);
         }
       } else {
-        this.notificationService.showMessage('darge', 'Lỗi hệ thống, vui lòng liên hệ quản trị viên');
+        this.notificationService.showMessage(Constant.DANGER, 'Lỗi hệ thống, vui lòng liên hệ quản trị viên');
       }
     });
 
@@ -92,11 +92,11 @@ export class LoginPage implements OnInit {
   }
 
   showAlertPassword() {
-    this.notificationService.showMessage('warning', 'Vui lòng liên hệ quản trị viên để cấp lại mật khẩu');
+    this.notificationService.showMessage(Constant.WARNING, 'Vui lòng liên hệ quản trị viên để cấp lại mật khẩu');
   }
   async doLogin() {
     if (!this.username) {
-      this.notificationService.showMessage('danger', 'Tên đăng nhập không được để trống');
+      this.notificationService.showMessage(Constant.DANGER, 'Tên đăng nhập không được để trống');
       return;
     }
     const loading = await this.loadingController.create({
@@ -115,7 +115,7 @@ export class LoginPage implements OnInit {
     this.mainService.login(this.username, this.password).subscribe((res: any) => {
       if (+res.result === 0) {
         loading.dismiss();
-        this.notificationService.showMessage('danger', 'Sai tên đăng nhập hoặc mật khẩu');
+        this.notificationService.showMessage(Constant.DANGER, 'Sai tên đăng nhập hoặc mật khẩu');
         return;
       }
       console.log('Constant.STORAGE_USERINFO, = ', Constant.STORAGE_USERINFO, res);
@@ -131,10 +131,10 @@ export class LoginPage implements OnInit {
     }, (error: any) => {
       console.log('error : ', error);
       if (error.error.message) {
-        this.notificationService.showMessage('danger', 'Sai tên đăng nhập hoặc mật khẩu');
+        this.notificationService.showMessage(Constant.DANGER, 'Sai tên đăng nhập hoặc mật khẩu');
       }
       else {
-        this.notificationService.showMessage('danger', `Có lỗi khi đăng nhập: ${error.error.message}`);
+        this.notificationService.showMessage(Constant.DANGER, `Có lỗi khi đăng nhập: ${error.error.message}`);
       }
       loading.dismiss();
     });

@@ -164,7 +164,7 @@ export class ServicesPage implements OnInit {
       },
       (errorRes: any) => {
         if (errorRes) {
-          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
         }
       }
     );
@@ -191,7 +191,7 @@ export class ServicesPage implements OnInit {
       },
       (errorRes: any) => {
         if (errorRes) {
-          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
         }
       }
     );
@@ -233,7 +233,7 @@ export class ServicesPage implements OnInit {
       },
       (errorRes: any) => {
         if (errorRes) {
-          this.notificationService.showMessage('danger', `Đã có lỗi xảy ra khi hệ thống trả dữ liệu về`);
+          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi xảy ra khi hệ thống trả dữ liệu về`);
         }
       });
   }

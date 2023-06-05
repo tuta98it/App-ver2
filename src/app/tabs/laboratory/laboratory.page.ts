@@ -313,10 +313,10 @@ export class LaboratoryPage implements OnInit {
       },
       (error) => {
         if (error.status === 403) {
-          this.notificationService.showMessage('danger', `Người dùng có quyền truy cập`);
+          this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
           this.router.navigate(['/login']);
         } else {
-          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
         }
       });
 
@@ -350,10 +350,10 @@ export class LaboratoryPage implements OnInit {
       },
       (error) => {
         if (error.status === 403) {
-          this.notificationService.showMessage('danger', `Người dùng có quyền truy cập`);
+          this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
           this.router.navigate(['/login']);
         } else {
-          this.notificationService.showMessage('danger', `Dữ liệu trả về đã có lỗi xảy ra`);
+          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
         }
       });
 
@@ -464,7 +464,7 @@ export class LaboratoryPage implements OnInit {
       };
       this.generalService.addRequest(item).subscribe((res: any) => {
         if (res.ret && res.ret[0].code !== 0) {
-          this.notificationService.showMessage(Constant.ERROR, res.ret[0].message);
+          this.notificationService.showMessage(Constant.DANGER, res.ret[0].message);
         } else {
           this.notificationService.showMessage(Constant.SUCCESS, Constant.MESSAGE_ADD_SUCCESS);
         }
