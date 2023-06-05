@@ -29,11 +29,11 @@ import { OrderService } from 'src/app/services/order.service';
 import { GeneralService } from 'src/app/services/general-service';
 
 @Component({
-  selector: 'app-laboratory',
-  templateUrl: 'laboratory.page.html',
-  styleUrls: ['laboratory.page.scss']
+  selector: 'app-requests',
+  templateUrl: 'requests.page.html',
+  styleUrls: ['requests.page.scss']
 })
-export class LaboratoryPage implements OnInit {
+export class RequestsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('popoverFormFilter') popoverFormFilter;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
@@ -44,7 +44,7 @@ export class LaboratoryPage implements OnInit {
 
 
   titleModalAddPatient = 'Thêm yêu cầu';
-  instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
+  instructionModalPatient = 'Mời nhập thông tin bệnh nhân :';
   numberOfNewPatients = 0;
   isModalOpenFormPatient = false;
 
@@ -244,44 +244,27 @@ export class LaboratoryPage implements OnInit {
 
 
     // Lấy dữ liệu danh sách phiếu xét nghiệm
-    const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: '',
-      pageSize: 50,
-      page: 1,
-    };
-    await this.getListOrder(payload, true);
+    // await this.getListOrder();
 
     // Lấy dữ liệu danh sách yêu cầu xét nghiệm
-    // const payload = {
-    //   page: 1,
-    //   pageSize: 50,
-    //   fromDate: null,
-    //   toDate: null,
-    //   phone: null,
-    //   partnerId: null,
-    //   receiveUserId: null,
-    //   called: null,
-    //   arrived: null,
-    //   arrivedLabo: null,
-    //   warning: null,
-    //   received: null,
-    //   requestTypeId: null,
-    //   userCreated: null,
-    //   canceled: false
-    // };
-    // await this.getListRequestByPayload(payload, true);
+    const payload = {
+      page: 1,
+      pageSize: 100,
+      fromDate: null,
+      toDate: null,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
+    };
+    await this.getListRequestByPayload(payload, true);
 
     // Lấy danh sách loại yêu cầu
     await this.getListOrderType();
@@ -300,13 +283,27 @@ export class LaboratoryPage implements OnInit {
     loading.present();
   }
 
-  getListOrder(payload: any, isLoading: boolean) {
+  getListOrder() {
     // Show thông báo delay thời gian chờ loading dữ liệu
-    if (isLoading) {
-      this.showLoading();
-    }
+    this.showLoading();
 
-
+    const payload = {
+      barcode: '',
+      patient: '',
+      status: 0,
+      fromDate: '',
+      toDate: '',
+      assignToUserId: 0,
+      counselors: null,
+      partnerId: 0,
+      isSendSMS: null,
+      isPrintResult: null,
+      patientAge: null,
+      phoneNo: null,
+      keyword: '',
+      pageSize: 50,
+      page: 1,
+    };
     this.orderService.getOrders(payload).subscribe(
       (res) => {
         if (res != null) {
@@ -322,6 +319,7 @@ export class LaboratoryPage implements OnInit {
           this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
         }
       });
+
   }
 
   getListOrderType() {
@@ -337,29 +335,29 @@ export class LaboratoryPage implements OnInit {
     );
   }
 
-  // getListRequestByPayload(payload: any, isLoading: boolean) {
-  //   // Show thông báo delay thời gian chờ loading dữ liệu
-  //   if (isLoading) {
-  //     this.showLoading();
-  //   }
+  getListRequestByPayload(payload: any, isLoading: boolean) {
+    // Show thông báo delay thời gian chờ loading dữ liệu
+    if (isLoading) {
+      this.showLoading();
+    }
 
-  //   this.generalService.getRequest(payload).subscribe(
-  //     (res: any) => {
-  //       if (res != null) {
-  //         this.listRequest = res.data;
-  //         console.log('this.listRequest : ', this.listRequest);
-  //       }
-  //     },
-  //     (error) => {
-  //       if (error.status === 403) {
-  //         this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
-  //         this.router.navigate(['/login']);
-  //       } else {
-  //         this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
-  //       }
-  //     });
+    this.generalService.getRequest(payload).subscribe(
+      (res: any) => {
+        if (res != null) {
+          this.listRequest = res.data;
+          console.log('this.listRequest : ', this.listRequest);
+        }
+      },
+      (error) => {
+        if (error.status === 403) {
+          this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
+          this.router.navigate(['/login']);
+        } else {
+          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
+        }
+      });
 
-  // }
+  }
 
   getListInitialData() {
     this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
@@ -446,8 +444,8 @@ export class LaboratoryPage implements OnInit {
       this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
 
       const item = {
-        partnerId: this.userInfo.id,
-        userId: 0,
+        partnerId: 0,
+        userId: this.userInfo.id,
         dateCreated: null,
         appointmentDate: this.itemPatientFormModalLab.timeSample,
         receiveTime: null,
@@ -461,7 +459,7 @@ export class LaboratoryPage implements OnInit {
         phone: this.itemPatientFormModalLab.phone,
         requestTypeId: this.itemPatientFormModalLab.valueRequestType,
         requestSourceId: 0,
-        comment: '',
+        comment: this.itemPatientFormModalLab.notes,
         receiveUserId: 0,
       };
       this.generalService.addRequest(item).subscribe((res: any) => {
@@ -524,25 +522,27 @@ export class LaboratoryPage implements OnInit {
   async handleChangeSearch(event: any) {
     this.keywordSearch = event.target.value;
 
+
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      page: 1,
+      pageSize: 100,
+      textSearch: this.keywordSearch,
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: this.keywordSearch,
-      pageSize: 50,
-      page: 1,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    await this.getListOrder(payload, true);
 
+    this.getListRequestByPayload(payload, false);
 
   }
 
@@ -552,7 +552,7 @@ export class LaboratoryPage implements OnInit {
   }
 
 
-  async handleChangeFilterInterval(event: any) {
+  handleChangeFilterInterval(event: any) {
     const value = event.target.value;
     // let isShowFilterInterval = this.filterInterval.isShow;
     const pastTime = new Date();
@@ -652,24 +652,25 @@ export class LaboratoryPage implements OnInit {
     this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
 
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      page: 1,
+      pageSize: 100,
+      textSearch: this.keywordSearch,
       fromDate: pastTime,
       toDate: presentTime,
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: this.keywordSearch,
-      pageSize: 50,
-      page: 1,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
 
-    await this.getListOrder(payload, true);
+    this.getListRequestByPayload(payload, true);
   }
 
   async handleChangeFilterIntervalCustomByUser(event: any) {
@@ -679,25 +680,25 @@ export class LaboratoryPage implements OnInit {
     const presentTime = this.filterInterval.presentTime;
     // console.log('presentTime: ',presentTime);
 
-
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      page: 1,
+      pageSize: 100,
       fromDate: pastTime,
       toDate: presentTime,
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: this.keywordSearch,
-      pageSize: 50,
-      page: 1,
+      phone: null,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    await this.getListOrder(payload, true);
+
+    this.getListRequestByPayload(payload, false);
   }
 
   handleChangeRequestType(event: any) {
@@ -713,26 +714,27 @@ export class LaboratoryPage implements OnInit {
 
   }
 
-  async onSearchByFormFilter() {
-
+  onSearchByFormFilter() {
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: this.formFilterTestSheet.phoneNoPatient,
-      keyword: this.formFilterTestSheet.namePatient,
-      pageSize: 50,
       page: 1,
+      pageSize: 100,
+      textSearch: this.formFilterTestSheet.namePatient,
+      fromDate: null,
+      toDate: null,
+      phone: this.formFilterTestSheet.phoneNoPatient,
+      partnerId: null,
+      receiveUserId: null,
+      called: null,
+      arrived: null,
+      arrivedLabo: null,
+      warning: null,
+      received: null,
+      requestTypeId: null,
+      userCreated: null,
+      canceled: false
     };
-    await this.getListOrder(payload, true);
+
+    this.getListRequestByPayload(payload, true);
 
     this.popoverFormFilter.dismiss();
   }

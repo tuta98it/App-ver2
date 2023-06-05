@@ -7,6 +7,10 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'requests',
+        loadChildren: () => import('./requests/requests.module').then(m => m.RequestsPageModule)
+      },
+      {
         path: 'laboratory',
         loadChildren: () => import('./laboratory/laboratory.module').then(m => m.LaboratoryPageModule)
       },

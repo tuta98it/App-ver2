@@ -2,30 +2,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 // import { IsEmptyPipe } from './is-empty.pipe';
 
 @Pipe({
-  name: 'statusRequestPipe'
+  name: 'requestTypePipe'
 })
-export class StatusRequestPipe implements PipeTransform {
+export class RequestTypePipe implements PipeTransform {
   constructor() {
 
   }
-  transform(request: any): string {
-    if (this.isEmpty(request.receiveTime)) {
-      return 'Chưa nhận yêu cầu';
-    }
-
-    if (this.isEmpty(request.arriveTime)) {
-      return 'Đã nhận yêu cầu và đang xử lý';
-    }
-
-    if (this.isEmpty(request.completeTime)) {
-      return 'Đã nhận yêu cầu và đang xử lý';
-    }
-
-    if (this.isEmpty(request.arriveLaboTime)) {
-      return 'Đã nhận yêu cầu và đang xử lý';
-    }
-
-    return 'Đã nhận yêu cầu và đang xử lý';
+  transform(requestID: any, listResquest: any): string {
+    const objResByID = listResquest.find((objRes: any) => objRes.requestTypeId === requestID);
+    return objResByID.requestTypeName;
   }
 
   private isEmpty(value: any): boolean {

@@ -24,7 +24,7 @@
     "@capacitor/android": "4.0.1",
     "@capacitor/app": "4.0.1",
     "@capacitor/camera": "^4.0.1",
-    "@capacitor/core": "^4.0.0",
+    "@capacitor/core": "^4.0.1",
     "@capacitor/device": "^4.0.1",
     "@capacitor/haptics": "4.0.1",
     "@capacitor/ios": "^4.0.1",
@@ -82,9 +82,6 @@
     "typescript": "~4.7.3"
   },
   "description": "An Ionic project",
-  "peerDependencies": {
-    "@capacitor/core": "^4.0.0"
-  },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
   "eslintConfig": {

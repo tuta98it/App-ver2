@@ -72,14 +72,14 @@
             <ion-content class="ion-padding">
               <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label>
               <ion-list>
-                <ion-item style="font-size: small;">
+                <!-- <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="person-outline"></ion-icon>
                     Tên bệnh nhân
                   </ion-label>
                   <ion-input placeholder="Nhập tên bệnh nhân ..."
                     [(ngModel)]="formFilterTestSheet.namePatient"></ion-input>
-                </ion-item>
+                </ion-item> -->
 
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
@@ -260,40 +260,56 @@
       <ion-list>
 
         <!-- Danh các đối tác -->
-        <ion-item *ngFor="let order of listOrder; let i = index">
+        <ion-item *ngFor="let request of listRequest; let i = index">
           <!-- Thông tin bệnh nhân -->
           <ion-label>
-            <!-- Tên bệnh nhân -->
-            <h3 *ngIf="!(order.code | isEmpty)" class="name-patient">{{order.dateCreated| date: "ddMMyy"}}-{{order.code}}
-              {{order.patient.name}}</h3>
+            <!-- Lịch hẹn -->
+            <div style="display: flex; justify-content: space-between; justify-items: center;">
+              <div *ngIf="(request?.phone)" class="info">
+                <div>
+                  <ion-icon name="time-outline"></ion-icon>
+                </div>
+                <h3 class="text">{{request.appointmentDate | date : 'HH:MM dd/mm/yyyy'}}</h3>
+              </div>
+
+              <div style="          display: inline-block;
+              padding: 0.25rem;
+              margin-top: 0.25rem;
+              border-radius: 0.25rem;
+              background-color: #1371e4; color: white;">
+                <h3>{{request.requestTypeId | requestTypePipe : listTypeOrder}}</h3>
+              </div>
+            </div>
 
             <!-- Số điện thoại -->
-            <div *ngIf="!(order.patient.phoneNo | isEmpty)" class="info">
+            <div *ngIf="(request?.phone)" class="info">
               <div>
                 <ion-icon name="call-outline"></ion-icon>
               </div>
-              <h3 class="text">{{order.patient.phoneNo}}</h3>
+              <h3 class="text">{{request.phone}}</h3>
             </div>
 
             <!-- Địa chỉ -->
-            <div *ngIf="!(order.patient.address | isEmpty)" class="info">
+            <div *ngIf="(request?.address)" class="info">
               <div>
                 <ion-icon name="location-outline"></ion-icon>
               </div>
-              <h3 class="text address">{{order.patient.address}}</h3>
+              <h3 class="text address">{{request.address}}</h3>
             </div>
 
             <!-- Chỉ định -->
-            <div *ngIf="!(order.chanDoan | isEmpty)" class="info">
+            <div *ngIf="(request?.comment)" class="info">
               <div>
                 <ion-icon name="pulse-outline"></ion-icon>
               </div>
-              <h3 class="text">{{order.chanDoan}}</h3>
+              <h3 class="text">{{request.comment}}</h3>
             </div>
 
-            <!-- Tình trạng mẫu xét nghiệm -->
-            <div *ngIf="!(order.status | isEmpty)" class="status">
-              <h3>{{initDatas? (order.status | orderStatus : initDatas?.orderStatus) : order.status}}</h3>
+            <!-- Tình trạng mẫu xét nghiệm *ngIf="(request?.requestType)"-->
+            <div class="status">
+              <!-- <h3>{{initDatas? (request.partner.status | orderStatus : initDatas?.orderStatus) : request.partner.status}}</h3> -->
+              <!-- <h3>{{request.requestType ? request.requestType.requestTypeName : 'Lấy mẫu'}}</h3> -->
+              <h3>{{request | statusRequestPipe}}</h3>
             </div>
           </ion-label>
         </ion-item>
@@ -358,7 +374,7 @@
         </ion-col>
 
         <!-- Nhập tên bệnh nhân -->
-        <ion-col>
+        <!-- <ion-col>
           <ion-item>
             <ion-label position="stacked">
               <ion-icon name="person-outline"></ion-icon>
@@ -368,7 +384,7 @@
               (keyup)="onKeyUpInputNamePatient()"></ion-input>
           </ion-item>
           <span class="m-error" *ngIf="validFormInput.isEmptyFullName">*Tên bệnh nhân không được để trống!</span>
-        </ion-col>
+        </ion-col> -->
 
         <!-- Nhập số điện thoại -->
         <ion-col>
@@ -447,14 +463,14 @@
       </div>
 
       <!-- Khối nút điều hướng -->
-      <div style="margin-top:1rem; display: flex; justify-content: end;">
-        <!-- Tiếp tục thêm thông tin bệnh nhân cần lấy mẫu xét nghiệp -->
+      <!-- Tiếp tục thêm thông tin bệnh nhân cần lấy mẫu xét nghiệp -->
+      <!-- <div style="margin-top:1rem; display: flex; justify-content: end;">
         <ion-buttons slot="primary">
           <ion-button (click)="nextModalPatient()">
             Lưu và thêm mới ...
           </ion-button>
         </ion-buttons>
-      </div>
+      </div> -->
 
 
     </ion-content>

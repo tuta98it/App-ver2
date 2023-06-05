@@ -92,10 +92,17 @@
       <ion-label>Tab 3</ion-label>
     </ion-tab-button> -->
 
+
+    <ion-tab-button tab="requests" color="secondary" class="ion-no-padding" (click)="titleApp = 'Yêu cầu'">
+      <ion-icon [color]="selectedTab !== 'requests' ? 'medium' : 'primary'"
+        [name]="selectedTab !== 'requests' ? 'git-pull-request-outline' : 'git-pull-request'" name="git-pull-request-outline"></ion-icon>
+      <ion-label>Yêu cầu</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="laboratory" color="secondary" class="ion-no-padding" (click)="titleApp = 'Xét nghiệm'">
       <ion-icon [color]="selectedTab !== 'laboratory' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'laboratory' ? 'clipboard-outline' : 'clipboard'" name="clipboard-outline"></ion-icon>
-      <ion-label>Xét nghiệm</ion-label>
+      <ion-label>Kết quả</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="services" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông tin dịch vụ'">
@@ -292,7 +299,7 @@
         <ion-item>
           <ion-label>Nhóm sản phẩm chiến lược:</ion-label>
         </ion-item>
-        
+
         <ion-item>
           <div class="bar-chart-container">
             <canvas class="bar-chart" #barCanvas2></canvas>
@@ -301,7 +308,7 @@
       </ion-list>
 
       <!-- <app-pie-chart></app-pie-chart> -->
-      
+
       <!-- <ion-card>
         <ion-card-content>
         </ion-card-content>
