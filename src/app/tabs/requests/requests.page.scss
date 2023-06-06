@@ -236,9 +236,24 @@
 
       ion-label {
 
-        h3.name-patient {
-          font-weight: 600;
-          white-space: break-spaces;
+        // h3.name-patient {
+        //   font-weight: 600;
+        //   white-space: break-spaces;
+        // }
+
+        div.appointment-date {
+          display: flex;
+          justify-content: space-between;
+          justify-items: center;
+
+          div.request-type {
+            display: inline-block;
+            padding: 0.25rem;
+            margin-top: 0.25rem;
+            border-radius: 0.25rem;
+            background-color: #91b5e4;
+            color: #fff;
+          }
         }
 
         div.info {
@@ -251,6 +266,10 @@
             }
 
             &.address {
+              white-space: break-spaces;
+            }
+
+            &.comment {
               white-space: break-spaces;
             }
           }

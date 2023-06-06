@@ -340,8 +340,7 @@
       <!-- Khôi nhập dữ liệu -->
       <div>
         <!-- Nhập hình thức thanh toán-->
-        <!-- Đối tác (ionCancel)="pushLog('ionCancel fired')" (ionDismiss)="pushLog('ionDismiss fired')"label="Floating label" label-placement="floating"-->
-        <ion-col>
+        <!-- <ion-col>
           <ion-item>
             <ion-label position="floating">
               <ion-icon name="options-outline"></ion-icon>
@@ -355,7 +354,7 @@
             </ion-select>
           </ion-item>
           <span class="m-error" *ngIf="validFormInput.isEmptyRequestType">*Loại yêu cầu không được để trống!</span>
-        </ion-col>
+        </ion-col> -->
 
         <!-- Nhập tên bệnh nhân -->
         <ion-col>
@@ -396,7 +395,7 @@
           <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*Địa chỉ không được để trống!</span>
         </ion-col>
 
-        <ion-col>
+        <!-- <ion-col>
           <ion-item *ngIf="'true'">
             <div style="display: flex; flex-direction: column;">
               <span>TG Lấy mấu/Thu mẫu: <span style="color:red">*</span></span>
@@ -406,7 +405,6 @@
 
             <ion-modal [keepContentsMounted]="true">
               <ng-template>
-                <!-- [(ngModel)]="this.itemPatientFormModalLab.timeSample" -->
                 <ion-datetime [(ngModel)]="this.itemPatientFormModalLab.timeSample" size="small"
                   [showDefaultTitle]="true" [showDefaultButtons]="true" locale="vi-VI" id="time"
                   [showClearButton]="true" (ionChange)="handleChangeTimeSample($event)">
@@ -415,7 +413,7 @@
               </ng-template>
             </ion-modal>
           </ion-item>
-        </ion-col>
+        </ion-col> -->
 
         <!-- Nhập đối tác -->
         <!-- Đối tác (ionCancel)="pushLog('ionCancel fired')" (ionDismiss)="pushLog('ionDismiss fired')"label="Floating label" label-placement="floating"-->

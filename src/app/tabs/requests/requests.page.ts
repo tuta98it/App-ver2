@@ -51,9 +51,10 @@ export class RequestsPage implements OnInit {
 
   validFormInput = {
     isEmptyRequestType: false,
-    isEmptyFullName: false,
+    // isEmptyFullName: false,
     isEmptyNumberPhone: false,
     isEmptyAdress: false,
+    isEmptyTimeSample: false,
   };
 
 
@@ -193,7 +194,7 @@ export class RequestsPage implements OnInit {
 
   onKeyUpInputNamePatient() {
     // Set is show message error Fullname
-    this.validFormInput.isEmptyFullName = this.isEmpty(this.itemPatientFormModalLab.name);
+    // this.validFormInput.isEmptyFullName = this.isEmpty(this.itemPatientFormModalLab.name);
   }
 
   onKeyUpInputNumberPhone() {
@@ -250,6 +251,7 @@ export class RequestsPage implements OnInit {
     const payload = {
       page: 1,
       pageSize: 100,
+      textSearch: null,
       fromDate: null,
       toDate: null,
       phone: null,
@@ -398,7 +400,7 @@ export class RequestsPage implements OnInit {
 
   openModalPatientLab() {
     // Reset lại lời dẫn
-    this.instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
+    this.instructionModalPatient = 'Mời tạo phiếu yêu cầu xét nghiệm:';
     this.numberOfNewPatients = 0;
 
     this.resetFormModalPatient();
@@ -408,7 +410,7 @@ export class RequestsPage implements OnInit {
 
   restartValidFormAddPatient() {
     this.validFormInput.isEmptyAdress = false;
-    this.validFormInput.isEmptyFullName = false;
+    // this.validFormInput.isEmptyFullName = false;
     this.validFormInput.isEmptyNumberPhone = false;
     this.validFormInput.isEmptyRequestType = false;
 
@@ -421,8 +423,8 @@ export class RequestsPage implements OnInit {
 
 
   confirmPatientModal() {
-    const isName = !this.isEmpty(this.itemPatientFormModalLab.name);
-    this.validFormInput.isEmptyFullName = !isName;
+    // const isName = !this.isEmpty(this.itemPatientFormModalLab.name);
+    // this.validFormInput.isEmptyFullName = !isName;
 
     const isPhone = !this.isEmpty(this.itemPatientFormModalLab.phone);
     this.validFormInput.isEmptyNumberPhone = !isPhone;
@@ -435,7 +437,10 @@ export class RequestsPage implements OnInit {
     const isRequest = !(this.itemPatientFormModalLab.valueRequestType === 0);
     this.validFormInput.isEmptyRequestType = !isRequest;
 
-    return (isName && isPhone && isAddress && isRequest);
+    const isTimeSample = !this.isEmpty(this.itemPatientFormModalLab.timeSample);
+    this.validFormInput.isEmptyTimeSample = !isTimeSample;
+
+    return (isRequest && isPhone && isAddress && isTimeSample);
   }
 
   saveModalAddPatient() {
@@ -443,8 +448,9 @@ export class RequestsPage implements OnInit {
       // Thêm mới một item Patient
       this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
 
+      const PARTNER_ID = 4;
       const item = {
-        partnerId: 0,
+        partnerId: PARTNER_ID,
         userId: this.userInfo.id,
         dateCreated: null,
         appointmentDate: this.itemPatientFormModalLab.timeSample,
@@ -458,23 +464,21 @@ export class RequestsPage implements OnInit {
         address: this.itemPatientFormModalLab.address,
         phone: this.itemPatientFormModalLab.phone,
         requestTypeId: this.itemPatientFormModalLab.valueRequestType,
-        requestSourceId: 0,
+        requestSourceId: null,
         comment: this.itemPatientFormModalLab.notes,
-        receiveUserId: 0,
+        receiveUserId: null,
       };
       this.generalService.addRequest(item).subscribe((res: any) => {
         if (res.ret && res.ret[0].code !== 0) {
           this.notificationService.showMessage(Constant.DANGER, res.ret[0].message);
         } else {
-          this.notificationService.showMessage(Constant.SUCCESS, Constant.MESSAGE_ADD_SUCCESS);
+          // this.notificationService.showMessage(Constant.SUCCESS, Constant.MESSAGE_ADD_SUCCESS);
+          this.notificationService.showMessage(Constant.SUCCESS, 'Tạo yêu cầu thành công!');
+          this.setOpenModalAddPatient(false);
         }
       });
-
-
-
-
     } else {
-
+      this.notificationService.showMessage(Constant.DANGER, 'Nhập thiếu trường dữ liệu bắt buộc!');
     }
 
   }
@@ -640,23 +644,30 @@ export class RequestsPage implements OnInit {
         this.filterInterval.isShow = true;
         break;
       default:
+        this.filterInterval.isShow = false;
         break;
     }
     // Đặt dữ liệu ban đầu cho khoảng thời gian lọc dữ liệu
-    // Bắt đầu - Thời điểm 0h ngày hôm nay
-    this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
-    // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime );
+    if (value >= 1 && value <= 10) {
+      // Bắt đầu - Thời điểm 0h ngày hôm nay
+      this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
 
-
-    // Kết thúc - Thời điểm hiện tại
-    this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
+      // Kết thúc - Thời điểm hiện tại
+      this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
+    } else {
+      // Bắt đầu - Thời điểm 0h ngày hôm nay
+      this.filterInterval.pastTime = '';
+      console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime);
+      // Kết thúc - Thời điểm hiện tại
+      this.filterInterval.presentTime = '';
+    }
 
     const payload = {
       page: 1,
       pageSize: 100,
       textSearch: this.keywordSearch,
-      fromDate: pastTime,
-      toDate: presentTime,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
       phone: null,
       partnerId: null,
       receiveUserId: null,
@@ -683,6 +694,7 @@ export class RequestsPage implements OnInit {
     const payload = {
       page: 1,
       pageSize: 100,
+      textSearch: this.formFilterTestSheet.namePatient,
       fromDate: pastTime,
       toDate: presentTime,
       phone: null,

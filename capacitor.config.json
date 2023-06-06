@@ -1,6 +1,6 @@
 {
-  "appId": "com.lamanh.mschool",
-  "appName": "mSchool",
+  "appId": "com.invivo.partner",
+  "appName": "Inivivo Partner",
   "webDir": "www",
   "bundledWebRuntime": false,
   "plugins": {

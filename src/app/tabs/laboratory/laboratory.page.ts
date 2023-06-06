@@ -50,7 +50,7 @@ export class LaboratoryPage implements OnInit {
 
 
   validFormInput = {
-    isEmptyRequestType: false,
+    // isEmptyRequestType: false,
     isEmptyFullName: false,
     isEmptyNumberPhone: false,
     isEmptyAdress: false,
@@ -412,7 +412,7 @@ export class LaboratoryPage implements OnInit {
     this.validFormInput.isEmptyAdress = false;
     this.validFormInput.isEmptyFullName = false;
     this.validFormInput.isEmptyNumberPhone = false;
-    this.validFormInput.isEmptyRequestType = false;
+    // this.validFormInput.isEmptyRequestType = false;
 
   }
 
@@ -434,10 +434,10 @@ export class LaboratoryPage implements OnInit {
     this.validFormInput.isEmptyAdress = !isAddress;
 
 
-    const isRequest = !(this.itemPatientFormModalLab.valueRequestType === 0);
-    this.validFormInput.isEmptyRequestType = !isRequest;
+    // const isRequest = !(this.itemPatientFormModalLab.valueRequestType === 0);
+    // this.validFormInput.isEmptyRequestType = !isRequest;
 
-    return (isName && isPhone && isAddress && isRequest);
+    return (isName && isPhone && isAddress);
   }
 
   saveModalAddPatient() {
@@ -446,37 +446,91 @@ export class LaboratoryPage implements OnInit {
       this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
 
       const item = {
-        partnerId: this.userInfo.id,
-        userId: 0,
-        dateCreated: null,
-        appointmentDate: this.itemPatientFormModalLab.timeSample,
-        receiveTime: null,
-        arriveTime: null,
-        completeTime: null,
-        arriveLaboTime: null,
-        returnResultReceiveTime: null,
-        returnResultAppointmentDate: null,
-        returnResultCompleteTime: null,
-        address: this.itemPatientFormModalLab.address,
-        phone: this.itemPatientFormModalLab.phone,
-        requestTypeId: this.itemPatientFormModalLab.valueRequestType,
-        requestSourceId: 0,
-        comment: '',
-        receiveUserId: 0,
+        id: 0,
+        patientId: null,
+        code: null,
+        name: null,
+        orderDoctor: null,
+        orderDate: null,
+        visitCode: null,
+        visiteDate: null,
+        chanDoan: null,
+        khoa: null,
+        buong: null,
+        giuong: null,
+        status: null,
+        phoneNo: null,
+        address: null,
+        note: this.itemPatientFormModalLab.notes,
+        partnerId: null,
+        details: [
+          {
+            orderTypeId: null,
+            price: null
+          }
+        ],
+        paymentType: 1,
+        patient: {
+          id: null,
+          code: null,
+          name: this.itemPatientFormModalLab.name,
+          sex: null,
+          dob: null,
+          yob: null,
+          cmnd: null,
+          address: this.itemPatientFormModalLab.address,
+          phoneNo: this.itemPatientFormModalLab.phone,
+          email: null
+        },
+        momWeight: null,
+        momHeightCM: null,
+        ultrasoundDate: null,
+        gestationalWeek: null,
+        gestationalDay: null,
+        pregnancyNo: null,
+        fetusAmount: null,
+        nt: null,
+        crl: null,
+        expectedDateOfBirth: null,
+        requestId: null,
+        lat: null,
+        lng: null,
+        assignToUserId: null,
+        specimenID: null,
+        privateNote: null,
+        discountPaymentType: null,
+        extraDiscountPaymentType: null,
+        bsdiscountPaymentType: null,
+        paidType: null,
+        utmSource: null,
+        dateTakenSpecimen: null,
+        addressLongitude: null,
+        addressLatitude: null
       };
-      this.generalService.addRequest(item).subscribe((res: any) => {
-        if (res.ret && res.ret[0].code !== 0) {
-          this.notificationService.showMessage(Constant.DANGER, res.ret[0].message);
-        } else {
-          this.notificationService.showMessage(Constant.SUCCESS, Constant.MESSAGE_ADD_SUCCESS);
+      // this.orderService.
+      this.generalService.createOrder(item).subscribe(
+        (res: any) => {
+          if (res.isValid) {
+            // console.log('generalService res', res );
+            // Reset form model lab
+            this.resetFormModalPatient();
+            this.notificationService.showMessage(Constant.SUCCESS, `Đã tạo phiếu xét nghiệm cho BN ${this.itemPatientFormModalLab.name}`);
+            // Đóng modal
+            this.setOpenModalAddPatient(false);
+          } else {
+            this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi : ${res.errors[0].errorMessage}`);
+          }
+        },
+        (error: any) => {
+          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi 1`);
+        },
+        (ret: any) => {
+          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi ${ret[0].errorMessage}`);
         }
-      });
-
-
-
-
+      );
+      this.notificationService.showMessage(Constant.DANGER, `Lỗi ngoài phạm vi xử lý, nghiệm vụ chưa hoàn chỉnh`);
     } else {
-
+      this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi 2`);
     }
 
   }
@@ -525,14 +579,14 @@ export class LaboratoryPage implements OnInit {
     this.keywordSearch = event.target.value;
 
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      barcode: null,
+      patient: null,
+      status: null,
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
-      assignToUserId: 0,
+      assignToUserId: null,
       counselors: null,
-      partnerId: 0,
+      partnerId: null,
       isSendSMS: null,
       isPrintResult: null,
       patientAge: null,
@@ -541,7 +595,7 @@ export class LaboratoryPage implements OnInit {
       pageSize: 50,
       page: 1,
     };
-    await this.getListOrder(payload, true);
+    await this.getListOrder(payload, false);
 
 
   }
@@ -652,14 +706,14 @@ export class LaboratoryPage implements OnInit {
     this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
 
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
+      barcode: null,
+      patient: null,
+      status: null,
       fromDate: pastTime,
       toDate: presentTime,
-      assignToUserId: 0,
+      assignToUserId: null,
       counselors: null,
-      partnerId: 0,
+      partnerId: null,
       isSendSMS: null,
       isPrintResult: null,
       patientAge: null,
@@ -681,8 +735,8 @@ export class LaboratoryPage implements OnInit {
 
 
     const payload = {
-      barcode: '',
-      patient: '',
+      barcode: null,
+      patient: null,
       status: 0,
       fromDate: pastTime,
       toDate: presentTime,
@@ -705,7 +759,7 @@ export class LaboratoryPage implements OnInit {
     console.log('handleChangePartner event: ', event);
     const value = event.target.value;
     // this.itemPatientFormModalLab.valueRequestType = value;
-    this.validFormInput.isEmptyRequestType = (value === 0);
+    // this.validFormInput.isEmptyRequestType = (value === 0);
 
   }
 
@@ -716,14 +770,14 @@ export class LaboratoryPage implements OnInit {
   async onSearchByFormFilter() {
 
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
+      barcode: null,
+      patient: null,
+      status: null,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
+      assignToUserId: null,
       counselors: null,
-      partnerId: 0,
+      partnerId: null,
       isSendSMS: null,
       isPrintResult: null,
       patientAge: null,
@@ -732,7 +786,7 @@ export class LaboratoryPage implements OnInit {
       pageSize: 50,
       page: 1,
     };
-    await this.getListOrder(payload, true);
+    await this.getListOrder(payload, false);
 
     this.popoverFormFilter.dismiss();
   }
