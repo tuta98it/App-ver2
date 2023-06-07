@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">mSchool</string>
-    <string name="title_activity_main">mSchool</string>
-    <string name="package_name">com.lamanh.mschool</string>
-    <string name="custom_url_scheme">com.lamanh.mschool</string>
+    <string name="app_name">Inivivo Partner</string>
+    <string name="title_activity_main">Inivivo Partner</string>
+    <string name="package_name">com.invivo.partner</string>
+    <string name="custom_url_scheme">com.invivo.partner</string>
 </resources>

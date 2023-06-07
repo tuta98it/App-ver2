@@ -23,6 +23,6 @@ import { RequestTypePipe } from 'src/app/shared/pipe/request-type';
     SharedModule
   ],
   providers: [AppVersion],
-  declarations: [RequestsPage, OrderStatusPipe, StatusRequestPipe, RequestTypePipe]
+  declarations: [RequestsPage, StatusRequestPipe, RequestTypePipe]
 })
 export class RequestsPageModule { }

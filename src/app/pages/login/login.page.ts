@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
       if (res.ret) {
         if (codeRes === 0) {
           // Success
-          this.router.navigate(['/main/laboratory']);
+          this.router.navigate(['/main/requests']);
         } else if (codeRes === 401) {
           // Code 401: Không xác thực được người dùng;
           localStorage.removeItem(Constant.TOKEN);
@@ -124,7 +124,7 @@ export class LoginPage implements OnInit {
         // this.router.navigate(['/main']);
         localStorage.setItem(Constant.TOKEN, res3.token);
         console.log('res3: ', res3);
-        this.navCtrl.navigateRoot(['/main/laboratory']);
+        this.navCtrl.navigateRoot(['/main/requests']);
       });
 
 

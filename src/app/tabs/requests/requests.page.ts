@@ -278,7 +278,7 @@ export class RequestsPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({
-      message: 'Dữ liệu đang tải lên sau 2 giây ...',
+      message: 'Dữ liệu đang tải lên ...',
       duration: 2000,
     });
 

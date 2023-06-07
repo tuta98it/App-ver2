@@ -124,7 +124,7 @@ export class ServicesPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({
-      message: 'Dữ liệu đang tải lên sau 1 giây ...',
+      message: 'Dữ liệu đang tải lên ...',
       duration: 1000,
     });
 
