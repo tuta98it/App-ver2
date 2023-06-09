@@ -1,4 +1,4 @@
-package com.lamanh.mschool;
+package com.invivo.partner;
 
 import com.getcapacitor.BridgeActivity;
 
