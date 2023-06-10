@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "825687385563",
+    "project_id": "mschool-de76f",
+    "storage_bucket": "mschool-de76f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825687385563:android:e95ccbb9d601968eb9b3fe",
+        "android_client_info": {
+          "package_name": "com.lamanh.mschool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825687385563-ju19q87vj1bru0ecsv8qeth0757n5t6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbKHUO78KElZBIW3omxXAIt5GGOlQaGGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825687385563-ju19q87vj1bru0ecsv8qeth0757n5t6r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "825687385563-gtpb5rmu4i63cift6t89apgi0ksg4bp3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lamanhtech.mschool"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825687385563:android:054d211d552e3cdfb9b3fe",
+        "android_client_info": {
+          "package_name": "com.lamanhtech.mschool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825687385563-ju19q87vj1bru0ecsv8qeth0757n5t6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbKHUO78KElZBIW3omxXAIt5GGOlQaGGY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825687385563-ju19q87vj1bru0ecsv8qeth0757n5t6r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "825687385563-gtpb5rmu4i63cift6t89apgi0ksg4bp3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lamanhtech.mschool"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
