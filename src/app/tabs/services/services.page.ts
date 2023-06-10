@@ -159,7 +159,7 @@ export class ServicesPage implements OnInit {
 
           // Bắt đầu danh sách với 50 phần tử
           this.generateItemsOrderType();
-          console.log('this.listOrderType', this.listOrderType);
+          // console.log('this.listOrderType', this.listOrderType);
         }
       },
       (errorRes: any) => {
@@ -186,7 +186,7 @@ export class ServicesPage implements OnInit {
 
           // Bắt đầu danh sách với 50 phần tử
           this.generateItemsOrderType();
-          console.log('this.listGroupOrderType', this.listGroupOrderType);
+          // console.log('this.listGroupOrderType', this.listGroupOrderType);
         }
       },
       (errorRes: any) => {
@@ -225,7 +225,7 @@ export class ServicesPage implements OnInit {
       (res: any) => {
         if (res != null) {
           this.listOrderType = res.data;
-          console.log('this.listOrderType: ', this.listOrderType);
+          // console.log('this.listOrderType: ', this.listOrderType);
           // Restar biến item về emplu để chuẩn cho quá trình quét dữ liệu
           this.items = [];
           this.generateItemsOrderType();
@@ -291,7 +291,7 @@ export class ServicesPage implements OnInit {
     // Nối thêm vào mảng this.items
     this.items = this.items.concat(subArray);
 
-    console.log('this.items', this.items);
+    // console.log('this.items', this.items);
 
   }
 }

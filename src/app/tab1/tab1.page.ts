@@ -46,28 +46,28 @@ export class Tab1Page {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad');
+    // console.log('ionViewDidLoad');
   }
 
   ionViewWillLeave() {
-    console.log('ionViewWillLeave');
+    // console.log('ionViewWillLeave');
   }
 
   ionViewDidLeave() {
-    console.log('ionViewDidLeave');
+    // console.log('ionViewDidLeave');
   }
 
   ionViewWillUnload() {
-    console.log('ionViewWillUnload');
+    // console.log('ionViewWillUnload');
   }
 
   ionViewDidEnter() {
-    console.log('ionViewDidEnter');
+    // console.log('ionViewDidEnter');
   }
 
   ionViewWillEnter() {
     this.localStorage.getSelectedUser().then((res) => {
-      console.log('getSelectedStudent', res);
+      // console.log('getSelectedStudent', res);
       this.userInfo = res;
     });
   }

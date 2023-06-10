@@ -23,7 +23,7 @@ export class HomePage {
     this.router.navigate(['/main/tab1']);
   }
   ngOnInit() {
-    console.log('Initializing HomePage');
+    // console.log('Initializing HomePage');
     return;
     // Request permission to use push notifications
     // iOS will prompt user and return if they granted permission or not

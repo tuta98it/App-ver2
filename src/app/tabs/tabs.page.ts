@@ -96,7 +96,7 @@ export class TabsPage implements AfterViewInit {
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   async ngOnInit() {
     this.localStorage.getSelectedUser().then((res) => {
-      console.log('getSelectedUser', res);
+      // console.log('getSelectedUser', res);
       this.userInfo = res;
     });
   }

@@ -52,7 +52,7 @@ export class PhotoService {
   }
 
   public async choosePhotoFromGallery() {
-    console.log('choosePhotoFromGallery');
+    // console.log('choosePhotoFromGallery');
     // Take a photo
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
@@ -115,7 +115,7 @@ export class PhotoService {
       img.src = src;
 
       img.onload = () => {
-        console.log(img.width, img.height);
+        // console.log(img.width, img.height);
         if (img.width < img.height) {
           newY = newX * img.height / img.width;
         } else {
@@ -126,7 +126,7 @@ export class PhotoService {
         elem.height = newY;
         const ctx = elem.getContext('2d');
         ctx.drawImage(img, 0, 0, newX, newY);
-        console.log(newX, newY);
+        // console.log(newX, newY);
         const data = ctx.canvas.toDataURL();
         res(data);
       };
@@ -156,7 +156,7 @@ export class PhotoService {
         } else if (inputImageAspectRatio < aspectRatio) {
           outputHeight = inputWidth / aspectRatio;
         }
-        console.log(outputWidth, outputHeight);
+        // console.log(outputWidth, outputHeight);
 
         // calculate the position to draw the image at
         const outputX = (outputWidth - inputWidth) * 0.5;
@@ -198,7 +198,7 @@ export class PhotoService {
     await this.compressImage(base64Data, 800, 800).then(compressed => {
       base64Data = compressed;
     })
-    console.log(base64Data);
+    // console.log(base64Data);
     const fileName = new Date().getTime() + '.jpg';
     return {
       filepath: fileName,

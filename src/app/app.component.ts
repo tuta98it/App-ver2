@@ -7,7 +7,7 @@ import {StorageService} from './services/storage.service';
 import {NotificationService} from './services/notification.service';
 import {Device} from '@capacitor/device';
 /*import {Badge} from '@awesome-cordova-plugins/badge/ngx';*/
-import {StatusBar, Style} from '@capacitor/status-bar';
+// import {StatusBar, Style} from '@capacitor/status-bar';
 import {Constant} from './shared/constants/constant.class';
 
 @Component({
@@ -26,12 +26,11 @@ export class AppComponent {
   }
 
   async ngOnInit() {
-    console.log('vao day ko');
-    try {
-      StatusBar.setStyle({style: Style.Dark});
-    } catch (e) {
+    // try {
+    //   StatusBar.setStyle({style: Style.Dark});
+    // } catch (e) {
 
-    }
+    // }
     const info = await Device.getInfo();
     const deviceId = await Device.getId();
     // console.log(info);
@@ -71,12 +70,12 @@ export class AppComponent {
         console.log('mSchool token:', token.value);*/
         this.localStorage.set('fcmToken', token.value).then(res => {
           // alert('saved token success: ' + token.value);
-          console.log('saved token success');
+          // console.log('saved token success');
         });
       });
 
       PushNotifications.addListener('registrationError', (error: any) => {
-        console.log('Error on registration: ' + JSON.stringify(error));
+        // console.log('Error on registration: ' + JSON.stringify(error));
       });
       PushNotifications.addListener(
         'pushNotificationReceived',
@@ -89,9 +88,9 @@ export class AppComponent {
         'pushNotificationActionPerformed',
         (notification: ActionPerformed) => {
           //alert('Push action performed: ' + JSON.stringify(notification)); //JSON.stringify(notification));
-          console.log('pushNotificationActionPerformed', JSON.stringify(notification));
-          console.log('notification', notification.notification.data);
-          console.log('tap', notification.actionId);
+          // console.log('pushNotificationActionPerformed', JSON.stringify(notification));
+          // console.log('notification', notification.notification.data);
+          // console.log('tap', notification.actionId);
           //
           let notiType = +notification.notification.data['gcm.notification.messageType'];
           if (!notiType) {

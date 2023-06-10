@@ -623,35 +623,35 @@ export class LaboratoryPage implements OnInit {
         this.filterInterval.isShow = false;
         daysToSubtract = 0;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Đầu ngày hôm nay', pastTime);
+        // console.log('Đầu ngày hôm nay', pastTime);
         break;
       case 2:
         // Subtract 1 day
         this.filterInterval.isShow = false;
         daysToSubtract = 1;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Cách đây 1 ngày trước', pastTime);
+        // console.log('Cách đây 1 ngày trước', pastTime);
         break;
       case 3:
         // Subtract 7 day
         this.filterInterval.isShow = false;
         daysToSubtract = 7;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Cách đây 7 ngày', pastTime);
+        // console.log('Cách đây 7 ngày', pastTime);
         break;
       case 4:
         // Subtract 14 day
         this.filterInterval.isShow = false;
         daysToSubtract = 14;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Cách đây 14 ngày', pastTime);
+        // console.log('Cách đây 14 ngày', pastTime);
         break;
       case 5:
         // Subtract 30 day
         this.filterInterval.isShow = false;
         daysToSubtract = 30;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Cách đây 30 ngày', pastTime);
+        // console.log('Cách đây 30 ngày', pastTime);
         break;
       case 6:
         // Đầu tuần này
@@ -659,7 +659,7 @@ export class LaboratoryPage implements OnInit {
 
         daysToSubtract = currentDay === 0 ? 6 : currentDay - 1;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log('Đầu tuần này', pastTime);
+        // console.log('Đầu tuần này', pastTime);
         break;
       case 7:
         // Đầu tuần trước
@@ -668,14 +668,14 @@ export class LaboratoryPage implements OnInit {
         daysToSubtract = currentDay + 7 - 1;
         console.log('daysToSubtract', daysToSubtract);
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
-        console.log(' Đầu tuần trước', pastTime);
+        // console.log(' Đầu tuần trước', pastTime);
         break;
       case 8:
         // Đầu tháng này
         this.filterInterval.isShow = false;
 
         pastTime.setDate(1);
-        console.log('Đầu tháng này', pastTime);
+        // console.log('Đầu tháng này', pastTime);
         break;
       case 9:
         // Đầu tháng trước
@@ -687,7 +687,7 @@ export class LaboratoryPage implements OnInit {
         // Subtract one month from the date
         pastTime.setMonth(pastTime.getMonth() - 1);
 
-        console.log('Đầu tháng trước ', pastTime);
+        // console.log('Đầu tháng trước ', pastTime);
         break;
       case 10:
         // Hiện calender cho hai thời điểm lọc dữ liệu.
@@ -727,7 +727,7 @@ export class LaboratoryPage implements OnInit {
   }
 
   async handleChangeFilterIntervalCustomByUser(event: any) {
-    console.log('handleChangeFilterIntervalCustomByUser event', event);
+    // console.log('handleChangeFilterIntervalCustomByUser event', event);
     const pastTime = this.filterInterval.pastTime;
     // console.log('pastTime: ',pastTime);
     const presentTime = this.filterInterval.presentTime;
@@ -756,7 +756,7 @@ export class LaboratoryPage implements OnInit {
 
   handleChangeRequestType(event: any) {
 
-    console.log('handleChangePartner event: ', event);
+    // console.log('handleChangePartner event: ', event);
     const value = event.target.value;
     // this.itemPatientFormModalLab.valueRequestType = value;
     // this.validFormInput.isEmptyRequestType = (value === 0);

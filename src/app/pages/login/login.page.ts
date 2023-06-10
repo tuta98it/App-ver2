@@ -44,13 +44,13 @@ export class LoginPage implements OnInit {
     // });
     this.localStorage.get('deviceInfo').then(res => {
       this.deviceInfo = res;
-      console.log(this.deviceInfo);
+      // console.log(this.deviceInfo);
     });
 
 
     // Xác thực người dùng
     this.authService.checkToken().subscribe((res: any) => {
-      console.log('this.authService.checkToken() res : ', res);
+      // console.log('this.authService.checkToken() res : ', res);
       const objRes = res.ret[0];
       const codeRes = objRes.code;
       if (res.ret) {
@@ -87,7 +87,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
       }
     }, error => {
-      console.log('Error Set INIT_DATA for local-storage');
+      // console.log('Error Set INIT_DATA for local-storage');
     });
   }
 
@@ -118,18 +118,18 @@ export class LoginPage implements OnInit {
         this.notificationService.showMessage(Constant.DANGER, 'Sai tên đăng nhập hoặc mật khẩu');
         return;
       }
-      console.log('Constant.STORAGE_USERINFO, = ', Constant.STORAGE_USERINFO, res);
+      // console.log('Constant.STORAGE_USERINFO, = ', Constant.STORAGE_USERINFO, res);
       this.storage.set(Constant.STORAGE_USERINFO, res).then((res3) => {
         loading.dismiss();
         // this.router.navigate(['/main']);
         localStorage.setItem(Constant.TOKEN, res3.token);
-        console.log('res3: ', res3);
+        // console.log('res3: ', res3);
         this.navCtrl.navigateRoot(['/main/requests']);
       });
 
 
     }, (error: any) => {
-      console.log('error : ', error);
+      // console.log('error : ', error);
       if (error.error.message) {
         this.notificationService.showMessage(Constant.DANGER, 'Sai tên đăng nhập hoặc mật khẩu');
       }
