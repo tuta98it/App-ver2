@@ -42,7 +42,6 @@
           <ion-label>Settings</ion-label>
         </ion-item> -->
       </ion-list>
-
       <!-- Nút "Đăng xuất" -->
       <div class="logout-button-wrapper">
         <ion-button size="medium" color="light" (click)="presentAlertLogout()">Đăng xuất<ion-icon slot="end"
@@ -63,13 +62,11 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-
       <!-- Tiêu đề -->
       <ion-title>{{titleApp}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-tab-bar slot="bottom" class="tab-bottom">
-
     <!-- <ion-tab-button tab="tab1" color="secondary" class="ion-no-padding">
       <ion-icon [color]="selectedTab !== 'tab1' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'tab1' ? 'home-outline' : 'home'" name="home-outline"></ion-icon>
@@ -91,30 +88,24 @@
         [name]="selectedTab !== 'feed' ? 'newspaper-outline' : 'newspaper'"></ion-icon>
       <ion-label>Tab 3</ion-label>
     </ion-tab-button> -->
-
     <ion-tab-button tab="laboratory" color="secondary" class="ion-no-padding" (click)="titleApp = 'Xét nghiệm'">
       <ion-icon [color]="selectedTab !== 'laboratory' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'laboratory' ? 'clipboard-outline' : 'clipboard'" name="clipboard-outline"></ion-icon>
       <ion-label>Xét nghiệm</ion-label>
     </ion-tab-button>
-
     <ion-tab-button tab="services" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông tin dịch vụ'">
       <ion-icon [color]="selectedTab !== 'services' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'services' ? 'prism-outline' : 'prism'" name="prism-outline"></ion-icon>
       <ion-label>Dịch vụ</ion-label>
     </ion-tab-button>
-
     <ion-tab-button tab="notifications" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông báo'">
       <ion-icon [color]="selectedTab !== 'notifications' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'notifications' ? 'notifications-outline' : 'notifications'"
         name="notifications-outline"></ion-icon>
       <ion-label>Thông báo</ion-label>
     </ion-tab-button>
-
-
   </ion-tab-bar>
 </ion-tabs>
-
 
 <!-- Thông tin user -->
 <ion-modal [isOpen]="isModalOpenUser">
@@ -129,22 +120,17 @@
             <!-- <ion-icon slot="icon-only" name="close-outline"></ion-icon> -->
           </ion-button>
         </ion-buttons>
-
         <!-- Tiêu đề Modal -->
         <ion-title>{{userInfo?.username? userInfo.username : 'Anonymous'}}</ion-title>
       </ion-toolbar>
-
     </ion-header>
-
     <ion-content class="ion-padding">
-
       <div style="display: flex; justify-content: center;">
         <ion-avatar style="height: fit-content; width: fit-content;">
           <ion-img [src]="userInfo?.avatar? userInfo.avatar : linkAvatarDefault"
             style="width: 6rem; height: 6rem;"></ion-img>
         </ion-avatar>
       </div>
-
       <ion-list *ngIf="!(userInfo | isEmpty) || true">
         <ion-item button *ngIf="userInfo.fullname">
           <ion-icon name="person-circle-outline" slot="start"></ion-icon>
@@ -207,8 +193,6 @@
           <ion-button size="medium" fill="clear" (click)="setOpenModalSales(true)">Doanh số</ion-button>
         </ion-buttons>
       </ion-list>
-
-
     </ion-content>
   </ng-template>
 </ion-modal>
@@ -230,7 +214,6 @@
         <ion-title>Doanh số</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item style="font-weight: bold;">
@@ -278,38 +261,34 @@
             </ion-select-option>
           </ion-select>
         </ion-item>
-
         <ion-item>
           <ion-label>Bệnh lý:</ion-label>
         </ion-item>
-
         <ion-item>
           <div class="bar-chart-container">
-            <canvas class="bar-chart" #barCanvas1></canvas>
+            <div class="colSmall">
+              <canvas class="bar-chart" #barCanvas1></canvas>
+            </div>
+            <div class="colLarge">
+              <div class="box">
+                <canvas class="bar-chart" #barCanvas3></canvas>
+              </div>
+            </div>
           </div>
         </ion-item>
-
         <ion-item>
           <ion-label>Nhóm sản phẩm chiến lược:</ion-label>
         </ion-item>
-        
         <ion-item>
-          <div class="bar-chart-container">
+          <div class="bar-chart-container" style="overflow-x: scroll;">
             <canvas class="bar-chart" #barCanvas2></canvas>
           </div>
         </ion-item>
       </ion-list>
-
       <!-- <app-pie-chart></app-pie-chart> -->
-      
-      <!-- <ion-card>
-        <ion-card-content>
-        </ion-card-content>
-      </ion-card> -->
     </ion-content>
   </ng-template>
 </ion-modal>
-
 
 <!-- Liên hệ-->
 <ion-modal [isOpen]="isModalOpenContact">
@@ -328,7 +307,6 @@
         <ion-title>{{titleContact}}</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item>

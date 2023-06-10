@@ -15,6 +15,7 @@ export class TabsPage implements AfterViewInit {
   @ViewChild('tabs', { static: false }) tabs: IonTabs;
   @ViewChild('barCanvas1', {static: false}) barCanvas1: ElementRef;
   @ViewChild('barCanvas2', {static: false}) barCanvas2: ElementRef;
+  @ViewChild('barCanvas3', {static: false}) barCanvas3: ElementRef;
   // @ViewChild(IonModal) modal!: IonModal;
   linkAvatarDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
   public alertConfirmButtons = [
@@ -116,36 +117,105 @@ export class TabsPage implements AfterViewInit {
     this.barChart = new Chart(this.barCanvas1.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['Tuyến giáp', 'Sốt xuất huyết', 'Ung thư', 'Sốt virus', 'Covid', 'NCP'],
+        labels: ['Covid', 'Sốt xuất huyết', 'Ung thư', 'Sốt virus', 'Covid', 'NCP', 'Ung thư', 'Sốt virus', 'Covid', 'NCP'],
         datasets: [
           {
             label: 'Doanh số tổng',
             data: ['467','576', '572', '79', '92',
-                '574', '573', '576'],
-            backgroundColor: 'blue'
+                '574', '53', '576', '92', '504'],
+            backgroundColor: 'blue',
+            minBarLength: 2,
           },
           {
             label: 'Chiết khấu',
             data: ['542', '542', '536', '327', '17',
-                  '0.00', '538', '541'],
+                  '0.00', '538', '341', '92', '374'],
             backgroundColor: 'limegreen'
           },
         {
             label: 'Chưa thanh toán',
             data: ['542', '542', '536', '327', '17',
-                  '0.00', '538', '541'],
+                  '50', '538', '541', '92', '574'],
             backgroundColor: 'cyan'
           }]
       },
       options: {
-        responsive: true,
+        responsive: false,
+        layout: {
+          padding: {
+            bottom: 42
+          }
+        },
         scales: {
+          xAxes: [{
+            ticks: {
+              display: false
+            },
+            gridLines: {
+              // drawOnChartArea: false,
+              offsetGridLines: true
+            }
+          }],
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+            },
+            gridLines: {
+              // drawOnChartArea: false
             }
           }]
-        }
+        },
+        maintainAspectRatio: false
+      }
+    });
+
+    this.barChart = new Chart(this.barCanvas3.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: ['Covid', 'Sốt xuất huyết', 'Ung thư', 'Sốt virus', 'Covid', 'NCP', 'Ung thư', 'Sốt virus', 'Covid', 'NCP'],
+        datasets: [
+          {
+            label: 'Doanh số tổng',
+            data: ['467','576', '572', '79', '92',
+                '574', '53', '576', '92', '504'],
+            backgroundColor: 'blue',
+            minBarLength: 2,
+          },
+          {
+            label: 'Chiết khấu',
+            data: ['542', '542', '536', '327', '17',
+                  '0.00', '538', '341', '92', '374'],
+            backgroundColor: 'limegreen'
+          },
+        {
+            label: 'Chưa thanh toán',
+            data: ['542', '542', '536', '327', '17',
+                  '50', '538', '541', '92', '574'],
+            backgroundColor: 'cyan'
+          }]
+      },
+      options: {
+        responsive: false,
+        scales: {
+          xAxes: [{
+            ticks: {
+              display: true
+            },
+            gridLines: {
+              // drawOnChartArea: false,
+              offsetGridLines: true
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              display: false,
+            },
+            gridLines: {
+              // drawOnChartArea: false
+            }
+          }]
+        },
+        maintainAspectRatio: false
       }
     });
 
@@ -174,14 +244,15 @@ export class TabsPage implements AfterViewInit {
           }]
       },
       options: {
-        responsive: true,
+        responsive: false,
         scales: {
           yAxes: [{
             ticks: {
               beginAtZero: true
             }
           }]
-        }
+        },
+        maintainAspectRatio: false
       }
     });
     console.log(this.barChart);
