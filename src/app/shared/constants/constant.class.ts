@@ -8,6 +8,7 @@ export class Constant {
   public static readonly SUCCESS = 'success';
   public static readonly INFO = 'info';
   public static readonly ERROR = 'error';
+  public static readonly DANGER = 'danger';
   public static readonly WARNING = 'warning';
   public static readonly TOKEN = 'token';
   public static readonly INIT_DATA = "initial_data";
