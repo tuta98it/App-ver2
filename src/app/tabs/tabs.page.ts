@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 import { Chart } from 'chart.js';
+import { HttpClient } from '@angular/common/http';
+import axios from 'axios';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -13,9 +15,9 @@ import { Chart } from 'chart.js';
 })
 export class TabsPage implements AfterViewInit {
   @ViewChild('tabs', { static: false }) tabs: IonTabs;
-  @ViewChild('barCanvas1', {static: false}) barCanvas1: ElementRef;
-  @ViewChild('barCanvas2', {static: false}) barCanvas2: ElementRef;
-  @ViewChild('barCanvas3', {static: false}) barCanvas3: ElementRef;
+  @ViewChild('barCanvas1', { static: false }) barCanvas1: ElementRef;
+  @ViewChild('barCanvas2', { static: false }) barCanvas2: ElementRef;
+  @ViewChild('barCanvas3', { static: false }) barCanvas3: ElementRef;
   // @ViewChild(IonModal) modal!: IonModal;
   linkAvatarDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
   public alertConfirmButtons = [
@@ -36,6 +38,7 @@ export class TabsPage implements AfterViewInit {
     },
   ];
   barChart: any;
+  contentAbout: any;
   // accCurrent: any = {};
   userInfo: any;
   titleApp = 'Xét nghiệm';
@@ -45,6 +48,7 @@ export class TabsPage implements AfterViewInit {
   isModalOpenUser = false;
   isModalOpenSales = false;
   isModalOpenContact = false;
+  isModalOpenContentAbout = false;
 
   constructor(
     public navCtrl: NavController,
@@ -55,7 +59,8 @@ export class TabsPage implements AfterViewInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private changeDetectorRef: ChangeDetectorRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private httpClient: HttpClient
   ) {
 
   }
@@ -95,17 +100,43 @@ export class TabsPage implements AfterViewInit {
 
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   async ngOnInit() {
-    this.localStorage.getSelectedUser().then((res) => {
+    this.localStorage.getSelectedUser().then((res: any) => {
       // console.log('getSelectedUser', res);
       this.userInfo = res;
     });
+
+    // this.loadContentAbout();
+
+    // this.loadWebsiteContent();
+  }
+
+  loadContentAbout() {
+    this.httpClient
+      .get('https://invivolab.vn/gioi-thieu/', { responseType: 'text' })
+      .subscribe((response) => {
+        this.contentAbout = response;
+      });
+  }
+
+  async loadWebsiteContent() {
+    try {
+      const response = await axios.get('https://invivolab.vn/gioi-thieu/');
+      console.log('response : ', response);
+      const websiteContent = response.data;
+
+      // Xử lý nội dung trang web ở đây
+      console.log('websiteContent: ', websiteContent);
+    } catch (error) {
+      // Xử lý lỗi khi tải nội dung trang web
+      console.error(error);
+    }
   }
 
   ngAfterViewInit() {
     // this.barChartMethod();
   }
 
-  setOpenModalSales(isOpen) {
+  setOpenModalSales(isOpen: any) {
     // this.changeDetectorRef.detectChanges();
     this.isModalOpenSales = isOpen;
     // this.barChartMethod();
@@ -121,21 +152,21 @@ export class TabsPage implements AfterViewInit {
         datasets: [
           {
             label: 'Doanh số tổng',
-            data: ['467','576', '572', '79', '92',
-                '574', '53', '576', '92', '504'],
+            data: ['467', '576', '572', '79', '92',
+              '574', '53', '576', '92', '504'],
             backgroundColor: 'blue',
             minBarLength: 2,
           },
           {
             label: 'Chiết khấu',
             data: ['542', '542', '536', '327', '17',
-                  '0.00', '538', '341', '92', '374'],
+              '0.00', '538', '341', '92', '374'],
             backgroundColor: 'limegreen'
           },
-        {
+          {
             label: 'Chưa thanh toán',
             data: ['542', '542', '536', '327', '17',
-                  '50', '538', '541', '92', '574'],
+              '50', '538', '541', '92', '574'],
             backgroundColor: 'cyan'
           }]
       },
@@ -176,21 +207,21 @@ export class TabsPage implements AfterViewInit {
         datasets: [
           {
             label: 'Doanh số tổng',
-            data: ['467','576', '572', '79', '92',
-                '574', '53', '576', '92', '504'],
+            data: ['467', '576', '572', '79', '92',
+              '574', '53', '576', '92', '504'],
             backgroundColor: 'blue',
             minBarLength: 2,
           },
           {
             label: 'Chiết khấu',
             data: ['542', '542', '536', '327', '17',
-                  '0.00', '538', '341', '92', '374'],
+              '0.00', '538', '341', '92', '374'],
             backgroundColor: 'limegreen'
           },
-        {
+          {
             label: 'Chưa thanh toán',
             data: ['542', '542', '536', '327', '17',
-                  '50', '538', '541', '92', '574'],
+              '50', '538', '541', '92', '574'],
             backgroundColor: 'cyan'
           }]
       },
@@ -226,20 +257,20 @@ export class TabsPage implements AfterViewInit {
         datasets: [
           {
             label: 'Doanh số tổng',
-            data: ['467','576', '572', '79', '92',
-                '574', '573', '576'],
+            data: ['467', '576', '572', '79', '92',
+              '574', '573', '576'],
             backgroundColor: 'blue'
           },
           {
             label: 'Chiết khấu',
             data: ['542', '542', '536', '327', '17',
-                  '0.00', '538', '541'],
+              '0.00', '538', '541'],
             backgroundColor: 'limegreen'
           },
-        {
+          {
             label: 'Chưa thanh toán',
             data: ['542', '542', '536', '327', '17',
-                  '0.00', '538', '541'],
+              '0.00', '538', '541'],
             backgroundColor: 'cyan'
           }]
       },
@@ -468,12 +499,22 @@ export class TabsPage implements AfterViewInit {
     }
   }
 
-  setOpenModalUser(isOpen) {
+  setOpenModalUser(isOpen: any) {
     this.isModalOpenUser = isOpen;
   }
 
-  setOpenModalContact(isOpen) {
+  setOpenModalContact(isOpen: any) {
     this.isModalOpenContact = isOpen;
+    if (isOpen) {
+      this.titleContact = 'Liên hệ';
+    }
+  }
+
+  setOpenModalContentAbout(isOpen: any) {
+    this.isModalOpenContentAbout = isOpen;
+    if (open) {
+      this.titleContact = 'About';
+    }
   }
 
   isEmpty(value: any) {
