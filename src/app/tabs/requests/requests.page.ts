@@ -37,6 +37,7 @@ export class RequestsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('popoverFormFilter') popoverFormFilter;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
+  @ViewChild('requestType') requestType: IonSelect;
   now: any;
   userInfo: any;
   isPopoverOpenFilter = false;
@@ -120,8 +121,10 @@ export class RequestsPage implements OnInit {
 
   // Form lọc theo filter
   formFilterTestSheet = {
+    valueRequestTypePatient: 0,
     namePatient: '',
     phoneNoPatient: '',
+    addressPatient: '',
     orderStatus: 0,
   };
 
@@ -755,6 +758,8 @@ export class RequestsPage implements OnInit {
   restartFormFilter() {
     this.formFilterTestSheet.namePatient = '';
     this.formFilterTestSheet.phoneNoPatient = '';
+    this.formFilterTestSheet.valueRequestTypePatient = 0;
+    this.requestType.value = 0;
     this.orderStatusSelect.value = 0;
   }
 

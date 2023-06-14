@@ -49,7 +49,7 @@ export class TabsPage implements AfterViewInit {
   isModalOpenSales = false;
   isModalOpenContact = false;
   isModalOpenContentAbout = false;
-
+  isModalOpenFormEditInfoUser = false;
   constructor(
     public navCtrl: NavController,
     public badgeService: BadgeService,
@@ -513,8 +513,21 @@ export class TabsPage implements AfterViewInit {
   setOpenModalContentAbout(isOpen: any) {
     this.isModalOpenContentAbout = isOpen;
     if (open) {
-      this.titleContact = 'About';
+      this.titleApp = 'About';
     }
+  }
+
+
+
+  setOpenModalFormEditInfoUser(isOpen: any) {
+    this.isModalOpenFormEditInfoUser = isOpen;
+    if(isOpen){
+      this.titleApp = 'Chỉnh sửa TT cá nhân';
+    }
+  }
+
+  saveModalFormEditInfoUser(){
+    this.isModalOpenFormEditInfoUser = false;
   }
 
   isEmpty(value: any) {
