@@ -146,35 +146,35 @@
 
       <ion-list *ngIf="!(userInfo | isEmpty) || true">
         <ion-item lines="none" *ngIf="userInfo.fullname">
-          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+          <ion-icon name="person-circle-outline" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Họ và tên</h3>
             <p>{{userInfo.fullname}}</p>
           </ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="barcode" slot="start"></ion-icon>
+          <ion-icon name="barcode" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Mã KH</h3>
             <p *ngIf="userInfo.code">{{userInfo.code}}</p>
           </ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="call" slot="start"></ion-icon>
+          <ion-icon name="call" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Số điện thoại</h3>
             <p *ngIf="userInfo.phone">{{userInfo.phone}}</p>
           </ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="location" slot="start"></ion-icon>
+          <ion-icon name="location" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Địa chỉ</h3>
             <p style="white-space: break-spaces;" *ngIf="userInfo.address">{{userInfo.address}}</p>
           </ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="logo-facebook" slot="start"></ion-icon>
+          <ion-icon name="logo-facebook" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Facebook</h3>
             <p *ngIf="userInfo.facebook">{{userInfo.socialNetwork.facebook}}</p>
@@ -186,7 +186,8 @@
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
           <!-- <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px;"></i> -->
           <!-- <ion-icon name="megaphone-outline" slot="start"></ion-icon> -->
-          <img width="26" height="26" src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" style="margin-inline: 0px 20px;"/>
+          <img width="26" height="26" src="https://img.icons8.com/color/50/zalo.png" alt="zalo"
+            style="margin-inline: 0px 20px;" />
           <!-- <ion-img src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" style="margin-inline: 0px 20px;"/> -->
           <!-- <img src="/src/assets/icon/zalo.svg"> -->
           <ion-label>
@@ -198,7 +199,7 @@
         <!-- Telegram -->
         <ion-item lines="none">
 
-          <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px;"></i>
+          <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px; color: #0353B4;"></i>
           <!-- <ion-icon name="fa-brands fa-telegram" slot="start"></ion-icon> -->
           <!-- <ion-icon slot="start"><i class="fa-brands fa-telegram"></i></ion-icon> -->
           <ion-label>
@@ -212,21 +213,18 @@
         <!-- Twitter -->
         <ion-item lines="none">
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
-          <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 20px;"></i>
+          <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 20px; color: #0353B4;"></i>
           <ion-label>
             <h3>Twitter</h3>
             <p *ngIf="userInfo.telegram">{{userInfo.socialNetwork.tiwtter}}</p>
           </ion-label>
         </ion-item>
-
-
-
-
-        <ion-buttons slot="start">
-          <ion-button size="medium" fill="clear" (click)="setOpenModalSales(true)">Doanh số</ion-button>
-        </ion-buttons>
       </ion-list>
     </ion-content>
+    <ion-button size="medium" fill="clear" (click)="setOpenModalSales(true)">
+      <i class="fa-sharp fa-solid fa-chart-simple" style="margin-inline: 0px 10px; color: #0353B4;"></i>
+      Doanh số
+    </ion-button>
   </ng-template>
 </ion-modal>
 
@@ -639,7 +637,7 @@
         <!-- Chỉnh sửa địa chỉ Zalo -->
         <ion-item>
           <ion-label position="stacked">
-            <img width="15" height="15" src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo"/>
+            <img width="15" height="15" src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" />
             Zalo
           </ion-label>
           <ion-input placeholder="Link zalo..." value="{{userInfo.socialNetwork.zalo}}"></ion-input>
