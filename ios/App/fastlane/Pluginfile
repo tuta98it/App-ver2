@@ -1,0 +1,2 @@
+gem 'fastlane-plugin-appbox'
+gem 'fastlane-plugin-zealot'

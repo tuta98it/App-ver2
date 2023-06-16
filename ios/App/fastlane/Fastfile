@@ -1,0 +1,65 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+require 'spaceship'
+Spaceship::ConnectAPI::App.const_set('ESSENTIAL_INCLUDES', 'appStoreVersions')
+
+default_platform(:ios)
+
+platform :ios do
+    lane :beta do
+        # register_devices(
+        #     devices: {
+        #       "Huong" => ""
+        #     }
+        #   )
+        match(type: "adhoc", api_key_path: "/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/Store_AuthKey_H3K2K79VVJ.json")
+
+        gym(scheme: "App", export_method: "ad-hoc", export_xcargs: "-allowProvisioningUpdates", clean: true, silent: true)
+
+        Dir.chdir ".." do
+            sh("pwd")
+            zealot(
+                endpoint: 'https://log4test.pmr.vn',
+                token: '320bacf980e20e7b058be2d77154dc53',
+                channel_key: 'f4833dcb260293a5523bfd1aa4a896fd',
+                file: '../ios/App/App.ipa',
+                changelog: ''
+            )
+        end
+        # appbox(
+	    #     emails: "abc@gmail.com",
+        #     keep_same_link: true
+        # )
+    end
+    lane :deploy do
+        api_key = app_store_connect_api_key(
+            key_id: ENV['IOS_KEY_ID'],
+            issuer_id: ENV['IOS_ISSUER_ID'],
+            key_filepath: "/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/Store_AuthKey_H3K2K79VVJ.p8",
+            in_house: false
+        )
+        match(type: "appstore", api_key_path: "/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/Store_AuthKey_H3K2K79VVJ.json")
+        gym(scheme: "App", export_method: "app-store", export_xcargs: "-allowProvisioningUpdates", clean: true, silent: true)
+        appstore(
+            skip_screenshots: true,
+            submit_for_review: false,
+            force: true,
+            precheck_include_in_app_purchases: false,
+            submission_information: { add_id_info_uses_idfa: false },
+            automatic_release: true
+        )
+        sh("echo", api_key)
+    end
+end
