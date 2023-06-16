@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>825687385563-s3i2dh8ja0d6dv1a8uovhckvrc8ga501.apps.googleusercontent.com</string>
+	<string>919108602480-84q0e8n8hfu5iv0g72f6jaed9p0fb36h.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.825687385563-s3i2dh8ja0d6dv1a8uovhckvrc8ga501</string>
+	<string>com.googleusercontent.apps.919108602480-84q0e8n8hfu5iv0g72f6jaed9p0fb36h</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCoTN_uswxRAjK-yYUwPZlcVGMo8ZVxBSs</string>
+	<string>AIzaSyBHhUTnu33yGvSiIAYqO5AG8bb-GKpl58k</string>
 	<key>GCM_SENDER_ID</key>
-	<string>825687385563</string>
+	<string>919108602480</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.lamanh.mschool</string>
+	<string>com.invivo.partner</string>
 	<key>PROJECT_ID</key>
-	<string>mschool-de76f</string>
+	<string>invivolab-d26fe</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mschool-de76f.appspot.com</string>
+	<string>invivolab-d26fe.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:825687385563:ios:d5df3c248dac0f03b9b3fe</string>
+	<string>1:919108602480:ios:ba575baf86e0ac824642b5</string>
 </dict>
 </plist>
