@@ -60,9 +60,10 @@
         </ion-list> -->
 
 
+        <!-- Filter -->
         <ion-buttons (click)="presentPopoverFilter($event)" slot="start">
           <ion-button>
-            <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
+            <ion-icon slot="icon-only" name="funnel-outline" aria-hidden="true"></ion-icon>
           </ion-button>
         </ion-buttons>
 
@@ -81,6 +82,20 @@
                     [(ngModel)]="formFilterTestSheet.namePatient"></ion-input>
                 </ion-item> -->
 
+                <ion-item>
+                  <ion-label position="stacked">
+                    <ion-icon name="options-outline"></ion-icon>
+                    Loại Yêu cầu
+                  </ion-label>
+                  <ion-select #requestType [interfaceOptions]="customAlertOptionsRequestType" style="font-size: small;" aria-label="parterns"
+                    placeholder="Chọn loại yêu cầu ..." (ionChange)="handleChangeRequestType($event)"
+                    [(ngModel)]="formFilterTestSheet.valueRequestTypePatient">
+                    <ion-select-option *ngFor="let typeOrder of listTypeOrder"
+                      [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="call-outline"></ion-icon>
@@ -91,7 +106,14 @@
                 </ion-item>
 
 
-
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="location-outline"></ion-icon>
+                    Địa chỉ
+                  </ion-label>
+                  <ion-input type="text" placeholder="Nhập Địa chỉ ..."
+                    [(ngModel)]="formFilterTestSheet.addressPatient"></ion-input>
+                </ion-item>
 
 
                 <ion-item style="font-size: small;">
