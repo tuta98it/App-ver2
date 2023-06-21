@@ -36,6 +36,7 @@ import { GeneralService } from 'src/app/services/general-service';
 export class RequestsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('popoverFormFilter') popoverFormFilter;
+  @ViewChild('modalFormFilter') modalFormFilter;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
   @ViewChild('requestType') requestType: IonSelect;
   now: any;
@@ -368,8 +369,8 @@ export class RequestsPage implements OnInit {
     this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
   }
 
-  presentPopoverFilter(e: Event) {
-    this.popoverFormFilter.event = e;
+  presentModalFilter(e: Event) {
+    // this.modalFormFilter.event = e;
     this.isPopoverOpenFilter = true;
   }
 
@@ -751,7 +752,7 @@ export class RequestsPage implements OnInit {
 
     this.getListRequestByPayload(payload, true);
 
-    this.popoverFormFilter.dismiss();
+    this.modalFormFilter.dismiss();
   }
 
 
@@ -768,7 +769,7 @@ export class RequestsPage implements OnInit {
   }
 
   cancelFormFilter() {
-    this.popoverFormFilter.dismiss();
+    this.modalFormFilter.dismiss();
   }
 
   isEmpty(value: any) {
