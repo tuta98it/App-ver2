@@ -8,6 +8,7 @@ import { IsEmptyPipe } from '../shared/pipe/is-empty.pipe';
 import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
+import { Constant } from '../shared/constants/constant.class';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -309,7 +310,7 @@ export class TabsPage implements AfterViewInit {
   }
 
   logoutAccount() {
-    this.localStorage.clearAll();
+    localStorage.removeItem(Constant.TOKEN);
     this.router.navigate(['/login']);
   }
 
@@ -329,7 +330,6 @@ export class TabsPage implements AfterViewInit {
           role: 'confirm',
           handler: () => {
             this.logoutAccount();
-            // this.handlerMessage = 'Alert confirmed';
           },
         },
       ],

@@ -245,19 +245,19 @@ export class LaboratoryPage implements OnInit {
 
     // Lấy dữ liệu danh sách phiếu xét nghiệm
     const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: '',
+      // barcode: '',
+      // patient: '',
+      // status: 0,
+      // fromDate: '',
+      // toDate: '',
+      // assignToUserId: 0,
+      // counselors: null,
+      // partnerId: 0,
+      // isSendSMS: null,
+      // isPrintResult: null,
+      // patientAge: null,
+      // phoneNo: null,
+      // keyword: '',
       pageSize: 50,
       page: 1,
     };
@@ -579,18 +579,18 @@ export class LaboratoryPage implements OnInit {
     this.keywordSearch = event.target.value;
 
     const payload = {
-      barcode: null,
-      patient: null,
-      status: null,
+      // barcode: null,
+      patient: this.formFilterTestSheet.namePatient,
+      status: this.formFilterTestSheet.orderStatus,
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
-      assignToUserId: null,
-      counselors: null,
-      partnerId: null,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
+      // assignToUserId: null,
+      // counselors: null,
+      partnerId: this.userInfo.partnerId,
+      // isSendSMS: null,
+      // isPrintResult: null,
+      // patientAge: null,
+      phoneNo: this.formFilterTestSheet.phoneNoPatient,
       keyword: this.keywordSearch,
       pageSize: 50,
       page: 1,
@@ -706,22 +706,23 @@ export class LaboratoryPage implements OnInit {
     this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
 
     const payload = {
-      barcode: null,
-      patient: null,
-      status: null,
-      fromDate: pastTime,
-      toDate: presentTime,
-      assignToUserId: null,
-      counselors: null,
-      partnerId: null,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
+      // barcode: null,
+      patient: this.formFilterTestSheet.namePatient,
+      status: this.formFilterTestSheet.orderStatus,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
+      // assignToUserId: null,
+      // counselors: null,
+      partnerId: this.userInfo.partnerId,
+      // isSendSMS: null,
+      // isPrintResult: null,
+      // patientAge: null,
+      phoneNo: this.formFilterTestSheet.phoneNoPatient,
       keyword: this.keywordSearch,
       pageSize: 50,
       page: 1,
     };
+
 
     await this.getListOrder(payload, true);
   }
@@ -735,22 +736,23 @@ export class LaboratoryPage implements OnInit {
 
 
     const payload = {
-      barcode: null,
-      patient: null,
-      status: 0,
-      fromDate: pastTime,
-      toDate: presentTime,
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
+      // barcode: null,
+      patient: this.formFilterTestSheet.namePatient,
+      status: this.formFilterTestSheet.orderStatus,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
+      // assignToUserId: null,
+      // counselors: null,
+      partnerId: this.userInfo.partnerId,
+      // isSendSMS: null,
+      // isPrintResult: null,
+      // patientAge: null,
+      phoneNo: this.formFilterTestSheet.phoneNoPatient,
       keyword: this.keywordSearch,
       pageSize: 50,
       page: 1,
     };
+
     await this.getListOrder(payload, true);
   }
 
@@ -770,19 +772,19 @@ export class LaboratoryPage implements OnInit {
   async onSearchByFormFilter() {
 
     const payload = {
-      barcode: null,
-      patient: null,
-      status: null,
+      // barcode: null,
+      patient: this.formFilterTestSheet.namePatient,
+      status: this.formFilterTestSheet.orderStatus,
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
-      assignToUserId: null,
-      counselors: null,
-      partnerId: null,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
+      // assignToUserId: null,
+      // counselors: null,
+      partnerId: this.userInfo.partnerId,
+      // isSendSMS: null,
+      // isPrintResult: null,
+      // patientAge: null,
       phoneNo: this.formFilterTestSheet.phoneNoPatient,
-      keyword: this.formFilterTestSheet.namePatient,
+      keyword: this.keywordSearch,
       pageSize: 50,
       page: 1,
     };

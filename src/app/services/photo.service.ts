@@ -67,7 +67,7 @@ export class PhotoService {
   }
 
   public async chooseAvatar(userInfo) {
-    // console.log(userInfo);
+    console.log(userInfo);
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri, // file-based data; provides best performance
