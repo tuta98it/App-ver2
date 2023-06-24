@@ -61,34 +61,26 @@
 
 
         <!-- Filter -->
-        <ion-buttons (click)="presentPopoverFilter($event)" slot="start">
+        <ion-buttons id="open-modal-form-filter" (click)="presentModalFilter($event)" slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="funnel-outline" aria-hidden="true"></ion-icon>
           </ion-button>
         </ion-buttons>
 
-        <ion-popover #popoverFormFilter size="auto" [isOpen]="isPopoverOpenFilter"
+        <!-- <ion-popover #popoverFormFilter size="auto" [isOpen]="isPopoverOpenFilter"
           (didDismiss)="isPopoverOpenFilter = false">
           <ng-template>
             <ion-content class="ion-padding">
               <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label>
               <ion-list>
-                <!-- <ion-item style="font-size: small;">
-                  <ion-label position="stacked">
-                    <ion-icon name="person-outline"></ion-icon>
-                    Tên bệnh nhân
-                  </ion-label>
-                  <ion-input placeholder="Nhập tên bệnh nhân ..."
-                    [(ngModel)]="formFilterTestSheet.namePatient"></ion-input>
-                </ion-item> -->
-
                 <ion-item>
                   <ion-label position="stacked">
                     <ion-icon name="options-outline"></ion-icon>
                     Loại Yêu cầu
                   </ion-label>
-                  <ion-select #requestType [interfaceOptions]="customAlertOptionsRequestType" style="font-size: small;" aria-label="parterns"
-                    placeholder="Chọn loại yêu cầu ..." (ionChange)="handleChangeRequestType($event)"
+                  <ion-select #requestType [interfaceOptions]="customAlertOptionsRequestType" style="font-size: small;"
+                    aria-label="parterns" placeholder="Chọn loại yêu cầu ..."
+                    (ionChange)="handleChangeRequestType($event)"
                     [(ngModel)]="formFilterTestSheet.valueRequestTypePatient">
                     <ion-select-option *ngFor="let typeOrder of listTypeOrder"
                       [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
@@ -126,9 +118,6 @@
                     placeholder="Trạng thái đơn hàng" (ionChange)="handleChangeSelectOrderStatus($event)">
                     <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
                       [value]="order.id">{{order.name}}</ion-select-option>
-                    <!-- <ion-select-option  style="font-size: small;" value="0">Chưa nhận yêu cầu</ion-select-option>
-                    <ion-select-option  style="font-size: small;" value="1">Đã nhận yêu cầu và đang xử lý</ion-select-option>
-                    <ion-select-option  style="font-size: small;" value="2">Đã trả kết quả</ion-select-option> -->
                   </ion-select>
                 </ion-item>
               </ion-list>
@@ -142,7 +131,93 @@
               </ion-buttons>
             </ion-content>
           </ng-template>
-        </ion-popover>
+        </ion-popover> -->
+
+
+        <!-- Modal Filter -->
+        <ion-modal class="form-filter" #modalFormFilter trigger="open-modal-form-filter">
+          <ng-template>
+            <ion-content>
+              <ion-toolbar color="primary">
+                <ion-title>Lọc yêu cầu</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button color="light" (click)="modalFormFilter.dismiss()">Huỷ</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              <!-- <ion-label style="font-size: small;">Lọc Đối tác yêu cầu</ion-label> -->
+              <ion-list>
+                <ion-item>
+                  <ion-label position="stacked">
+                    <ion-icon name="options-outline"></ion-icon>
+                    Loại Yêu cầu
+                  </ion-label>
+                  <ion-select #requestType [interfaceOptions]="customAlertOptionsRequestType" style="font-size: small;"
+                    aria-label="parterns" placeholder="Chọn loại yêu cầu ..."
+                    (ionChange)="handleChangeRequestType($event)"
+                    [(ngModel)]="formFilterTestSheet.valueRequestTypePatient">
+                    <ion-select-option *ngFor="let typeOrder of listTypeOrder"
+                      [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="call-outline"></ion-icon>
+                    Số điện thoại
+                  </ion-label>
+                  <ion-input type="tel" placeholder="Nhập SĐT ..."
+                    [(ngModel)]="formFilterTestSheet.phoneNoPatient"></ion-input>
+                </ion-item>
+
+
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="location-outline"></ion-icon>
+                    Địa chỉ
+                  </ion-label>
+                  <ion-input type="text" placeholder="Nhập Địa chỉ ..."
+                    [(ngModel)]="formFilterTestSheet.addressPatient"></ion-input>
+                </ion-item>
+
+
+                <ion-item style="font-size: small;">
+                  <ion-label position="stacked">
+                    <ion-icon name="send-outline"></ion-icon>
+                    Trạng thái Đơn hàng
+                  </ion-label>
+                  <ion-select #orderStatusSelect style="font-size: small;" label="Trạng thái Đơn hàng"
+                    [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
+                    placeholder="Trạng thái đơn hàng" (ionChange)="handleChangeSelectOrderStatus($event)">
+                    <!-- <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
+                      [value]="order.id">{{order.name}}
+                    </ion-select-option> -->
+                    <ion-select-option style="font-size: small;" [value]=1>Chưa nhận yêu cầu
+                    </ion-select-option>
+                    <ion-select-option style="font-size: small;" [value]=2>Đã nhận yc và đang xử lý
+                    </ion-select-option>
+                    <ion-select-option style="font-size: small;" [value]=3>Đã có kết quả
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+              <ion-buttons style="display: flex; justify-content: space-evenly ; margin-top: 0.5rem;">
+                <!-- <ion-button size="small" fill="outline" color="medium" title="Huỷ"
+                          (click)="cancelFormFilter()"><ion-icon name="close-outline"></ion-icon></ion-button> -->
+                <ion-button size="small" fill="outline" color="danger" title="Xoá lọc" (click)="restartFormFilter()">
+                  <ion-icon size="small" name="trash-outline"></ion-icon>
+                  Xoá lọc
+                </ion-button>
+                <ion-button size="small" fill="solid" (click)="onSearchByFormFilter()" title="Lọc dữ liệu ...">
+                  <ion-icon size="small" name="search-outline"></ion-icon>
+                  Tìm kiếm
+                </ion-button>
+              </ion-buttons>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+
         <!-- <ion-item>
         </ion-item> -->
 
@@ -327,7 +402,14 @@
             </div>
 
             <!-- Tình trạng mẫu xét nghiệm *ngIf="(request?.requestType)"-->
-            <div class="status">
+            <div class="status"
+              [ngStyle]=
+              "
+                {
+                  'color' : request.receiveTime === null? '#ff0000' : '#885dff',
+                  'background-color' : request.receiveTime === null ? '#ffecec' : '#f5f1ff'
+                }
+              ">
               <!-- <h3>{{initDatas? (request.partner.status | orderStatus : initDatas?.orderStatus) : request.partner.status}}</h3> -->
               <!-- <h3>{{request.requestType ? request.requestType.requestTypeName : 'Lấy mẫu'}}</h3> -->
               <h3>{{request | statusRequestPipe}}</h3>

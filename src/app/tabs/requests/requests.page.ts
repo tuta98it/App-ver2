@@ -36,6 +36,7 @@ import { GeneralService } from 'src/app/services/general-service';
 export class RequestsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('popoverFormFilter') popoverFormFilter;
+  @ViewChild('modalFormFilter') modalFormFilter;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
   @ViewChild('requestType') requestType: IonSelect;
   now: any;
@@ -239,8 +240,29 @@ export class RequestsPage implements OnInit {
 
   async ngOnInit() {
     // console.log('ngOnInit');
-    this.localStorage.getSelectedUser().then((res) => {
+    this.localStorage.getSelectedUser().then((res: any) => {
       this.userInfo = res;
+      console.log('this.userInfo: ', this.userInfo);
+      // Lấy dữ liệu danh sách yêu cầu xét nghiệm
+      const payload = {
+        page: 1,
+        pageSize: 100,
+        // textSearch: null,
+        // fromDate: null,
+        // toDate: null,
+        // phone: null,
+        partnerId: this.userInfo.partnerId,
+        // receiveUserId: null,
+        // called: null,
+        // arrived: null,
+        // arrivedLabo: null,
+        // warning: null,
+        // received: null,
+        // requestTypeId: null,
+        // userCreated: null,
+        // canceled: null,
+      };
+     this.getListRequestByPayload(payload, true);
     });
 
     // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
@@ -250,26 +272,6 @@ export class RequestsPage implements OnInit {
     // Lấy dữ liệu danh sách phiếu xét nghiệm
     // await this.getListOrder();
 
-    // Lấy dữ liệu danh sách yêu cầu xét nghiệm
-    const payload = {
-      page: 1,
-      pageSize: 100,
-      textSearch: null,
-      fromDate: null,
-      toDate: null,
-      phone: null,
-      partnerId: null,
-      receiveUserId: null,
-      called: null,
-      arrived: null,
-      arrivedLabo: null,
-      warning: null,
-      received: null,
-      requestTypeId: null,
-      userCreated: null,
-      canceled: false
-    };
-    await this.getListRequestByPayload(payload, true);
 
     // Lấy danh sách loại yêu cầu
     await this.getListOrderType();
@@ -368,8 +370,8 @@ export class RequestsPage implements OnInit {
     this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
   }
 
-  presentPopoverFilter(e: Event) {
-    this.popoverFormFilter.event = e;
+  presentModalFilter(e: Event) {
+    // this.modalFormFilter.event = e;
     this.isPopoverOpenFilter = true;
   }
 
@@ -536,17 +538,17 @@ export class RequestsPage implements OnInit {
       textSearch: this.keywordSearch,
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
-      phone: null,
-      partnerId: null,
-      receiveUserId: null,
-      called: null,
-      arrived: null,
-      arrivedLabo: null,
-      warning: null,
-      received: null,
-      requestTypeId: null,
-      userCreated: null,
-      canceled: false
+      phone: this.formFilterTestSheet.phoneNoPatient,
+      partnerId: this.userInfo.partnerId,
+      // receiveUserId: null,
+      // called: null,
+      // arrived: null,
+      // arrivedLabo: null,
+      // warning: null,
+      // received: null,
+      requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
+      // userCreated: null,
+      // canceled: false
     };
 
     this.getListRequestByPayload(payload, false);
@@ -671,17 +673,17 @@ export class RequestsPage implements OnInit {
       textSearch: this.keywordSearch,
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
-      phone: null,
-      partnerId: null,
-      receiveUserId: null,
-      called: null,
-      arrived: null,
-      arrivedLabo: null,
-      warning: null,
-      received: null,
-      requestTypeId: null,
-      userCreated: null,
-      canceled: false
+      phone: this.formFilterTestSheet.phoneNoPatient,
+      partnerId: this.userInfo.partnerId,
+      // receiveUserId: null,
+      // called: null,
+      // arrived: null,
+      // arrivedLabo: null,
+      // warning: null,
+      // received: null,
+      requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
+      // userCreated: null,
+      // canceled: false
     };
 
     this.getListRequestByPayload(payload, true);
@@ -697,20 +699,20 @@ export class RequestsPage implements OnInit {
     const payload = {
       page: 1,
       pageSize: 100,
-      textSearch: this.formFilterTestSheet.namePatient,
-      fromDate: pastTime,
-      toDate: presentTime,
-      phone: null,
-      partnerId: null,
-      receiveUserId: null,
-      called: null,
-      arrived: null,
-      arrivedLabo: null,
-      warning: null,
-      received: null,
-      requestTypeId: null,
-      userCreated: null,
-      canceled: false
+      textSearch: this.keywordSearch,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
+      phone: this.formFilterTestSheet.phoneNoPatient,
+      partnerId: this.userInfo.partnerId,
+      // receiveUserId: null,
+      // called: null,
+      // arrived: null,
+      // arrivedLabo: null,
+      // warning: null,
+      // received: null,
+      requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
+      // userCreated: null,
+      // canceled: false
     };
 
     this.getListRequestByPayload(payload, false);
@@ -733,25 +735,25 @@ export class RequestsPage implements OnInit {
     const payload = {
       page: 1,
       pageSize: 100,
-      textSearch: this.formFilterTestSheet.namePatient,
-      fromDate: null,
-      toDate: null,
+      textSearch: this.keywordSearch,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
       phone: this.formFilterTestSheet.phoneNoPatient,
-      partnerId: null,
-      receiveUserId: null,
-      called: null,
-      arrived: null,
-      arrivedLabo: null,
-      warning: null,
-      received: null,
-      requestTypeId: null,
-      userCreated: null,
-      canceled: false
+      partnerId: this.userInfo.partnerId,
+      // receiveUserId: null,
+      // called: null,
+      // arrived: null,
+      // arrivedLabo: null,
+      // warning: null,
+      // received: null,
+      requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
+      // userCreated: null,
+      // canceled: false
     };
 
     this.getListRequestByPayload(payload, true);
 
-    this.popoverFormFilter.dismiss();
+    this.modalFormFilter.dismiss();
   }
 
 
@@ -768,7 +770,7 @@ export class RequestsPage implements OnInit {
   }
 
   cancelFormFilter() {
-    this.popoverFormFilter.dismiss();
+    this.modalFormFilter.dismiss();
   }
 
   isEmpty(value: any) {

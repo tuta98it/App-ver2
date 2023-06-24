@@ -44,6 +44,7 @@ export class StorageService {
   }
   clearAll(){
     this.localstorage.clear();
+    this.removeAllStorage();
   }
   getSelectedUser(): any {
     return this.storage.get(Constant.STORAGE_USERINFO);
