@@ -29,7 +29,6 @@ platform :ios do
         gym(scheme: "App", export_method: "ad-hoc", export_xcargs: "-allowProvisioningUpdates", clean: true, silent: true)
 
         Dir.chdir ".." do
-            sh("pwd")
             zealot(
                 endpoint: 'https://log4test.pmr.vn',
                 token: '320bacf980e20e7b058be2d77154dc53',
