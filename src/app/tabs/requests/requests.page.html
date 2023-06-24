@@ -103,7 +103,7 @@
                     <ion-icon name="location-outline"></ion-icon>
                     Địa chỉ
                   </ion-label>
-                  <ion-input type="text" placeholder="Nhập Địa chỉ ..."
+                  <ion-input type="text" placeholder="Nhập địa chỉ ..."
                     [(ngModel)]="formFilterTestSheet.addressPatient"></ion-input>
                 </ion-item>
 
@@ -135,13 +135,13 @@
 
 
         <!-- Modal Filter -->
-        <ion-modal class="form-filter" #modalFormFilter trigger="open-modal-form-filter">
+        <ion-modal class="form-filter" #modalFormFilterRequest trigger="open-modal-form-filter">
           <ng-template>
             <ion-content>
               <ion-toolbar color="primary">
                 <ion-title>Lọc yêu cầu</ion-title>
                 <ion-buttons slot="end">
-                  <ion-button color="light" (click)="modalFormFilter.dismiss()">Huỷ</ion-button>
+                  <ion-button color="light" (click)="modalFormFilterRequest.dismiss()">Huỷ</ion-button>
                 </ion-buttons>
               </ion-toolbar>
               <!-- <ion-label style="font-size: small;">Lọc Đối tác yêu cầu</ion-label> -->
@@ -176,7 +176,7 @@
                     <ion-icon name="location-outline"></ion-icon>
                     Địa chỉ
                   </ion-label>
-                  <ion-input type="text" placeholder="Nhập Địa chỉ ..."
+                  <ion-input type="text" placeholder="Nhập địa chỉ ..."
                     [(ngModel)]="formFilterTestSheet.addressPatient"></ion-input>
                 </ion-item>
 
@@ -194,7 +194,7 @@
                     </ion-select-option> -->
                     <ion-select-option style="font-size: small;" [value]=1>Chưa nhận yêu cầu
                     </ion-select-option>
-                    <ion-select-option style="font-size: small;" [value]=2>Đã nhận yc và đang xử lý
+                    <ion-select-option style="font-size: small; white-space: break-spaces;" [value]=2>Đã nhận yêu cầu, đang xử lý
                     </ion-select-option>
                     <ion-select-option style="font-size: small;" [value]=3>Đã có kết quả
                     </ion-select-option>
@@ -242,36 +242,45 @@
             <ion-select aria-label="times" interface="alert" value=0 placeholder="Chọn khoảng thời gian lọc ..."
               (ionChange)="handleChangeFilterInterval($event)">
 
-              <ion-select-option value=0>
+              <ion-select-option [value]=0>
                 --Tất cả--
               </ion-select-option>
-              <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [value]="time.id">
+              <!-- <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [[value]]="time.id">
                 {{time.name}}
-              </ion-select-option>
-              <!-- <ion-select-option value="all">
+              </ion-select-option> -->
+              <ion-select-option [value]=0>
                 --Tất Cả--
               </ion-select-option>
-              <ion-select-option value="today">
+              <ion-select-option [value]=1>
                 Hôm nay
               </ion-select-option>
-              <ion-select-option value="yesterday">
+              <ion-select-option [value]=2>
                 Hôm qua
               </ion-select-option>
-              <ion-select-option value="this_week">
+              <ion-select-option [value]=3>
+                7 ngày qua
+              </ion-select-option>
+              <ion-select-option [value]=4>
+                14 ngày qua
+              </ion-select-option>
+              <ion-select-option [value]=5>
+                30 ngày qua
+              </ion-select-option>
+              <ion-select-option [value]=6>
                 Tuần này
               </ion-select-option>
-              <ion-select-option value="7_day_ago">
-                7 ngày trước
+              <ion-select-option [value]=7>
+                Tuần trước
               </ion-select-option>
-              <ion-select-option value="this_month">
+              <ion-select-option [value]=8>
                 Tháng này
               </ion-select-option>
-              <ion-select-option value="30_days_ago">
-                30 ngày trước
+              <ion-select-option [value]=9>
+                Tháng trước
               </ion-select-option>
-              <ion-select-option value="from_day_to_date">
+              <ion-select-option [value]=10>
                 Từ ngày đến ngày
-              </ion-select-option> -->
+              </ion-select-option>
             </ion-select>
 
           </ion-item>
@@ -503,13 +512,14 @@
         </ion-col>
 
         <!-- Nhập địa chỉ bệnh nhân -->
+        <!--  -->
         <ion-col>
           <ion-item>
             <ion-label position="stacked">
               <ion-icon name="location-outline"></ion-icon>
               Địa chỉ <span style="color:red">*</span>
             </ion-label>
-            <ion-input [(ngModel)]="itemPatientFormModalLab.address" type="text" (keyup)="onKeyUpInputAddress()"
+            <ion-input  type="text" (keyup)="onKeyUpInputAddress()" [(ngModel)]="itemPatientFormModalLab.address"
               placeholder="Nhập địa chỉ ..."></ion-input>
           </ion-item>
           <span class="m-error" *ngIf="validFormInput.isEmptyAdress">*Địa chỉ không được để trống!</span>

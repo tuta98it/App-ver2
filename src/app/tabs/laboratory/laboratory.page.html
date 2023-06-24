@@ -59,18 +59,26 @@
           </ion-item>
         </ion-list> -->
 
-
-        <ion-buttons (click)="presentPopoverFilter($event)" slot="start">
+<!-- (click)="presentPopoverFilter($event)" -->
+        <ion-buttons  id="open-modal-form-filter-lab"  slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="funnel-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
 
-        <ion-popover #popoverFormFilter size="auto" [isOpen]="isPopoverOpenFilter"
-          (didDismiss)="isPopoverOpenFilter = false">
+
+
+        <!-- Modal Filter trigger="open-modal-form-filter-lab"-->
+        <ion-modal  class="form-filter" #modalFormFilterLab trigger="open-modal-form-filter-lab">
           <ng-template>
-            <ion-content class="ion-padding">
-              <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label>
+            <ion-content>
+              <ion-toolbar color="primary">
+                <ion-title>Lọc kết quả</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button color="light" (click)="modalFormFilterLab.dismiss()">Huỷ</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+              <!-- <ion-label style="font-size: small;">Lọc dữ liệu theo ...</ion-label> -->
               <ion-list>
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
@@ -90,10 +98,6 @@
                     [(ngModel)]="formFilterTestSheet.phoneNoPatient"></ion-input>
                 </ion-item>
 
-
-
-
-
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="send-outline"></ion-icon>
@@ -111,16 +115,17 @@
                 </ion-item>
               </ion-list>
               <ion-buttons style="display: flex; justify-content: space-evenly ; margin-top: 0.5rem;">
-                <ion-button size="small" fill="outline" color="medium" title="Huỷ"
-                  (click)="cancelFormFilter()"><ion-icon name="close-outline"></ion-icon></ion-button>
+                <!-- <ion-button size="small" fill="outline" color="medium" title="Huỷ"
+                  (click)="cancelFormFilter()"><ion-icon name="close-outline"></ion-icon></ion-button> -->
                 <ion-button size="small" fill="outline" color="danger" title="Xoá lọc"
-                  (click)="restartFormFilter()"><ion-icon size="small" name="trash-outline"></ion-icon></ion-button>
+                  (click)="restartFormFilter()"><ion-icon size="small" name="trash-outline"></ion-icon>Xoá lọc</ion-button>
                 <ion-button size="small" fill="solid" (click)="onSearchByFormFilter()" title="Lọc dữ liệu ..."><ion-icon
-                    size="small" name="search-outline"></ion-icon></ion-button>
+                    size="small" name="search-outline"></ion-icon>Tìm kiếm</ion-button>
               </ion-buttons>
             </ion-content>
           </ng-template>
-        </ion-popover>
+        </ion-modal>
+
         <!-- <ion-item>
         </ion-item> -->
 
@@ -264,7 +269,8 @@
           <!-- Thông tin bệnh nhân -->
           <ion-label>
             <!-- Tên bệnh nhân -->
-            <h3 *ngIf="!(order.code | isEmpty)" class="name-patient">{{order.dateCreated| date: "ddMMyy"}}-{{order.code}}
+            <h3 *ngIf="!(order.code | isEmpty)" class="name-patient">{{order.dateCreated| date:
+              "ddMMyy"}}-{{order.code}}
               {{order.patient.name}}</h3>
 
             <!-- Số điện thoại -->

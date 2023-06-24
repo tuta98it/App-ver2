@@ -36,7 +36,7 @@ import { GeneralService } from 'src/app/services/general-service';
 export class RequestsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('popoverFormFilter') popoverFormFilter;
-  @ViewChild('modalFormFilter') modalFormFilter;
+  @ViewChild('modalFormFilterRequest') modalFormFilterRequest;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
   @ViewChild('requestType') requestType: IonSelect;
   now: any;
@@ -70,8 +70,8 @@ export class RequestsPage implements OnInit {
   itemPatientFormModalLab = {
     valueRequestType: 0,
     name: '',
-    phone: '',
-    address: '',
+    phone: '1',
+    address: '1',
     timeSample: this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss'),
     notes: '',
   };
@@ -116,6 +116,7 @@ export class RequestsPage implements OnInit {
 
   // Danh sách đối tác
   listPartner = [];
+  partnerByID: any;
 
   // Danh sách các loại yêu cầu
   listTypeOrder = [];
@@ -213,57 +214,85 @@ export class RequestsPage implements OnInit {
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad');
+    console.log('ionViewDidLoad');
   }
 
   ionViewWillLeave() {
-    // console.log('ionViewWillLeave');
+    console.log('ionViewWillLeave');
   }
 
   ionViewDidLeave() {
-    // console.log('ionViewDidLeave');
+    console.log('ionViewDidLeave');
   }
 
   ionViewWillUnload() {
-    // console.log('ionViewWillUnload');
+    console.log('ionViewWillUnload');
   }
 
   ionViewDidEnter() {
-    // console.log('ionViewDidEnter');
+    console.log('ionViewDidEnter');
   }
 
   async ionViewWillEnter() {
-    // console.log('ionViewWillEnter');
-
-
+    console.log('ionViewWillEnter');
+     // Lấy dữ liệu danh sách yêu cầu xét nghiệm
+     const payload = {
+      page: 1,
+      pageSize: 100,
+      // textSearch: null,
+      // fromDate: null,
+      // toDate: null,
+      // phone: null,
+      partnerId: this.userInfo.partnerId,
+      // receiveUserId: null,
+      // called: null,
+      // arrived: null,
+      // arrivedLabo: null,
+      // warning: null,
+      // received: null,
+      // requestTypeId: null,
+      // userCreated: null,
+      // canceled: null,
+    };
+    this.getListRequestByPayload(payload, true);
   }
 
   async ngOnInit() {
+
+
+
     // console.log('ngOnInit');
     this.localStorage.getSelectedUser().then((res: any) => {
       this.userInfo = res;
       console.log('this.userInfo: ', this.userInfo);
+
+
+      this.getPartnerByID(this.userInfo.partnerId);
+      console.log('this.partnerByID: ', this.partnerByID);
+
       // Lấy dữ liệu danh sách yêu cầu xét nghiệm
-      const payload = {
-        page: 1,
-        pageSize: 100,
-        // textSearch: null,
-        // fromDate: null,
-        // toDate: null,
-        // phone: null,
-        partnerId: this.userInfo.partnerId,
-        // receiveUserId: null,
-        // called: null,
-        // arrived: null,
-        // arrivedLabo: null,
-        // warning: null,
-        // received: null,
-        // requestTypeId: null,
-        // userCreated: null,
-        // canceled: null,
-      };
-     this.getListRequestByPayload(payload, true);
+      // const payload = {
+      //   page: 1,
+      //   pageSize: 100,
+      //   // textSearch: null,
+      //   // fromDate: null,
+      //   // toDate: null,
+      //   // phone: null,
+      //   partnerId: this.userInfo.partnerId,
+      //   // receiveUserId: null,
+      //   // called: null,
+      //   // arrived: null,
+      //   // arrivedLabo: null,
+      //   // warning: null,
+      //   // received: null,
+      //   // requestTypeId: null,
+      //   // userCreated: null,
+      //   // canceled: null,
+      // };
+      // this.getListRequestByPayload(payload, true);
     });
+
+
 
     // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
     await this.getListInitialData();
@@ -279,6 +308,26 @@ export class RequestsPage implements OnInit {
 
     // Lấy dữ liệu danh sách các đối tác
     // await this.getListPartner();
+  }
+
+
+  getListPartner() {
+    this.generalService.getListPartner().subscribe(
+      (res) => {
+        this.listPartner = res;
+      },
+      (error) => { }
+    );
+  }
+
+
+  getPartnerByID(id: any) {
+    this.generalService.getPartner(id).subscribe((res: any) => {
+      this.partnerByID = res;
+    },
+      (error: any) => {
+      }
+    );
   }
 
   async showLoading() {
@@ -371,18 +420,11 @@ export class RequestsPage implements OnInit {
   }
 
   presentModalFilter(e: Event) {
-    // this.modalFormFilter.event = e;
+    // this.modalFormFilterRequest.event = e;
     this.isPopoverOpenFilter = true;
   }
 
-  getListPartner() {
-    this.generalService.getListPartner().subscribe(
-      (res) => {
-        this.listPartner = res;
-      },
-      (error) => { }
-    );
-  }
+
 
   showProfile() {
 
@@ -403,14 +445,16 @@ export class RequestsPage implements OnInit {
     this.isModalOpenFormPatient = isOpen;
   }
 
-  openModalPatientLab() {
+  async openModalPatientLab() {
     // Reset lại lời dẫn
     this.instructionModalPatient = 'Mời tạo phiếu yêu cầu xét nghiệm:';
     this.numberOfNewPatients = 0;
-
     this.resetFormModalPatient();
     this.restartValidFormAddPatient();
     this.setOpenModalAddPatient(true);
+
+
+
   }
 
   restartValidFormAddPatient() {
@@ -483,7 +527,7 @@ export class RequestsPage implements OnInit {
         }
       });
     } else {
-      this.notificationService.showMessage(Constant.DANGER, 'Nhập thiếu trường dữ liệu bắt buộc!');
+      this.notificationService.showMessage(Constant.DANGER, 'Nhập thiếu  dữ liệu bắt buộc!');
     }
 
   }
@@ -520,8 +564,8 @@ export class RequestsPage implements OnInit {
     this.itemPatientFormModalLab = {
       valueRequestType: 0,
       name: '',
-      phone: '',
-      address: '',
+      phone: this.partnerByID.phone,
+      address: this.partnerByID.address,
       timeSample: this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss'),
       notes: '',
     };
@@ -753,7 +797,7 @@ export class RequestsPage implements OnInit {
 
     this.getListRequestByPayload(payload, true);
 
-    this.modalFormFilter.dismiss();
+    this.modalFormFilterRequest.dismiss();
   }
 
 
@@ -770,7 +814,7 @@ export class RequestsPage implements OnInit {
   }
 
   cancelFormFilter() {
-    this.modalFormFilter.dismiss();
+    this.modalFormFilterRequest.dismiss();
   }
 
   isEmpty(value: any) {

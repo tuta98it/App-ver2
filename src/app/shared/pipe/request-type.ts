@@ -10,7 +10,7 @@ export class RequestTypePipe implements PipeTransform {
   }
   transform(requestID: any, listResquest: any): string {
     const objResByID = listResquest.find((objRes: any) => objRes.requestTypeId === requestID);
-    return objResByID.requestTypeName;
+    return objResByID? objResByID.requestTypeName : '';
   }
 
   private isEmpty(value: any): boolean {

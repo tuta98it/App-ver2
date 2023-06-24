@@ -59,12 +59,14 @@ export class LoginPage implements OnInit {
           this.router.navigate(['/main/requests']);
         } else if (codeRes === 401) {
           // Code 401: Không xác thực được người dùng;
+          this.localStorage.removeInfoUserStorage();
           localStorage.removeItem(Constant.TOKEN);
           this.router.navigate(['/login']);
           // this.notificationService.showMessage(Constant.DANGER, `${codeRes}: Hệ thống không xác thực được người dùng`);
         } else if (codeRes === 403) {
           // Code 403: Người dùng không có quyền truy cập vào hệ thống.
           this.notificationService.showMessage(Constant.DANGER, `${codeRes}: Người dùng không có quyền truy cập`);
+          this.localStorage.removeInfoUserStorage();
           localStorage.removeItem(Constant.TOKEN);
           this.router.navigate(['/login']);
         } else {
@@ -116,7 +118,7 @@ export class LoginPage implements OnInit {
         this.notificationService.showMessage(Constant.DANGER, 'Sai tên đăng nhập hoặc mật khẩu');
         return;
       }
-      // console.log('Constant.STORAGE_USERINFO, = ', Constant.STORAGE_USERINFO, res);
+      console.log('Constant.STORAGE_USERINFO, = ', Constant.STORAGE_USERINFO, res);
       this.storage.set(Constant.STORAGE_USERINFO, res).then((res3) => {
         loading.dismiss();
         // this.router.navigate(['/main']);

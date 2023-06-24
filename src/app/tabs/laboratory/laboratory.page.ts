@@ -35,7 +35,7 @@ import { GeneralService } from 'src/app/services/general-service';
 })
 export class LaboratoryPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
-  @ViewChild('popoverFormFilter') popoverFormFilter;
+  @ViewChild('modalFormFilterLab') modalFormFilterLab;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
   now: any;
   userInfo: any;
@@ -366,7 +366,7 @@ export class LaboratoryPage implements OnInit {
   }
 
   presentPopoverFilter(e: Event) {
-    this.popoverFormFilter.event = e;
+    // this.modalFormFilterLab.event = e;
     this.isPopoverOpenFilter = true;
   }
 
@@ -790,7 +790,7 @@ export class LaboratoryPage implements OnInit {
     };
     await this.getListOrder(payload, false);
 
-    this.popoverFormFilter.dismiss();
+    this.modalFormFilterLab.dismiss();
   }
 
 
@@ -805,7 +805,7 @@ export class LaboratoryPage implements OnInit {
   }
 
   cancelFormFilter() {
-    this.popoverFormFilter.dismiss();
+    this.modalFormFilterLab.dismiss();
   }
 
   isEmpty(value: any) {
