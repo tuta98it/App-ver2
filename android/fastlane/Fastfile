@@ -17,21 +17,32 @@ default_platform(:android)
 
 platform :android do
   desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
 
   lane :beta do
     gradle(task: "clean assembleRelease")
-
     gradle(
         task: "assemble",
         build_type: "Release",
         print_command: false,
         properties: {
-            "android.injected.signing.store.file" => "keystore.jks",
-            "android.injected.signing.store.password" => "",
-            "android.injected.signing.key.alias" => "alias_key",
-            "android.injected.signing.key.password" => "",
+            "android.injected.signing.store.file" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PATH'],
+            "android.injected.signing.store.password" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PASSWORD'],
+            "android.injected.signing.key.alias" => "Inivivo Partner",
+            "android.injected.signing.key.password" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PASSWORD'],
         }
     )
+    Dir.chdir ".." do
+        zealot(
+            endpoint: 'https://log4test.pmr.vn',
+            token: '320bacf980e20e7b058be2d77154dc53',
+            channel_key: '936a41e85a77900f1903bc6f48ca932f',
+            file: Dir.pwd + '/../android/app/build/outputs/apk/release/app-release.apk',
+            changelog: ''
+        )
+    end
 
   end
 
@@ -43,10 +54,10 @@ platform :android do
         build_type: "Release",
         print_command: false,
         properties: {
-            "android.injected.signing.store.file" => "keystore.jks",
-            "android.injected.signing.store.password" => "",
-            "android.injected.signing.key.alias" => "alias_key",
-            "android.injected.signing.key.password" => "",
+            "android.injected.signing.store.file" => Dir.pwd + "/../keystore/keystore.jks",
+            "android.injected.signing.store.password" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PASSWORD'],
+            "android.injected.signing.key.alias" => "Inivivo Partner",
+            "android.injected.signing.key.password" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PASSWORD'],
         }
     )
     upload_to_play_store(skip_upload_apk: true)
