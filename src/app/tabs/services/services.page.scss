@@ -1,10 +1,5 @@
-ion-content {
-  div.service-header {
-    position: sticky;
-    top: -1rem;
-    z-index: 1;
-    background-color: white;
-
+ion-header {
+  ion-toolbar {
     div.service-search {
       div.search-filter {
         display: flex;
@@ -15,8 +10,19 @@ ion-content {
           align-items: center;
         }
       }
-
     }
+  }
+}
+
+
+ion-content {
+  div.service-header {
+    position: sticky;
+    top: -1rem;
+    z-index: 1;
+    background-color: white;
+
+
 
     ion-item.title-service {
       font-size: 1rem;

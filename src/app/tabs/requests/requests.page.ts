@@ -235,26 +235,6 @@ export class RequestsPage implements OnInit {
 
   async ionViewWillEnter() {
     console.log('ionViewWillEnter');
-     // Lấy dữ liệu danh sách yêu cầu xét nghiệm
-     const payload = {
-      page: 1,
-      pageSize: 100,
-      // textSearch: null,
-      // fromDate: null,
-      // toDate: null,
-      // phone: null,
-      partnerId: this.userInfo.partnerId,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
-      // requestTypeId: null,
-      // userCreated: null,
-      // canceled: null,
-    };
-    this.getListRequestByPayload(payload, true);
   }
 
   async ngOnInit() {
@@ -271,6 +251,7 @@ export class RequestsPage implements OnInit {
       console.log('this.partnerByID: ', this.partnerByID);
 
       // Lấy dữ liệu danh sách yêu cầu xét nghiệm
+      this.getAllListRequest();
       // const payload = {
       //   page: 1,
       //   pageSize: 100,
@@ -415,6 +396,28 @@ export class RequestsPage implements OnInit {
 
   }
 
+  getAllListRequest() {
+    const payload = {
+      page: 1,
+      pageSize: 100,
+      // textSearch: null,
+      // fromDate: null,
+      // toDate: null,
+      // phone: null,
+      // partnerId: null,
+      // receiveUserId: null,
+      // called: null,
+      // arrived: null,
+      // arrivedLabo: null,
+      // warning: null,
+      // received: null,
+      // requestTypeId: null,
+      // userCreated: null,
+      // canceled: false
+    };
+    this.getListRequestByPayload(payload, true);
+  }
+
   getListInitialData() {
     this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
   }
@@ -492,7 +495,7 @@ export class RequestsPage implements OnInit {
     return (isRequest && isPhone && isAddress && isTimeSample);
   }
 
-  saveModalAddPatient() {
+  saveModalAddRequest() {
     if (this.confirmPatientModal()) {
       // Thêm mới một item Patient
       this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
@@ -523,6 +526,7 @@ export class RequestsPage implements OnInit {
         } else {
           // this.notificationService.showMessage(Constant.SUCCESS, Constant.MESSAGE_ADD_SUCCESS);
           this.notificationService.showMessage(Constant.SUCCESS, 'Tạo yêu cầu thành công!');
+          this.getAllListRequest();
           this.setOpenModalAddPatient(false);
         }
       });
@@ -696,18 +700,15 @@ export class RequestsPage implements OnInit {
         this.filterInterval.isShow = false;
         break;
     }
-    // Đặt dữ liệu ban đầu cho khoảng thời gian lọc dữ liệu
+    // Định dạng khoảng thời gian lọc
     if (value >= 1 && value <= 10) {
-      // Bắt đầu - Thời điểm 0h ngày hôm nay
+
       this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
 
-      // Kết thúc - Thời điểm hiện tại
       this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
     } else {
-      // Bắt đầu - Thời điểm 0h ngày hôm nay
       this.filterInterval.pastTime = '';
-      // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime);
-      // Kết thúc - Thời điểm hiện tại
+
       this.filterInterval.presentTime = '';
     }
 

@@ -1,7 +1,7 @@
 <ion-tabs #tabs (ionTabsDidChange)="tabClicked($event)" (ionViewDidLeave)="ionViewDidLeave()">
   <ion-menu contentId="main-content">
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar class="safe--area" color="primary">
         <!-- Tiêu đề Menu -->
         <!-- <ion-title>Menu Content</ion-title> -->
         <div class="title-menu-partner">
@@ -57,7 +57,7 @@
   <ion-header>
     <div class="ion-page" id="main-content"></div>
     <!-- Toolbar -->
-    <ion-toolbar class="toolbar-app" color="primary">
+      <ion-toolbar class="toolbar-app safe--area" color="primary">
       <!-- Icon Menu -->
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -121,7 +121,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar class="safe--area" color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalUser(false)">
           <ion-button>
@@ -233,7 +233,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar class="safe--area" color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalSales(false)">
           <ion-button>
@@ -326,7 +326,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar class="safe--area" color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalContact(false)">
           <ion-button>
@@ -362,7 +362,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar class="safe--area" color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalContentAbout(false)">
           <ion-button>
@@ -563,7 +563,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar class="safe--area" color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="start">
           <ion-button (click)="setOpenModalFormEditInfoUser(false)">Huỷ</ion-button>

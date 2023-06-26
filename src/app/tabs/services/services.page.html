@@ -1,13 +1,12 @@
-<ion-content class="ion-padding">
-  <!-- Nội dung -->
-  <div class="service-header">
+<ion-header>
+  <ion-toolbar>
     <!-- Khu vực tìm kiếm -->
     <div class="service-search">
       <!-- Tìm liếm - lọc -->
       <div class="search-filter">
 
         <!-- Tìm kiếm -->
-        <ion-searchbar placeholder="Tìm kiếm ..." (ionChange)="handleChangeSearch($event)"></ion-searchbar>
+        <ion-searchbar style="padding-top: 15px;" placeholder="Tìm kiếm ..." (ionChange)="handleChangeSearch($event)"></ion-searchbar>
 
         <!-- Lọc -->
         <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
@@ -38,9 +37,14 @@
           </ng-template>
         </ion-popover>
       </div>
-
-
     </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Nội dung -->
+  <div class="service-header">
+
     <!-- Tiêu đề -->
     <ion-item class="title-service">
       <ion-label class="title-designation"><strong>Chỉ định</strong> </ion-label>
@@ -77,7 +81,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-      <ion-toolbar color="primary">
+       <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalDetailItemService(false)">
           <ion-button>

@@ -446,66 +446,66 @@ export class LaboratoryPage implements OnInit {
       this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
 
       const item = {
-        id: 0,
-        patientId: null,
-        code: null,
-        name: null,
-        orderDoctor: null,
-        orderDate: null,
-        visitCode: null,
-        visiteDate: null,
-        chanDoan: null,
-        khoa: null,
-        buong: null,
-        giuong: null,
-        status: null,
-        phoneNo: null,
-        address: null,
+        // id: 0,
+        // patientId: null,
+        // code: null,
+        // name: null,
+        // orderDoctor: null,
+        // orderDate: null,
+        // visitCode: null,
+        // visiteDate: null,
+        // chanDoan: null,
+        // khoa: null,
+        // buong: null,
+        // giuong: null,
+        // status: null,
+        // phoneNo: null,
+        // address: null,
         note: this.itemPatientFormModalLab.notes,
-        partnerId: null,
-        details: [
-          {
-            orderTypeId: null,
-            price: null
-          }
-        ],
+        // partnerId: null,
+        // details: [
+        //   {
+        //     orderTypeId: null,
+        //     price: null
+        //   }
+        // ],
         paymentType: 1,
         patient: {
-          id: null,
-          code: null,
+          // id: null,
+          // code: null,
           name: this.itemPatientFormModalLab.name,
-          sex: null,
-          dob: null,
-          yob: null,
-          cmnd: null,
+          // sex: null,
+          // dob: null,
+          // yob: null,
+          // cmnd: null,
           address: this.itemPatientFormModalLab.address,
           phoneNo: this.itemPatientFormModalLab.phone,
           email: null
         },
-        momWeight: null,
-        momHeightCM: null,
-        ultrasoundDate: null,
-        gestationalWeek: null,
-        gestationalDay: null,
-        pregnancyNo: null,
-        fetusAmount: null,
-        nt: null,
-        crl: null,
-        expectedDateOfBirth: null,
-        requestId: null,
-        lat: null,
-        lng: null,
-        assignToUserId: null,
-        specimenID: null,
-        privateNote: null,
-        discountPaymentType: null,
-        extraDiscountPaymentType: null,
-        bsdiscountPaymentType: null,
-        paidType: null,
-        utmSource: null,
-        dateTakenSpecimen: null,
-        addressLongitude: null,
-        addressLatitude: null
+        // momWeight: null,
+        // momHeightCM: null,
+        // ultrasoundDate: null,
+        // gestationalWeek: null,
+        // gestationalDay: null,
+        // pregnancyNo: null,
+        // fetusAmount: null,
+        // nt: null,
+        // crl: null,
+        // expectedDateOfBirth: null,
+        // requestId: null,
+        // lat: null,
+        // lng: null,
+        // assignToUserId: null,
+        // specimenID: null,
+        // privateNote: null,
+        // discountPaymentType: null,
+        // extraDiscountPaymentType: null,
+        // bsdiscountPaymentType: null,
+        // paidType: null,
+        // utmSource: null,
+        // dateTakenSpecimen: null,
+        // addressLongitude: null,
+        // addressLatitude: null
       };
       // this.orderService.
       this.generalService.createOrder(item).subscribe(
@@ -522,7 +522,7 @@ export class LaboratoryPage implements OnInit {
           }
         },
         (error: any) => {
-          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi 1`);
+          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi  xảy ra`);
         },
         (ret: any) => {
           this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi ${ret[0].errorMessage}`);
@@ -530,7 +530,7 @@ export class LaboratoryPage implements OnInit {
       );
       this.notificationService.showMessage(Constant.DANGER, `Lỗi ngoài phạm vi xử lý, nghiệm vụ chưa hoàn chỉnh`);
     } else {
-      this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi 2`);
+      this.notificationService.showMessage(Constant.DANGER, `Người dùng nhập thiếu trường dữ liệu`);
     }
 
   }
@@ -619,6 +619,14 @@ export class LaboratoryPage implements OnInit {
     // Subtract the number of days elapsed in the current week
     let daysToSubtract: any;
     switch (value) {
+      case 0:
+        this.filterInterval.isShow = false;
+        // Bắt đầu - Thời điểm 0h ngày hôm nay
+        this.filterInterval.pastTime = '';
+        // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime);
+        // Kết thúc - Thời điểm hiện tại
+        this.filterInterval.presentTime = '';
+        break;
       case 1:
         this.filterInterval.isShow = false;
         daysToSubtract = 0;
@@ -696,14 +704,17 @@ export class LaboratoryPage implements OnInit {
       default:
         break;
     }
-    // Đặt dữ liệu ban đầu cho khoảng thời gian lọc dữ liệu
-    // Bắt đầu - Thời điểm 0h ngày hôm nay
-    this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
-    // console.log('this.filterInterval.pastTime : ', this.filterInterval.pastTime );
 
+    // Định dạng khoảng thời gian lọc
+    if (value >= 1 && value <= 10) {
+      this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
 
-    // Kết thúc - Thời điểm hiện tại
-    this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
+      this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
+    } else {
+      this.filterInterval.pastTime = '';
+
+      this.filterInterval.presentTime = '';
+    }
 
     const payload = {
       // barcode: null,
