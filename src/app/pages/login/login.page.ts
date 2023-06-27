@@ -19,6 +19,7 @@ export class LoginPage implements OnInit {
   username: any;
   password: any;
   deviceInfo: any;
+  userInfo: any;
 
   constructor(
     private mainService: MainService,
@@ -46,6 +47,12 @@ export class LoginPage implements OnInit {
       this.deviceInfo = res;
       // console.log(this.deviceInfo);
     });
+
+    this.localStorage.getSelectedUser().then((res: any) => {
+      this.userInfo = res;
+      console.log('this.userInfo: ', this.userInfo);
+    });
+
 
 
     // Xác thực người dùng

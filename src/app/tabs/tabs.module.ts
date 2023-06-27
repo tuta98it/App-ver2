@@ -19,6 +19,6 @@ import { PieChartComponent } from '../shared/components/pie-chart';
     TabsPageRoutingModule,
     SharedModule,
   ],
-  declarations: [TabsPage, PieChartComponent],
+  declarations: [TabsPage],
 })
 export class TabsPageModule {}

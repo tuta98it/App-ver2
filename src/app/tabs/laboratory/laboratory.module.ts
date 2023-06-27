@@ -21,6 +21,6 @@ import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
     SharedModule
   ],
   providers: [AppVersion],
-  declarations: [LaboratoryPage, OrderStatusPipe]
+  declarations: [LaboratoryPage]
 })
 export class LaboratoryPageModule {}

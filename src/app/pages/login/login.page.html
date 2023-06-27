@@ -13,12 +13,13 @@
         <ion-input [(ngModel)]="username" placeholder="Tên đăng nhập"></ion-input>
       </ion-item>
       <ion-item lines="none" class="ion-margin-bottom">
-        <ion-icon size="small"  color="primary" name="key-outline"></ion-icon>
+        <ion-icon size="small" color="primary" name="key-outline"></ion-icon>
         <ion-label></ion-label>
         <ion-input [(ngModel)]="password" type="password" placeholder="Mật khẩu"></ion-input>
       </ion-item>
       <div class="ion-margin-bottom">
-        <ion-label (click)="showAlertPassword()" color="primary">Quên mật khẩu</ion-label>
+        <!-- (click)="showAlertPassword()" -->
+        <ion-label id="open-modal-forgot-password" color="primary">Quên mật khẩu</ion-label>
       </div>
       <div class="ion-margin-bottom">
         <ion-button (click)="doLogin()" style="width: 100%" color="primary">Đăng nhập</ion-button>
@@ -32,6 +33,56 @@
     </label>
   </div>
 </ion-content>
+
+<!-- Xác minh tài khoản -->
+<ion-modal #modalForgotPasssword trigger="open-modal-forgot-password">
+  <ng-template>
+    <!-- Tiêu đề -->
+    <ion-header>
+      <ion-toolbar color="primary">
+        <!-- Nút quay lại -->
+        <ion-buttons slot="start" (click)="modalForgotPasssword.dismiss()">
+          <!-- <ion-back-button defaultHref="#" text=""></ion-back-button> -->
+          Đóng
+        </ion-buttons>
+
+        <!-- Tiêu đề Modal -->
+        <ion-title>Xác minh tài khoản</ion-title>
+
+
+        <ion-buttons slot="end" (click)="modalForgotPasssword.dismiss()">
+          <ion-button [textContent]="'Tiếp'">
+            <!-- <ion-icon slot="end" name="chevron-forward-outline"></ion-icon> -->
+          </ion-button>
+        </ion-buttons>
+        <!-- Nút tiếp theo -->
+
+      </ion-toolbar>
+
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <!-- <i class="fa-solid fa-rotate-right fa-2xl"></i> -->
+      <!-- <i class="fa-solid fa-lock fa-2xl"></i> -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Quên mật khẩu</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Để xác nhận đây là tài khoản của bạn, hãy nhập lại SĐT {{userInfo.phone | hidePhoneNumber}} mà bạn đã đăng ký
+          <ion-list>
+            <ion-item>
+              <ion-label position="stacked">Số điện thoại</ion-label>
+              <ion-input type="tel" required></ion-input>
+            </ion-item>
+          </ion-list>
+          <ion-button shape="round" expand="block" fill="solid" color="primary">Đặt lại mật khẩu</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+
+  </ng-template>
+</ion-modal>
 <!--<ion-footer class="ion-no-border">
     <ion-title style="font-size: 12px;background: transparent" color="primary" class="ion-text-center">Version: 6.2</ion-title>
 </ion-footer>-->

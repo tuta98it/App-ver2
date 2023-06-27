@@ -9,6 +9,7 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
+import { SharedModule } from 'src/app/shared/modules/share.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AuthService } from 'src/app/services/auth.service';
     FormsModule,
     IonicModule,
     LoginPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [AuthService],
   declarations: [LoginPage]
