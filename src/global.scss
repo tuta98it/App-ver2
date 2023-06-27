@@ -26,11 +26,13 @@
   box-shadow: none !important;
 }
 
-body {
-}
+/// Do not use empty rulesetsscss(emptyRules)
+// body {
+// }
 
-ion-button {
-}
+// ion-button {
+// }
+
 ion-content{
   background: #FFF;
 }
@@ -205,8 +207,8 @@ ion-refresher{
 
 
 .safe--area {
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
-  --ion-safe-area-top: 20px;
-  --ion-safe-area-bottom: 20px;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    --ion-safe-area-top: 25px;
+    --ion-safe-area-bottom: 20px;
 }
