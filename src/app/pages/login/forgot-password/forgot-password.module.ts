@@ -5,27 +5,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { LoginPageRoutingModule } from './login-routing.module';
+// import { LoginPageRoutingModule } from './login-routing.module';
 
-import { LoginPage } from './login.page';
+// import { LoginPage } from './login.page';
+import { ForgotPasswordComponent } from './forgot-password.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { SharedModule } from 'src/app/shared/modules/share.module';
-
+import { ForgotPasswordComponentRoutingModule } from './forgot-password-routing.module';
 
 
 @NgModule({
   imports: [
-    IonicModule.forRoot({ mode: 'ios' }),
-    RouterModule.forChild([]),
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule,
+    ForgotPasswordComponentRoutingModule,
     HttpClientModule,
     SharedModule
   ],
   providers: [AuthService],
-  declarations: [LoginPage]
+  declarations: [ForgotPasswordComponent]
 })
-export class LoginPageModule {}
+
+export class ForgotPasswordComponentModule {
+}

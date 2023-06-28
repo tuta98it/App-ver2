@@ -103,7 +103,7 @@
                   <ion-select #orderStatusSelect style="font-size: small;" label="Trạng thái Đơn hàng"
                     [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
                     placeholder="Trạng thái đơn hàng" (ionChange)="handleChangeSelectOrderStatus($event)">
-                    <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
+                    <ion-select-option *ngFor="let order of orderStatus" style="font-size: small;"
                       [value]="order.id">{{order.name}}</ion-select-option>
                     <!-- <ion-select-option  style="font-size: small;" value="0">Chưa nhận yêu cầu</ion-select-option>
                     <ion-select-option  style="font-size: small;" value="1">Đã nhận yêu cầu và đang xử lý</ion-select-option>
@@ -313,7 +313,7 @@
 
             <!-- Tình trạng mẫu xét nghiệm -->
             <div *ngIf="!(order.status | isEmpty)" class="status">
-              <h3>{{initDatas? (order.status | orderStatus : initDatas?.orderStatus) : order.status}}</h3>
+              <h3>{{order.status | orderStatus : orderStatus}}</h3>
             </div>
           </ion-label>
         </ion-item>

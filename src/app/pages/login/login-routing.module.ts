@@ -6,12 +6,23 @@ import { LoginPage } from './login.page';
 const routes: Routes = [
   {
     path: '',
-    component: LoginPage
+    component: LoginPage,
+    children: [
+      {
+        path: 'forgot-password',
+        loadChildren: () => import('./forgot-password/forgot-password.module').then(m => m.ForgotPasswordComponentModule)
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  // exports: [RouterModule],
 })
-export class LoginPageRoutingModule {}
+export class LoginPageRoutingModule { }

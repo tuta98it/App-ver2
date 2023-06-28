@@ -102,6 +102,46 @@ export class LaboratoryPage implements OnInit {
     }
   ];
 
+
+  orderStatus = [
+    {
+      id: 1,
+      name: 'Đã thanh toán'
+    },
+    {
+      id: 2,
+      name: 'Đã thực hiện'
+    },
+    {
+      id: 3,
+      name: 'Đã có kết quả 1 phần'
+    },
+    {
+      id: 4,
+      name: 'Đã có kết quả'
+    },
+    {
+      id: 5,
+      name: 'Đã lấy mẫu'
+    },
+    {
+      id: 6,
+      name: 'Đã lấy mẫu một phần'
+    },
+    {
+      id: 7,
+      name: 'Đã nhận mẫu'
+    },
+    {
+      id: 8,
+      name: 'Đã nhận mẫu 1 phần'
+    },
+    {
+      id: 10,
+      name: 'Chờ lấy mẫu'
+    }
+  ];
+
   // Chức dữ liệu cơ sở, khởi tạo ban đầu.
   initDatas: any;
 
@@ -240,7 +280,7 @@ export class LaboratoryPage implements OnInit {
     });
 
     // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
-    await this.getListInitialData();
+    // await this.getListInitialData();
 
 
     // Lấy dữ liệu danh sách phiếu xét nghiệm
@@ -361,9 +401,9 @@ export class LaboratoryPage implements OnInit {
 
   // }
 
-  getListInitialData() {
-    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
-  }
+  // getListInitialData() {
+  //   this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+  // }
 
   presentPopoverFilter(e: Event) {
     // this.modalFormFilterLab.event = e;

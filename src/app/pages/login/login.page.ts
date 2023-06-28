@@ -9,18 +9,19 @@ import { StorageService } from '../../services/storage.service';
 import { NotificationService } from '../../services/notification.service';
 import { GeneralService } from 'src/app/services/general-service';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  forgotPasswordComponent = ForgotPasswordComponent;
   username: any;
   password: any;
   deviceInfo: any;
   userInfo: any;
-
+  allUsers: any[] = [];
   constructor(
     private mainService: MainService,
     private http: HttpClient,
@@ -48,10 +49,10 @@ export class LoginPage implements OnInit {
       // console.log(this.deviceInfo);
     });
 
-    this.localStorage.getSelectedUser().then((res: any) => {
-      this.userInfo = res;
-      console.log('this.userInfo: ', this.userInfo);
-    });
+    // this.localStorage.getSelectedUser().then((res: any) => {
+    //   this.userInfo = res;
+    //   console.log('this.userInfo: ', this.userInfo);
+    // });
 
 
 
@@ -84,19 +85,28 @@ export class LoginPage implements OnInit {
       }
     });
 
+    // Lấy toàn bộ dữ liệu acount người dùng
+    this.generalService.getAllUser().subscribe((res: any) => {
+      if (res !== null) {
+        this.allUsers = res;
+        console.log('this.allUsers : ', this.allUsers);
+      }
+    });
+
+
     // Set INIT_DATA for local-storage
-    await this.setInitData();
+    // await this.setInitData();
   }
 
-  setInitData() {
-    this.generalService.getInitialData().subscribe((resData: any) => {
-      if (resData !== null) {
-        localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
-      }
-    }, error => {
-      // console.log('Error Set INIT_DATA for local-storage');
-    });
-  }
+  // setInitData() {
+  //   this.generalService.getInitialData().subscribe((resData: any) => {
+  //     if (resData !== null) {
+  //       localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
+  //     }
+  //   }, error => {
+  //     // console.log('Error Set INIT_DATA for local-storage');
+  //   });
+  // }
 
   showAlertPassword() {
     this.notificationService.showMessage(Constant.WARNING, 'Vui lòng liên hệ quản trị viên để cấp lại mật khẩu');
@@ -145,5 +155,27 @@ export class LoginPage implements OnInit {
       }
       loading.dismiss();
     });
+  }
+
+  navigateForgotPassword() {
+    if (this.username) {
+      // Check sự tồn tại của username trên hệ thống
+      // console.log('this.username : ', this.username);
+      // console.log('this.allUsers. : ', this.allUsers);
+      const foundObject = this.allUsers.find((objUser: any) =>
+        objUser.username === this.username
+      );
+
+      // console.log('foundObject. : ', foundObject);
+
+
+      if (foundObject) {
+        this.router.navigate(['/forgot-password'], { queryParams: foundObject });
+      } else {
+        this.notificationService.showMessage(Constant.WARNING, 'Tên người dùng không tồn tại, vui lòng kiểm tra lại!');
+      }
+    } else {
+      this.notificationService.showMessage(Constant.WARNING, 'Cần điền tên đăng nhập để tiến hành thiết lập lại mật khẩu!');
+    }
   }
 }

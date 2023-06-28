@@ -41,4 +41,7 @@ export class Constant {
   public static readonly NOTIFICATION_TYPE_REQUEST_PERMISSION = 7;
   public static readonly NOTIFICATION_TYPE_HOMEWORK = 8;
   public static readonly LANGUAGE = 'language';
+
+
+  public static readonly MAX_VERIFI_NUMBER_PHONE = 5;
 }

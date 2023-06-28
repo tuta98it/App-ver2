@@ -17,10 +17,16 @@
         <ion-label></ion-label>
         <ion-input [(ngModel)]="password" type="password" placeholder="Mật khẩu"></ion-input>
       </ion-item>
-      <div class="ion-margin-bottom">
-        <!-- (click)="showAlertPassword()" -->
+      <!-- <div class="ion-margin-bottom">
+        (click)="showAlertPassword()"
         <ion-label id="open-modal-forgot-password" color="primary">Quên mật khẩu</ion-label>
-      </div>
+      </div> -->
+      <!-- <ion-nav-link router-direction="forward" [component]="forgotPasswordComponent">
+        <ion-button>Quên mật khẩu</ion-button>
+      </ion-nav-link> -->
+      <ion-buttons slot="center" style="justify-content: space-around;">
+        <ion-button size="medium" (click)="navigateForgotPassword()"> Quên mật khẩu </ion-button>
+      </ion-buttons>
       <div class="ion-margin-bottom">
         <ion-button (click)="doLogin()" style="width: 100%" color="primary">Đăng nhập</ion-button>
       </div>
@@ -69,11 +75,18 @@
           <ion-card-title>Quên mật khẩu</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          Để xác nhận đây là tài khoản của bạn, hãy nhập lại SĐT {{userInfo.phone | hidePhoneNumber}} mà bạn đã đăng ký
+          Để xác nhận đây là tài khoản của bạn, hãy nhập lại SĐT và Email đã đăng ký
           <ion-list>
             <ion-item>
+              <ion-label position="stacked">Email</ion-label>
+              <!--<ion-input type="email" required></ion-input> -->
+              <ion-input type="email" fill="solid" helperText="Enter a valid email"
+                errorText="Invalid email"></ion-input>
+            </ion-item>
+
+            <ion-item>
               <ion-label position="stacked">Số điện thoại</ion-label>
-              <ion-input type="tel" required></ion-input>
+              <ion-input type="tel" placeholder="888-888-8888" [maxlength]="11"></ion-input>
             </ion-item>
           </ion-list>
           <ion-button shape="round" expand="block" fill="solid" color="primary">Đặt lại mật khẩu</ion-button>

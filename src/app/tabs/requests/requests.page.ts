@@ -276,7 +276,7 @@ export class RequestsPage implements OnInit {
 
 
     // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
-    await this.getListInitialData();
+    // await this.getListInitialData();
 
 
     // Lấy dữ liệu danh sách phiếu xét nghiệm
@@ -418,9 +418,9 @@ export class RequestsPage implements OnInit {
     this.getListRequestByPayload(payload, true);
   }
 
-  getListInitialData() {
-    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
-  }
+  // getListInitialData() {
+  //   this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+  // }
 
   presentModalFilter(e: Event) {
     // this.modalFormFilterRequest.event = e;

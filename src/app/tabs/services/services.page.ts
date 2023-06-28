@@ -132,7 +132,7 @@ export class ServicesPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.getListInitialData();
+    // this.getListInitialData();
     await this.getOrderType();
   }
 
@@ -197,9 +197,9 @@ export class ServicesPage implements OnInit {
     );
   }
 
-  getListInitialData() {
-    this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
-  }
+  // getListInitialData() {
+  //   this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
+  // }
 
   presentPopoverFillter(e: Event) {
     this.popover.event = e;
