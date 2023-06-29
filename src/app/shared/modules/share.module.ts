@@ -6,6 +6,7 @@ import { RequestTypePipe } from '../pipe/request-type';
 import { OrderStatusPipe } from '../pipe/order-status.pipe';
 import { ActivePipe } from '../pipe/active.pipe';
 import { HidePhoneNumberPipe } from '../pipe/hide-phone-number.pipe';
+import { EmailMaskPipe } from '../pipe/email-mask.pipe';
 
 
 
@@ -18,14 +19,16 @@ import { HidePhoneNumberPipe } from '../pipe/hide-phone-number.pipe';
     RequestTypePipe,
     OrderStatusPipe,
     ActivePipe,
-    HidePhoneNumberPipe],
+    HidePhoneNumberPipe,
+    EmailMaskPipe],
   exports: [IsEmptyPipe,
     PaymentTypePipe,
     StatusRequestPipe,
     RequestTypePipe,
     OrderStatusPipe,
     ActivePipe,
-    HidePhoneNumberPipe]
+    HidePhoneNumberPipe,
+    EmailMaskPipe]
 })
 export class SharedModule { }
 

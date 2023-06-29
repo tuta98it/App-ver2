@@ -114,9 +114,7 @@ export class ForgotPasswordComponent {
             this.notificationService.showMessage(Constant.WARNING, `Quay lại trang đăng nhập`);
             this.setIsOpenModalConfirmAddressSendOTP(false);
             this.setIsOpenModalResetNewPassword(false);
-            // this.reloadPage();
-            this.router.navigate(['/login']);
-            setTimeout(() => window.location.reload(), 1);
+            this.reloadPage();
             // location.reload();
           },
         },
@@ -127,11 +125,8 @@ export class ForgotPasswordComponent {
   }
 
   reloadPage() {
-    const navigationExtras: NavigationExtras = {
-      skipLocationChange: true
-    };
-
-    this.router.navigateByUrl('/login', navigationExtras);
+    this.router.navigate(['/login']);
+    setTimeout(() => window.location.reload(), 1);
   }
 
   sendCodeOT() {

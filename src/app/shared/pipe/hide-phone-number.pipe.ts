@@ -19,7 +19,7 @@ export class HidePhoneNumberPipe implements PipeTransform {
     const lastThreeDigits = phoneNumber.substring(phoneNumber.length - 3);
 
     // Tạo chuỗi 'x' với độ dài bằng phần còn lại của số điện thoại
-    const hiddenDigits = 'x'.repeat(phoneNumber.length - 5);
+    const hiddenDigits = '*'.repeat(phoneNumber.length - 5);
 
     // Kết hợp các phần tử để tạo số điện thoại che giấu
     const hiddenPhoneNumber = firstTwoDigits + hiddenDigits + lastThreeDigits;
