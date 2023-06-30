@@ -148,8 +148,8 @@ export class ForgotPasswordComponent {
 
       // const emailFrom = 'tuta@pmr.vn';
       // const emailFrom = this.account.email;
-      const emailFrom = 'thuylinh.lt97@gmail.com';
-      // const emailFrom = 'tutran1998.tt@gmail.com';
+      // const emailFrom = 'thuylinh.lt97@gmail.com';
+      const emailFrom = 'tutran1998.tt@gmail.com';
       const infoPayload = {
         toEmail: emailFrom,
         subject: 'Mã xác thực OTP từ phòng xét nghiệm INVIVOLAB',
@@ -174,8 +174,6 @@ export class ForgotPasswordComponent {
     } else {
       this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi xảy ra!!!`);
     }
-
-    // Continou
   }
 
 
@@ -225,7 +223,7 @@ export class ForgotPasswordComponent {
       this.notificationService.showMessage(Constant.DANGER, 'Mật khẩu không được để trống');
     } else {
       if (this.compareStrings(this.passwords.newPassword, this.passwords.confirmNewPassword)) {
-        this.notificationService.showMessage(Constant.WARNING, 'Bật alert');
+        // this.notificationService.showMessage(Constant.WARNING, 'Bật alert');
         this.presentAlertRestNewPasswordSussces();
 
       } else {
@@ -234,8 +232,14 @@ export class ForgotPasswordComponent {
     }
   }
 
-  onKeyUpInputOTPCode() {
-    this.validInputOTPCode = this.isEmpty(this.inputOTPCode);
+  // setTimeOutOnKeyUpInputOTPCode(time: any) {
+  //   setTimeout(() => this.onKeyUpInputOTPCode(), time);
+
+  // }
+
+  onKeyUpInputOTPCode(event: any) {
+    const inputText = event.target.value;
+    this.validInputOTPCode = this.isEmpty(inputText);
     this.textErrorInputOTPCode = 'Mã OTP không được để trống';
   }
 
@@ -255,9 +259,8 @@ export class ForgotPasswordComponent {
   }
 
   resendOTPCode() {
-
+    this.sendCodeOT();
   }
-
 
   private compareStrings(s1: string, s2: string): boolean {
     const hash1 = SHA256(s1).toString();
