@@ -136,4 +136,7 @@ export class UrlConstant {
 
   //Notification
   public static readonly USER_NOTIFICATION = "/UserNotification";
+
+  //Email
+  public static readonly EMAIL = "/Email";
 }

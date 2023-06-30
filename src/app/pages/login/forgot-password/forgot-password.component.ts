@@ -6,8 +6,7 @@ import { SHA256 } from 'crypto-js';
 import { AlertController } from '@ionic/angular';
 import { OtpService } from 'src/app/shared/services/otp.service';
 import { StringsService } from 'src/app/shared/services/strings.service';
-import { WINDOWS_SQUARE_150_X_150_ICON } from 'cordova-res/dist/resources';
-
+import { GeneralService } from 'src/app/services/general-service';
 // import * as nodemailer from 'nodemailer';
 @Component({
   selector: 'app-forgot-password',
@@ -35,6 +34,7 @@ export class ForgotPasswordComponent {
   textErrorInputOTPCode = 'Bạn nhập sai mã OTP, vui lòng nhập lại';
   constructor(
     private router: Router,
+    private generalService: GeneralService,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private alertController: AlertController,
@@ -145,12 +145,30 @@ export class ForgotPasswordComponent {
     if (this.compareStrings(this.valueAddressSendOTPCode, 'email')) {
       // Gửi mã OTP đến địa chỉ Email người dùng
       console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', this.randomOTP);
-      this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến địa chỉ Email: ${this.account.email}`);
+
+      // const emailFrom = 'tuta@pmr.vn';
+      // const emailFrom = this.account.email;
+      const emailFrom = 'thuylinh.lt97@gmail.com';
+      // const emailFrom = 'tutran1998.tt@gmail.com';
+      const infoPayload = {
+        toEmail: emailFrom,
+        subject: 'Mã xác thực OTP từ phòng xét nghiệm INVIVOLAB',
+        content: `Mã OTP: ${this.randomOTP}`
+      };
+      this.generalService.sendOTP2Email(infoPayload).subscribe((res) => {
+        if (res.isValid) {
+          this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến địa chỉ Email: ${this.account.email}`);
+        } else {
+          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi khi gửi mã OTP đến địa chị ${this.account.email}`);
+        }
+      });
       this.setIsOpenModalInputOTPCode(true);
     } else if (this.compareStrings(this.valueAddressSendOTPCode, 'phone')) {
       // Gửi mã OTP đến số điện thoại người dùng
       console.log('Gửi mã đến số điện thoại: ', this.account.phoneNo, 'Mã OTP: ', this.randomOTP);
+
       this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến số điện thoại: ${this.account.phoneNo}`);
+
       // this.sendOTPByEmail(this.account.email, this.randomOTP);
       this.setIsOpenModalInputOTPCode(true);
     } else {

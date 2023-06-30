@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {BaseService} from '../shared/services/base.service';
-import {Observable} from 'rxjs';
-import {UrlConstant} from '../shared/constants/url.class';
+import { Injectable } from '@angular/core';
+import { BaseService } from '../shared/services/base.service';
+import { Observable } from 'rxjs';
+import { UrlConstant } from '../shared/constants/url.class';
 // import {Role} from '../model/role.class';
-import {Constant} from '../shared/constants/constant.class';
+import { Constant } from '../shared/constants/constant.class';
 
 @Injectable()
 export class GeneralService extends BaseService {
@@ -356,11 +356,11 @@ export class GeneralService extends BaseService {
   putReleasedPoint(releasedPoint: number, reason: string): any {
     return this.put(
       UrlConstant.LIST_ACCOUNT +
-        '/releasedPoint?' +
-        'releasedPoint=' +
-        releasedPoint +
-        '&reason=' +
-        reason,
+      '/releasedPoint?' +
+      'releasedPoint=' +
+      releasedPoint +
+      '&reason=' +
+      reason,
       releasedPoint
     );
   }
@@ -604,12 +604,12 @@ export class GeneralService extends BaseService {
   getSpecimenBarcode(code: any, width: any, height: any): any {
     return this.get(
       UrlConstant.LIST_SPECIMEN +
-        '/BarCode?code=' +
-        code +
-        '&width=' +
-        width +
-        '&height=' +
-        height,
+      '/BarCode?code=' +
+      code +
+      '&width=' +
+      width +
+      '&height=' +
+      height,
       null,
       'text'
     );
@@ -1284,7 +1284,7 @@ export class GeneralService extends BaseService {
   getWarehouseExportNeedConfirm(filter: any): Observable<any> {
     return this.post(
       UrlConstant.LIST_WAREHOUSE_EXPORT +
-        '/GetWarehouseExportNeedConfirmReceived',
+      '/GetWarehouseExportNeedConfirmReceived',
       filter
     );
   }
@@ -1799,12 +1799,18 @@ export class GeneralService extends BaseService {
   saveToken(payload: any) {
     return this.post(
       UrlConstant.USER_NOTIFICATION +
-        `?token=${payload.token}&deviceType=${payload.deviceType}`,
+      `?token=${payload.token}&deviceType=${payload.deviceType}`,
       null
     );
   }
 
   sendNotification() {
     return this.post(UrlConstant.USER_NOTIFICATION + '/testSingle', null);
+  }
+
+
+  // Mail
+  sendOTP2Email(payload: any): Observable<any> {
+    return this.post(UrlConstant.EMAIL + '/SendOTP2Email', payload);
   }
 }
