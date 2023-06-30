@@ -146,12 +146,12 @@ export class ForgotPasswordComponent {
       // Gửi mã OTP đến địa chỉ Email người dùng
       console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', this.randomOTP);
 
-      // const emailFrom = 'tuta@pmr.vn';
-      // const emailFrom = this.account.email;
-      // const emailFrom = 'thuylinh.lt97@gmail.com';
-      const emailFrom = 'tutran1998.tt@gmail.com';
+      // const emailTo = 'tuta@pmr.vn';
+      // const emailTo = this.account.email;
+      const emailTo = 'thuylinh.lt97@gmail.com';
+      // const emailTo = 'tutran1998.tt@gmail.com';
       const infoPayload = {
-        toEmail: emailFrom,
+        toEmail: emailTo,
         subject: 'Mã xác thực OTP từ phòng xét nghiệm INVIVOLAB',
         content: `Mã OTP: ${this.randomOTP}`
       };
