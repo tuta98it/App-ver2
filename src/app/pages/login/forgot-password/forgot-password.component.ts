@@ -25,9 +25,14 @@ export class ForgotPasswordComponent {
     newPassword: '',
     confirmNewPassword: ''
   };
+  randomOTP: any;
+  inputOTPCode: any;
   isOpenModalConfirmAddressSendOTP: boolean;
   isOpenModalResetNewPassword: boolean;
+  isOpenModalInputOTPCode: boolean;
 
+  validInputOTPCode = false;
+  textErrorInputOTPCode = 'Bạn nhập sai mã OTP, vui lòng nhập lại';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -51,6 +56,11 @@ export class ForgotPasswordComponent {
   setIsOpenModalResetNewPassword(isOpen: boolean) {
     this.isOpenModalResetNewPassword = isOpen;
   }
+
+  setIsOpenModalInputOTPCode(isOpen: boolean) {
+    this.isOpenModalInputOTPCode = isOpen;
+  }
+
 
   verifyUserPhoneNumber() {
     this.countVerifiNoPhone++;
@@ -130,19 +140,19 @@ export class ForgotPasswordComponent {
   }
 
   sendCodeOT() {
-    const randomOTP = this.otpService.generateOTP(6);
+    this.randomOTP = this.otpService.generateOTP(6);
 
     if (this.compareStrings(this.valueAddressSendOTPCode, 'email')) {
       // Gửi mã OTP đến địa chỉ Email người dùng
-      console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', randomOTP);
+      console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', this.randomOTP);
       this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến địa chỉ Email: ${this.account.email}`);
-      this.setIsOpenModalResetNewPassword(true);
+      this.setIsOpenModalInputOTPCode(true);
     } else if (this.compareStrings(this.valueAddressSendOTPCode, 'phone')) {
       // Gửi mã OTP đến số điện thoại người dùng
-      console.log('Gửi mã đến số điện thoại: ', this.account.phoneNo, 'Mã OTP: ', randomOTP);
+      console.log('Gửi mã đến số điện thoại: ', this.account.phoneNo, 'Mã OTP: ', this.randomOTP);
       this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến số điện thoại: ${this.account.phoneNo}`);
-      // this.sendOTPByEmail(this.account.email, randomOTP);
-      this.setIsOpenModalResetNewPassword(true);
+      // this.sendOTPByEmail(this.account.email, this.randomOTP);
+      this.setIsOpenModalInputOTPCode(true);
     } else {
       this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi xảy ra!!!`);
     }
@@ -206,6 +216,30 @@ export class ForgotPasswordComponent {
     }
   }
 
+  onKeyUpInputOTPCode() {
+    this.validInputOTPCode = this.isEmpty(this.inputOTPCode);
+    this.textErrorInputOTPCode = 'Mã OTP không được để trống';
+  }
+
+  confirmOTPCode() {
+    if (this.isEmpty(this.inputOTPCode)) {
+      this.validInputOTPCode = true;
+      this.textErrorInputOTPCode = 'Mã OTP không được để trống';
+    } else {
+      if (this.compareStrings(this.inputOTPCode, this.randomOTP)) {
+        this.validInputOTPCode = false;
+        this.setIsOpenModalResetNewPassword(true);
+      } else {
+        this.validInputOTPCode = true;
+        this.textErrorInputOTPCode = 'Bạn nhập sai mã OTP, vui lòng nhập lại';
+      }
+    }
+  }
+
+  resendOTPCode() {
+
+  }
+
 
   private compareStrings(s1: string, s2: string): boolean {
     const hash1 = SHA256(s1).toString();
@@ -233,4 +267,6 @@ export class ForgotPasswordComponent {
 
     return false;
   }
+
+
 }
