@@ -238,8 +238,8 @@ export class ForgotPasswordComponent {
   // }
 
   onKeyUpInputOTPCode(event: any) {
-    const inputText = event.target.value;
-    this.validInputOTPCode = this.isEmpty(inputText);
+    this.inputOTPCode = event.target.value;
+    this.validInputOTPCode = this.isEmpty(this.inputOTPCode);
     this.textErrorInputOTPCode = 'Mã OTP không được để trống';
   }
 
