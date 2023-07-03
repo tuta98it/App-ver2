@@ -9,6 +9,9 @@ import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 import { Constant } from '../shared/constants/constant.class';
+import { MenuController } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -61,7 +64,8 @@ export class TabsPage implements AfterViewInit {
     private alertController: AlertController,
     private changeDetectorRef: ChangeDetectorRef,
     private renderer: Renderer2,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private menuController: MenuController
   ) {
 
   }
@@ -521,13 +525,21 @@ export class TabsPage implements AfterViewInit {
 
   setOpenModalFormEditInfoUser(isOpen: any) {
     this.isModalOpenFormEditInfoUser = isOpen;
-    if(isOpen){
+    if (isOpen) {
       this.titleApp = 'Chỉnh sửa TT cá nhân';
     }
   }
 
-  saveModalFormEditInfoUser(){
+  saveModalFormEditInfoUser() {
     this.isModalOpenFormEditInfoUser = false;
+  }
+
+
+  openTabService() {
+    this.selectedTab  = 'services';
+    this.titleApp = 'Thông tin dịch vụ';
+    this.router.navigate(['/main/services']);
+    this.menuController.close(); // Đóng menu
   }
 
   isEmpty(value: any) {
