@@ -213,7 +213,7 @@
 
 
                 <ion-datetime #fromDatetime [(ngModel)]="this.filterInterval.pastTime" [showDefaultTitle]="true"
-                  [showDefaultButtons]="true" locale="vi-VI" id="from-datetime" [showClearButton]="true"
+                  [showDefaultButtons]="true" locale="vi-VI" id="from-datetime" [showClearButton]="true" clearText="Xoá" doneText="Xong" cancelText="Huỷ"
                   (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
                   <span slot="title">Chọn thời gian bắt đầu</span>
                 </ion-datetime>
@@ -248,7 +248,7 @@
               <ng-template>
 
                 <ion-datetime #toDatetime [(ngModel)]="this.filterInterval.presentTime" [showDefaultTitle]="true"
-                  [showDefaultButtons]="true" locale="vi-VI" id="toDatetime" [showClearButton]="true"
+                  [showDefaultButtons]="true" locale="vi-VI" id="toDatetime" [showClearButton]="true" clearText="Xoá" doneText="Xong" cancelText="Huỷ"
                   [min]="filterInterval.pastTime" (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
                   <span slot="title">Chọn thời gian bắt đầu</span>
                   <!-- <ion-buttons slot="buttons">
