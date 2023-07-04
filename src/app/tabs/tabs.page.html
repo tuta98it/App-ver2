@@ -1,13 +1,13 @@
 <ion-tabs #tabs (ionTabsDidChange)="tabClicked($event)" (ionViewDidLeave)="ionViewDidLeave()">
   <ion-menu contentId="main-content">
     <ion-header>
-       <ion-toolbar  color="primary">
+      <ion-toolbar color="primary">
         <!-- Tiêu đề Menu -->
         <!-- <ion-title>Menu Content</ion-title> -->
         <div class="title-menu-partner">
           <ion-chip color="dark" (click)="setOpenModalUser(true)">
             <ion-avatar>
-              <img alt="Avatar của bạn" [src]="userInfo?.avatar?  userInfo.avatar : linkAvatarDefault" />
+              <img alt="Avatar của bạn" [src]="userInfoShow?.linkAvatar?  userInfoShow.linkAvatar : linkAvatarDefault" />
             </ion-avatar>
             <ion-label>{{userInfo?.username? userInfo.username : 'Anonymous' }}</ion-label>
           </ion-chip>
@@ -57,7 +57,7 @@
   <ion-header>
     <div class="ion-page" id="main-content"></div>
     <!-- Toolbar -->
-      <ion-toolbar class="toolbar-app" color="primary">
+    <ion-toolbar class="toolbar-app" color="primary">
       <!-- Icon Menu -->
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -121,7 +121,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-       <ion-toolbar  color="primary">
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalUser(false)">
           <ion-button>
@@ -136,7 +136,7 @@
     <ion-content class="ion-padding">
       <div style="display: flex; flex-direction: column; align-items: center;">
         <ion-avatar style="height: fit-content; width: fit-content;">
-          <ion-img [src]="userInfo?.avatar? userInfo.avatar : linkAvatarDefault"
+          <ion-img [src]="userInfoShow?.linkAvatar? userInfoShow.linkAvatar : linkAvatarDefault"
             style="width: 6rem; height: 6rem;"></ion-img>
         </ion-avatar>
 
@@ -144,79 +144,87 @@
           sơ</ion-button>
       </div>
 
-      <ion-list *ngIf="!(userInfo | isEmpty) || true">
-        <ion-item lines="none" *ngIf="userInfo.fullname">
+      <!-- Họ và tên User -->
+      <ion-list *ngIf="!(userInfoShow | isEmpty) || true">
+        <ion-item lines="none" *ngIf="userInfoShow.fullname">
           <ion-icon name="person-circle-outline" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Họ và tên</h3>
-            <p>{{userInfo.fullname}}</p>
+            <p>{{userInfoShow.fullname}}</p>
           </ion-label>
         </ion-item>
-        <ion-item lines="none">
+
+        <!-- Mã KH User -->
+        <ion-item lines="none" *ngIf="userInfoShow.code">
           <ion-icon name="barcode" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Mã KH</h3>
-            <p *ngIf="userInfo.code">{{userInfo.code}}</p>
+            <p>{{userInfoShow.code}}</p>
           </ion-label>
         </ion-item>
-        <ion-item lines="none">
+
+        <!-- Số điện thoại -->
+        <ion-item lines="none" *ngIf="userInfoShow.phone">
           <ion-icon name="call" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Số điện thoại</h3>
-            <p *ngIf="userInfo.phone">{{userInfo.phone}}</p>
+            <p>{{userInfoShow.phone}}</p>
           </ion-label>
         </ion-item>
-        <ion-item lines="none">
+
+        <!-- Địa chỉ User -->
+        <ion-item lines="none" *ngIf="userInfoShow.address">
           <ion-icon name="location" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Địa chỉ</h3>
-            <p style="white-space: break-spaces;" *ngIf="userInfo.address">{{userInfo.address}}</p>
+            <p style="white-space: break-spaces;">{{userInfoShow.address}}</p>
           </ion-label>
         </ion-item>
-        <ion-item lines="none">
+
+        <!-- Link facebook user -->
+        <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.facebook">
           <ion-icon name="logo-facebook" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Facebook</h3>
-            <p *ngIf="userInfo.facebook">{{userInfo.socialNetwork.facebook}}</p>
+            <p>{{userInfoShow.socialNetwork.facebook}}</p>
           </ion-label>
         </ion-item>
 
         <!-- Zalo -->
-        <ion-item lines="none">
+        <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.zalo">
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
           <!-- <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px;"></i> -->
           <!-- <ion-icon name="megaphone-outline" slot="start"></ion-icon> -->
           <img width="26" height="26" src="https://img.icons8.com/color/50/zalo.png" alt="zalo"
-            style="margin-inline: 0px 20px;" />
-          <!-- <ion-img src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" style="margin-inline: 0px 20px;"/> -->
+            style="margin-inline: 0px 1.3rem;" />
+          <!-- <ion-img src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" style="margin-inline: 0px 1.3rem;"/> -->
           <!-- <img src="/src/assets/icon/zalo.svg"> -->
           <ion-label>
             <h3>Zalo</h3>
-            <p *ngIf="userInfo.zalo">{{userInfo.socialNetwork.zalo}}</p>
+            <p>{{userInfoShow.socialNetwork.zalo}}</p>
           </ion-label>
         </ion-item>
 
         <!-- Telegram -->
-        <ion-item lines="none">
-
-          <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px; color: #0353B4;"></i>
+        <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.telegram">
+          <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 1.3rem; color: #0353B4;"></i>
           <!-- <ion-icon name="fa-brands fa-telegram" slot="start"></ion-icon> -->
           <!-- <ion-icon slot="start"><i class="fa-brands fa-telegram"></i></ion-icon> -->
           <ion-label>
             <h3>Telegram</h3>
-            <p *ngIf="userInfo.telegram">{{userInfo.socialNetwork.telegram}}</p>
+            <p>{{userInfoShow.socialNetwork.telegram}}</p>
             <!-- <p>{{'Telegram'}}</p> -->
           </ion-label>
         </ion-item>
 
 
         <!-- Twitter -->
-        <ion-item lines="none">
+        <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.telegram">
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
-          <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 20px; color: #0353B4;"></i>
+          <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 1.5rem; color: #0353B4;"></i>
           <ion-label>
             <h3>Twitter</h3>
-            <p *ngIf="userInfo.telegram">{{userInfo.socialNetwork.tiwtter}}</p>
+            <p>{{userInfoShow.socialNetwork.tiwtter}}</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -233,7 +241,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-       <ion-toolbar  color="primary">
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalSales(false)">
           <ion-button>
@@ -326,7 +334,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-       <ion-toolbar  color="primary">
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalContact(false)">
           <ion-button>
@@ -362,7 +370,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-       <ion-toolbar  color="primary">
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalContentAbout(false)">
           <ion-button>
@@ -563,7 +571,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-       <ion-toolbar  color="primary">
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="start">
           <ion-button (click)="setOpenModalFormEditInfoUser(false)">Huỷ</ion-button>
@@ -582,29 +590,61 @@
     <!-- Nội dung -->
     <ion-content class="ion-padding">
       <div style="display: flex; flex-direction: column; align-items: center;">
-        <ion-avatar style="height: fit-content; width: fit-content;">
+        <!-- <ion-avatar style="height: fit-content; width: fit-content;" id="open-avatar-dialog">
           <ion-img [src]="userInfo?.avatar? userInfo.avatar : linkAvatarDefault"
             style="width: 6rem; height: 6rem;"></ion-img>
-        </ion-avatar>
+        </ion-avatar> -->
+        <!-- Avatar -->
+        <ion-chip style="height: 4rem; width: 8rem;" id="open-avatar-dialog">
+          <ion-avatar style="height: 2.8rem; width: 2.8rem;">
+            <img alt="Avater User" [src]="userInfoEdit?.linkAvatar? userInfoEdit.linkAvatar : linkAvatarDefault" />
+          </ion-avatar>
+
+          <!-- <ion-label>{{userInfo.username}}</ion-label> -->
+          <ion-icon size="large" name="create-outline"></ion-icon>
+        </ion-chip>
+        <!-- Modal lựa chọn avata cho user -->
+        <ion-modal id="avatar-modal" #modal_avatar trigger="open-avatar-dialog">
+          <ng-template>
+            <div class="wrapper">
+              <h1>DS Avatar </h1>
+
+              <ion-list lines="inset" style="overflow: scroll; max-height: 325px;">
+                <ion-item button *ngFor="let srcAvatar of listSrcAvatar; let i = index"
+                  (click)="selectedAvatar(srcAvatar)">
+                  <ion-avatar slot="start">
+                    <ion-img [src]="srcAvatar"></ion-img>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>{{userInfo.username}}</h2>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ng-template>
+        </ion-modal>
       </div>
+
 
       <ion-list *ngIf="!(userInfo | isEmpty) || true">
         <!-- Chỉnh sửa họ và tên -->
-        <ion-item *ngIf="userInfo.fullname">
+        <ion-item>
           <ion-label position="stacked">
             <ion-icon name="person-circle-outline"></ion-icon>
             Họ và tên
           </ion-label>
-          <ion-input placeholder="Họ Và Tên" value="{{userInfo.fullname}}"></ion-input>
+          <!-- value="{{userInfo.fullname}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.fullname" placeholder="Họ Và Tên"></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa mã khách hàng -->
-        <ion-item>
+        <ion-item >
           <ion-label position="stacked">
             <ion-icon name="barcode-outline"></ion-icon>
             Mã KH
           </ion-label>
-          <ion-input placeholder="ABC12345" value="{{userInfo.code}}"></ion-input>
+          <!-- value="{{userInfo.code}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.code" placeholder="ABC12345"></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa số điện thoại -->
@@ -613,7 +653,8 @@
             <ion-icon name="call-outline"></ion-icon>
             Số điện thoại
           </ion-label>
-          <ion-input placeholder="888-888-8888" type='tel' value="{{userInfo.phone}}"></ion-input>
+          <!-- value="{{userInfo.phone}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.phone" placeholder="888-888-8888" type='tel'></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa địa chỉ -->
@@ -622,7 +663,8 @@
             <ion-icon name="location-outline"></ion-icon>
             Địa chỉ
           </ion-label>
-          <ion-input placeholder="Địa chỉ ..." value="{{userInfo.address}}"></ion-input>
+          <!-- value="{{userInfo.address}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.address" placeholder="Địa chỉ ..."></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa địa chỉ facebook -->
@@ -631,7 +673,8 @@
             <ion-icon name="logo-facebook"></ion-icon>
             Facebook
           </ion-label>
-          <ion-input placeholder="Link facebook..." value="{{userInfo.socialNetwork.facebook}}"></ion-input>
+          <!-- value="{{userInfo.socialNetwork.facebook}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.socialNetwork.facebook" placeholder="Link facebook..."></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa địa chỉ Zalo -->
@@ -640,7 +683,8 @@
             <img width="15" height="15" src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" />
             Zalo
           </ion-label>
-          <ion-input placeholder="Link zalo..." value="{{userInfo.socialNetwork.zalo}}"></ion-input>
+          <!-- value="{{userInfo.socialNetwork.zalo}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.socialNetwork.zalo" placeholder="Link zalo..."></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa địa chỉ Telegram -->
@@ -649,7 +693,8 @@
             <i class="fa-brands fa-telegram fa-xs"></i>
             Telegram
           </ion-label>
-          <ion-input placeholder="Link telegram..." value="{{userInfo.socialNetwork.telegram}}"></ion-input>
+          <!-- value="{{userInfo.socialNetwork.telegram}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.socialNetwork.telegram" placeholder="Link telegram..."></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa địa chỉ Twitter -->
@@ -658,7 +703,8 @@
             <i class="fa-brands fa-twitter fa-xs"></i>
             Twitter
           </ion-label>
-          <ion-input placeholder="Link twitter..." value="{{userInfo.socialNetwork.tiwtter}}"></ion-input>
+          <!-- value="{{userInfo.socialNetwork.tiwtter}}" -->
+          <ion-input [(ngModel)]="userInfoEdit.socialNetwork.tiwtter" placeholder="Link twitter..."></ion-input>
         </ion-item>
       </ion-list>
     </ion-content>

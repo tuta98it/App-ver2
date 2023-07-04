@@ -23,6 +23,7 @@ export class TabsPage implements AfterViewInit {
   @ViewChild('barCanvas2', { static: false }) barCanvas2: ElementRef;
   @ViewChild('barCanvas3', { static: false }) barCanvas3: ElementRef;
   // @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild('modal_avatar') modalAvatar: IonModal;
   linkAvatarDefault = 'https://ionicframework.com/docs/img/demos/avatar.svg';
   public alertConfirmButtons = [
     {
@@ -54,6 +55,66 @@ export class TabsPage implements AfterViewInit {
   isModalOpenContact = false;
   isModalOpenContentAbout = false;
   isModalOpenFormEditInfoUser = false;
+  listSrcAvatar = [
+    'https://i.pravatar.cc/300?u=a',
+    'https://i.pravatar.cc/300?u=b',
+    'https://i.pravatar.cc/300?u=с',
+    'https://i.pravatar.cc/300?u=d',
+    'https://i.pravatar.cc/300?u=e',
+    'https://i.pravatar.cc/300?u=f',
+    'https://i.pravatar.cc/300?u=g',
+    'https://i.pravatar.cc/300?u=h',
+    'https://i.pravatar.cc/300?u=i',
+    'https://i.pravatar.cc/300?u=j',
+    'https://i.pravatar.cc/300?u=k',
+    'https://i.pravatar.cc/300?u=l',
+    'https://i.pravatar.cc/300?u=m',
+    'https://i.pravatar.cc/300?u=n',
+    'https://i.pravatar.cc/300?u=o',
+    'https://i.pravatar.cc/300?u=p',
+    'https://i.pravatar.cc/300?u=q',
+    'https://i.pravatar.cc/300?u=r',
+    'https://i.pravatar.cc/300?u=s',
+    'https://i.pravatar.cc/300?u=t',
+    'https://i.pravatar.cc/300?u=u',
+    'https://i.pravatar.cc/300?u=v',
+    'https://i.pravatar.cc/300?u=w',
+    'https://i.pravatar.cc/300?u=x',
+    'https://i.pravatar.cc/300?u=y',
+    'https://i.pravatar.cc/300?u=z',
+  ];
+
+
+  userInfoShow = {
+    username: 'admin',
+    linkAvatar: 'https://i.pravatar.cc/300?u=l',
+    fullname: 'Lý Thuỳ Linh',
+    code: '9167',
+    phone: '0934686465',
+    address: 'Mỹ Đình, Nam Từ Liêm, Hà Nội',
+    socialNetwork: {
+      facebook: 'https://www.facebook.com/lylinh97hy',
+      zalo: 'https://www.zalo.com/lylinh97hy',
+      telegram: 'https://www.telegram.com/lylinh97hy',
+      tiwtter: 'https://www.tiwtter.com/lylinh97hy'
+    },
+  };
+
+  userInfoEdit = {
+    username: '',
+    linkAvatar: '',
+    fullname: '',
+    code: '',
+    phone: '',
+    address: '',
+    socialNetwork: {
+      facebook: '',
+      zalo: '',
+      telegram: '',
+      tiwtter: ''
+    },
+  };
+
   constructor(
     public navCtrl: NavController,
     public badgeService: BadgeService,
@@ -528,18 +589,27 @@ export class TabsPage implements AfterViewInit {
     if (isOpen) {
       this.titleApp = 'Chỉnh sửa TT cá nhân';
     }
+    this.userInfoEdit = this.userInfoShow;
   }
 
   saveModalFormEditInfoUser() {
     this.isModalOpenFormEditInfoUser = false;
+    this.userInfoShow = this.userInfoEdit;
   }
 
 
   openTabService() {
-    this.selectedTab  = 'services';
+    this.selectedTab = 'services';
     this.titleApp = 'Thông tin dịch vụ';
     this.router.navigate(['/main/services']);
     this.menuController.close(); // Đóng menu
+  }
+
+
+  selectedAvatar(srcAvatar: any){
+    // console.log('src: ', srcAvatar);
+    this.userInfoEdit.linkAvatar = srcAvatar;
+    this.modalAvatar.dismiss();
   }
 
   isEmpty(value: any) {
