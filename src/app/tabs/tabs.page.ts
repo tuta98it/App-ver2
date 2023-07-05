@@ -422,7 +422,7 @@ export class TabsPage implements AfterViewInit {
           },
         },
         {
-          text: 'Có',
+          text: 'Liên hệ ngay',
           role: 'confirm',
           handler: () => {
             this.presentAlertNotification(
@@ -456,7 +456,7 @@ export class TabsPage implements AfterViewInit {
           },
         },
         {
-          text: 'Có',
+          text: 'Liên hệ ngay',
           role: 'confirm',
           handler: () => {
             this.presentAlertNotification(
@@ -477,8 +477,8 @@ export class TabsPage implements AfterViewInit {
     this.titleContact = 'Liên hệ Bộ phận thanh toán';
     const alert = await this.alertController.create({
       header: 'Thông báo',
-      subHeader: 'Không có gì đâu',
-      message: 'Đừng liên hệ',
+      subHeader: 'Bộ phận thanh toán sẽ phụ trách các công việc liên quan tới thanh toán hóa đơn, công nợ, chiết khấu,...',
+      message: 'Bạn có muốn gặp bộ phận thanh toán không?',
       buttons: [
         {
           text: 'Không',
@@ -488,13 +488,13 @@ export class TabsPage implements AfterViewInit {
           },
         },
         {
-          text: 'Có',
+          text: 'Liên hệ ngay',
           role: 'confirm',
           handler: () => {
             this.presentAlertNotification(
               'Thông báo',
-              'Liên hệ bộ phận thanh toán',
-              'Thôi đừng liên hệ nữa');
+              '',
+              'Bộ phận thanh toán sẽ sớm liên hệ lại với bạn');
           },
         },
       ],
@@ -505,7 +505,7 @@ export class TabsPage implements AfterViewInit {
     const { role } = await alert.onDidDismiss();
   }
 
-  async presentAlertNotification(header, subHeader, message) {
+  async presentAlertNotification(header?: any, subHeader?: any, message?: any) {
     // this.titleContact = 'Liên hệ NVKD';
     const alert = await this.alertController.create({
       header,
