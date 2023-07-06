@@ -4,7 +4,7 @@ export const environment = {
   // webUrl: 'https://invivo.pmr.vn',
   // jitsiUrl: 'https://meet.pmr.vn/'
 
-  baseUrl: 'https://listest.stc.vn:8643',
+  baseUrl: 'https://betestinvivover2.pmr.vn',
   webUrl: 'https://listest.stc.vn',
   jitsiUrl: 'https://meet.pmr.vn/'
 };
