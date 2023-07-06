@@ -87,16 +87,16 @@ export class TabsPage implements AfterViewInit {
 
   userInfoShow = {
     username: 'admin',
-    linkAvatar: 'https://i.pravatar.cc/300?u=l',
-    fullname: 'Lý Thuỳ Linh',
+    linkAvatar: 'https://i.pravatar.cc/300?u=z',
+    fullname: 'Nguyễn Văn Vở',
     code: '9167',
     phone: '0934686465',
     address: 'Mỹ Đình, Nam Từ Liêm, Hà Nội',
     socialNetwork: {
-      facebook: 'https://www.facebook.com/lylinh97hy',
-      zalo: 'https://www.zalo.com/lylinh97hy',
-      telegram: 'https://www.telegram.com/lylinh97hy',
-      tiwtter: 'https://www.tiwtter.com/lylinh97hy'
+      facebook: 'https://www.facebook.com/khongsovo',
+      zalo: 'https://www.zalo.com/nocnhanhe',
+      telegram: 'https://www.telegram.com/thoidibanoi',
+      tiwtter: 'https://www.tiwtter.com/banlanhat'
     },
   };
 
@@ -442,7 +442,7 @@ export class TabsPage implements AfterViewInit {
   }
 
   async presentAlertContactSwitchboard() {
-    this.titleContact = 'Liên hệ Tổng đài';
+    this.titleContact = 'Liên hệ tổng đài';
     const alert = await this.alertController.create({
       header: 'Thông báo',
       subHeader: 'Tổng đài sẽ phụ trách các công việc lên đơn, phản ánh tình trạng kết quả muộn, ...',
@@ -462,7 +462,7 @@ export class TabsPage implements AfterViewInit {
             this.presentAlertNotification(
               'Thông báo',
               '',
-              'Cảm ơn bạn đã gửi yêu cầu, Trần Thị Mỹ Linh sẽ liên hệ lại với bạn trong thời gian gần nhất.',);
+              'Cảm ơn bạn đã gửi yêu cầu, tổng đài sẽ liên hệ lại với bạn trong thời gian gần nhất.',);
           },
         },
       ],
