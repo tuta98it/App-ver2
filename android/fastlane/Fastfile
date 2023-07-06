@@ -54,7 +54,7 @@ platform :android do
         build_type: "Release",
         print_command: false,
         properties: {
-            "android.injected.signing.store.file" => Dir.pwd + "/../keystore/keystore.jks",
+            "android.injected.signing.store.file" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PATH'],
             "android.injected.signing.store.password" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PASSWORD'],
             "android.injected.signing.key.alias" => "Inivivo Partner",
             "android.injected.signing.key.password" => ENV['ANDROID_LIS_PARTNER_KEYSTORE_PASSWORD'],
