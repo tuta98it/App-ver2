@@ -606,7 +606,7 @@ export class TabsPage implements AfterViewInit {
   }
 
 
-  selectedAvatar(srcAvatar: any){
+  selectedAvatar(srcAvatar: any) {
     // console.log('src: ', srcAvatar);
     this.userInfoEdit.linkAvatar = srcAvatar;
     this.modalAvatar.dismiss();
