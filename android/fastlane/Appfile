@@ -1,2 +1,2 @@
-json_key_file("json-key-file.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+json_key_file("/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/00.Mesoco/json-key-file.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 package_name("com.invivo.partner") # e.g. com.krausefx.app
