@@ -59,8 +59,8 @@ export class LaboratoryPage implements OnInit {
 
 
   customPopoverOptions = {
-    // header: 'Trạng thái đơn hàng',
-    subHeader: 'Chọn trạng thái đơn hàng cần lọc',
+    // header: 'Trạng thái chỉ định',
+    subHeader: 'Chọn trạng thái chỉ định cần lọc',
     // message: 'Chỉ chọn một TTĐH',
   };
 
@@ -104,18 +104,18 @@ export class LaboratoryPage implements OnInit {
 
 
   orderStatus = [
-    {
-      id: 1,
-      name: 'Đã thanh toán'
-    },
-    {
-      id: 2,
-      name: 'Đã thực hiện'
-    },
-    {
-      id: 3,
-      name: 'Đã có kết quả 1 phần'
-    },
+    // {
+    //   id: 1,
+    //   name: 'Đã thanh toán'
+    // },
+    // {
+    //   id: 2,
+    //   name: 'Đã thực hiện'
+    // },
+    // {
+    //   id: 3,
+    //   name: 'Đã có kết quả 1 phần'
+    // },
     {
       id: 4,
       name: 'Đã có kết quả'
@@ -124,18 +124,18 @@ export class LaboratoryPage implements OnInit {
       id: 5,
       name: 'Đã lấy mẫu'
     },
-    {
-      id: 6,
-      name: 'Đã lấy mẫu một phần'
-    },
-    {
-      id: 7,
-      name: 'Đã nhận mẫu'
-    },
-    {
-      id: 8,
-      name: 'Đã nhận mẫu 1 phần'
-    },
+    // {
+    //   id: 6,
+    //   name: 'Đã lấy mẫu một phần'
+    // },
+    // {
+    //   id: 7,
+    //   name: 'Đã nhận mẫu'
+    // },
+    // {
+    //   id: 8,
+    //   name: 'Đã nhận mẫu 1 phần'
+    // },
     {
       id: 10,
       name: 'Chờ lấy mẫu'

@@ -98,11 +98,12 @@
                 <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="send-outline"></ion-icon>
-                    Trạng thái Đơn hàng
+                    Trạng thái chỉ định
                   </ion-label>
-                  <ion-select #orderStatusSelect style="font-size: small;" label="Trạng thái Đơn hàng"
+                  <ion-select #orderStatusSelect style="font-size: small;" label="Trạng thái chỉ định"
                     [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
-                    placeholder="Trạng thái đơn hàng" (ionChange)="handleChangeSelectOrderStatus($event)">
+                    placeholder="Trạng thái chỉ định" [value]="formFilterTestSheet.orderStatus"
+                    (ionChange)="handleChangeSelectOrderStatus($event)">
                     <ion-select-option *ngFor="let order of orderStatus" style="font-size: small;"
                       [value]="order.id">{{order.name}}</ion-select-option>
                     <!-- <ion-select-option  style="font-size: small;" value="0">Chưa nhận yêu cầu</ion-select-option>
@@ -213,8 +214,8 @@
 
 
                 <ion-datetime #fromDatetime [(ngModel)]="this.filterInterval.pastTime" [showDefaultTitle]="true"
-                  [showDefaultButtons]="true" locale="vi-VI" id="from-datetime" [showClearButton]="true" clearText="Xoá" doneText="Xong" cancelText="Huỷ"
-                  (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
+                  [showDefaultButtons]="true" locale="vi-VI" id="from-datetime" [showClearButton]="true" clearText="Xoá"
+                  doneText="Xong" cancelText="Huỷ" (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
                   <span slot="title">Chọn thời gian bắt đầu</span>
                 </ion-datetime>
               </ng-template>
@@ -248,8 +249,9 @@
               <ng-template>
 
                 <ion-datetime #toDatetime [(ngModel)]="this.filterInterval.presentTime" [showDefaultTitle]="true"
-                  [showDefaultButtons]="true" locale="vi-VI" id="toDatetime" [showClearButton]="true" clearText="Xoá" doneText="Xong" cancelText="Huỷ"
-                  [min]="filterInterval.pastTime" (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
+                  [showDefaultButtons]="true" locale="vi-VI" id="toDatetime" [showClearButton]="true" clearText="Xoá"
+                  doneText="Xong" cancelText="Huỷ" [min]="filterInterval.pastTime"
+                  (ionChange)="handleChangeFilterIntervalCustomByUser($event)">
                   <span slot="title">Chọn thời gian bắt đầu</span>
                   <!-- <ion-buttons slot="buttons">
                     <ion-button color="danger" (click)="toDatetime.reset()">Reset</ion-button>
@@ -279,7 +281,8 @@
       <ion-list>
 
         <!-- Danh các đối tác -->
-        <ion-item *ngFor="let order of listOrder; let i = index">
+        <ion-item *ngFor="let order of listOrder; let i = index" [button]="order.status === 4"
+          [detail]="order.status === 4" detailIcon="reader-outline">
           <!-- Thông tin bệnh nhân -->
           <ion-label>
             <!-- Tên bệnh nhân -->
@@ -303,7 +306,7 @@
               <h3 class="text address">{{order.patient.address}}</h3>
             </div>
 
-            <!-- Chỉ định -->
+            <!-- chỉ định -->
             <div *ngIf="!(order.chanDoan | isEmpty)" class="info">
               <div>
                 <ion-icon name="pulse-outline"></ion-icon>
