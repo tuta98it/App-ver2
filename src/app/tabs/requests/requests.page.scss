@@ -1,0 +1,304 @@
+// ion-content {
+//   --padding-top: 30px;
+// }
+
+// .info-row {
+//   padding: 0 10px;
+// }
+
+// ion-col {
+//   padding: 0 !important;
+//   position: relative;
+
+//   ion-badge {
+//     position: absolute;
+//     right: 5px;
+//     top: -4px;
+//   }
+// }
+
+// #trigger-button {
+//   margin: auto;
+//   display: block;
+// }
+
+// ion-button {
+//   height: 36px !important;
+// }
+
+// main {
+//   background: #FAFAFA;
+// }
+
+// .m-border-bottom {
+//   border-bottom: solid 1px #EEE;
+// }
+
+// .focus-student {
+//   background: linear-gradient(267.8deg, #F8A577 0.45%, #FCB733 99.87%);
+//   padding-top: 10px;
+//   padding-bottom: 5px;
+// }
+
+// .focus-teacher {
+//   background: linear-gradient(267.8deg, #5957f8 0.45%, #263dfc 99.87%);
+//   padding-top: 10px;
+//   padding-bottom: 5px;
+// }
+
+// .focus-admin {
+//   background: linear-gradient(267.8deg, #027876 0.45%, #009334 99.87%);
+//   padding-top: 10px;
+//   padding-bottom: 5px;
+// }
+
+// .option-student {
+//   background: #FFF;
+//   padding-top: 10px;
+//   padding-bottom: 5px;
+// }
+
+// ion-row.featured-row {
+//   padding: 10px 0 8px;
+//   margin: 5px 10px;
+// }
+
+// .featured-row ion-icon {
+//   margin-bottom: 5px;
+// }
+
+// .featured-row ion-col {
+//   text-align: center;
+//   font-size: 14px;
+// }
+
+// .featured-row ion-text {
+//   display: block;
+//   margin: auto;
+// }
+
+// ion-tab-button {
+//   --background-focused: red !important;
+//   --color: #FFF !important;
+// }
+
+// .divider-top {
+//   border-top: solid 8px var(--ion-color-light);
+// }
+
+// .news {
+//   .img-wrapper {
+//     height: calc((100vw * 0.8 - 32px) * 4 / 7.5);
+//     overflow: hidden;
+//     margin-bottom: 5px;
+
+//     img {
+//       max-height: 100%;
+//       height: 100%;
+//       width: 100%;
+//     }
+//   }
+// }
+
+// ion-card {
+//   margin: 10px 15px 10px 0;
+//   box-shadow: none;
+//   border-radius: 6px;
+//   border: solid 1px #EEE;
+// }
+
+// ion-card-header {
+//   padding: 0 !important;
+//   text-align: left;
+// }
+
+// ion-card-title,
+// ion-card-content {
+//   padding: 5px 10px;
+//   margin: 0;
+// }
+
+// ion-card-content {
+//   padding: 0px 10px 10px !important;
+//   text-align: left;
+//   font-size: 12px;
+// }
+
+// ion-card-title {
+//   font-size: 14px;
+// }
+
+// .inner-scroll,
+// .scroll-y {
+//   padding: 0 !important;
+//   background: red;
+// }
+
+// .size15 {
+//   width: 15px;
+//   height: 15px;
+// }
+
+// ion-item.last .ion-item {
+//   border: none !important;
+// }
+
+// ion-item:last-child {
+//   --border-width: 0 0 0 0 !important;
+// }
+
+// ion-label.btn {
+//   cursor: pointer;
+// }
+
+// .col-ava {
+//   display: flex;
+//   align-items: center;
+
+//   ion-avatar {
+//     width: 70%;
+//     height: auto;
+//     margin: auto;
+//   }
+// }
+
+// .modal-student {
+//   position: absolute;
+//   background: #FFF;
+//   z-index: 2;
+//   box-shadow: 0 2px 5px #9f9f9f;
+//   left: 0;
+//   right: 0;
+// }
+
+// ion-avatar {
+//   margin-right: 15px;
+//   margin-left: 10px;
+// }
+
+// ion-slides {
+//   ion-card-title {
+//     -webkit-line-clamp: 2;
+//     display: -webkit-box;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     -webkit-box-orient: vertical;
+//     font-size: 14px;
+//     line-height: 20px;
+//     padding: 2px 10px;
+//     letter-spacing: -0.4px;
+//   }
+
+//   ion-card-content {
+//     -webkit-line-clamp: 2;
+//     display: -webkit-box;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     -webkit-box-orient: vertical;
+//     font-size: 13px;
+//     line-height: 20px;
+//     padding: 3px 10px !important;
+//   }
+// }
+
+// .account-info {
+//   margin-top: 8px;
+// }
+
+// .info-row {
+//   margin-top: 8px;
+// }
+
+// .featured-row {
+//   ion-icon {
+//     font-size: 40px !important;
+//   }
+// }
+
+.m-error {
+  position: relative;
+  z-index: 1;
+  margin-left: 0.8rem;
+  min-height: 18px;
+  font-size: small;
+  color: var(--ion-color-danger);
+}
+
+
+.content-laboratory {
+  overflow: auto;
+  max-height: calc(100vh - 15.5rem);
+
+  ion-list {
+    ion-item {
+      display: flex;
+      flex-direction: column;
+
+      ion-label {
+
+        // h3.name-patient {
+        //   font-weight: 600;
+        //   white-space: break-spaces;
+        // }
+
+        div.appointment-date {
+          display: flex;
+          justify-content: space-between;
+          justify-items: center;
+
+          div.request-type {
+            display: inline-block;
+            padding: 0.25rem;
+            margin-top: 0.25rem;
+            border-radius: 0.25rem;
+            background-color: #91b5e4;
+            color: #fff;
+          }
+        }
+
+        div.info {
+          display: flex;
+          padding: 0.25rem;
+
+          h3 {
+            &.text {
+              margin-left: 0.25rem;
+            }
+
+            &.address {
+              white-space: break-spaces;
+            }
+
+            &.comment {
+              white-space: break-spaces;
+            }
+          }
+        }
+
+        div.status {
+          display: inline-block;
+          padding: 0.25rem;
+          margin-top: 0.25rem;
+          border-radius: 0.25rem;
+          background-color: #b5e0ff;
+        }
+      }
+    }
+  }
+}
+
+ion-modal.form-filter {
+  --height: 60%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  &::part(backdrop) {
+    background-color: rgba(209, 213, 219);
+    opacity: 1;
+  }
+
+  ion-toolbar {
+    --background: rgb(14 116 144);
+    --color: white;
+  }
+}

@@ -30,7 +30,7 @@ export class RoutePage implements OnInit {
   ngOnInit() {
     this.localStorage.getSelectedUser().then((res) => {
       if (res) {
-        this.navCtrl.navigateRoot(['/main/tab1']);
+        this.navCtrl.navigateRoot(['']);
       }
       else{
         this.navCtrl.navigateRoot(['/login']);

@@ -1,7 +1,8 @@
 {
-  "name": "capApp",
+  "name": "LIMS Partner",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

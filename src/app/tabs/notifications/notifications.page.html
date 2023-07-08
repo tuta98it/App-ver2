@@ -1,0 +1,30 @@
+<ion-content class="ion-padding">
+  <!-- Nội dung -->
+  <div class="content-notification">
+    <!-- Danh sách các dịch vụ -->
+    <ion-list lines="full">
+      <ion-item *ngFor="let notification of listNotifi; let i = index" class="notification-item">
+        <!-- <ion-avatar slot="start">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+        </ion-avatar> -->
+        <div class="notification-box">
+          <ion-label>
+            <div class="notification-header">
+              <h3> <strong>{{ notification.title | uppercase }}</strong> </h3>
+              <span class="notification-time">{{ notification.time | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <!-- <p style="white-space: normal; text-align: justify; color: black;" [innerHTML]="notification.content"></p> -->
+            <p class="notification-note" [innerHTML]="notification.content">{{ notification.content }}</p>
+          </ion-label>
+
+          <ion-buttons *ngIf="notification.showButtons" class="notification-buttons" >
+            <ion-button size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
+            <ion-button size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
+            <ion-button size="small" fill="solid" shape="round">Đã nhận</ion-button>
+          </ion-buttons>
+        </div>
+
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+
 import {Constant} from '../shared/constants/constant.class';
 
 @Injectable({
@@ -24,11 +25,26 @@ export class StorageService {
   public get(key: string) {
     return this.storage?.get(key);
   }
-  setSelectedUser(student: any): any {
-    return this.storage.set(Constant.STORAGE_USERINFO, student);
+  setSelectedUser(user: any): any {
+    return this.storage.set(Constant.STORAGE_USERINFO, user);
   }
-  logout(){
+  removeInfoUserStorage(){
     this.storage.remove(Constant.STORAGE_USERINFO);
+  }
+  removeInitialDataStorage(){
+    this.storage.remove(Constant.INIT_DATA);
+  }
+  removeTokenStorage(){
+    this.storage.remove(Constant.TOKEN);
+  }
+  removeAllStorage(){
+    this.removeInfoUserStorage();
+    this.removeInitialDataStorage();
+    this.removeTokenStorage();
+  }
+  clearAll(){
+    this.localstorage.clear();
+    this.removeAllStorage();
   }
   getSelectedUser(): any {
     return this.storage.get(Constant.STORAGE_USERINFO);

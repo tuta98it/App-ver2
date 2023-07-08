@@ -26,11 +26,13 @@
   box-shadow: none !important;
 }
 
-body {
-}
+/// Do not use empty rulesetsscss(emptyRules)
+// body {
+// }
 
-ion-button {
-}
+// ion-button {
+// }
+
 ion-content{
   background: #FFF;
 }
@@ -201,4 +203,33 @@ ion-refresher{
   background: #FFF;
   z-index: 2;
   margin-top: 22px;
+}
+
+
+.safe--area {
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
+    --ion-safe-area-top: 25px;
+    --ion-safe-area-bottom: 20px;
+}
+
+
+.m-error {
+  position: relative;
+  z-index: 1;
+  margin-left: 0.8rem;
+  min-height: 18px;
+  font-size: small;
+  color: var(--ion-color-danger);
+}
+
+
+.m-medium{
+  position: relative;
+  z-index: 1;
+  // margin-left: 0.8rem;
+  padding: 0.25rem;
+  min-height: 18px;
+  font-size: small;
+  color: var(--ion-color-medium);
 }

@@ -28,3 +28,72 @@
   background: red;
 }
 
+.title-menu-partner {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.logout-button-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+}
+
+.bar-chart-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.bar-chart {
+  height: 250px;
+  // width: 400px;
+}
+
+.colSmall {
+  width: 43px;
+  overflow: hidden;
+}
+
+.colLarge {
+  max-width: 100%;
+  overflow-x: scroll;
+}
+
+.box {
+  width: calc(100% - 41px);
+  height: 100%;
+}
+
+
+// avatar-modal
+ion-modal#avatar-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+
+  h1 {
+    margin: 20px 20px 10px 20px;
+  }
+
+  ion-icon {
+    margin-right: 6px;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 4px 0;
+
+    color: #aaaaaa;
+  }
+
+  .wrapper {
+    margin-bottom: 10px;
+  }
+}

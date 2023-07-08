@@ -8,8 +8,10 @@ export class Constant {
   public static readonly SUCCESS = 'success';
   public static readonly INFO = 'info';
   public static readonly ERROR = 'error';
+  public static readonly DANGER = 'danger';
   public static readonly WARNING = 'warning';
   public static readonly TOKEN = 'token';
+  public static readonly INIT_DATA = "initial_data";
   public static readonly ACTION = 'action';
   public static readonly USER_INFO = 'userinfo';
   public static readonly USER_LIST = 'loginusers';
@@ -39,4 +41,7 @@ export class Constant {
   public static readonly NOTIFICATION_TYPE_REQUEST_PERMISSION = 7;
   public static readonly NOTIFICATION_TYPE_HOMEWORK = 8;
   public static readonly LANGUAGE = 'language';
+
+
+  public static readonly MAX_VERIFI_NUMBER_PHONE = 5;
 }

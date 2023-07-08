@@ -1,0 +1,42 @@
+.content-notification {
+  ion-list {
+    ion-item.notification-item {
+      background-color: #f1f1f1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+
+      div.notification-box {
+        padding: 0.25rem 0 0.25rem 0;
+        margin: 0.5rem 0 0.5rem 0;
+
+        ion-label {
+          div.notification-header {
+            display: flex;
+            justify-content: space-between;
+
+            span.notification-time {
+              font-size: small;
+              font-style: oblique;
+              padding: 1px;
+            }
+          }
+
+          p.notification-note {
+            white-space: normal;
+            text-align: justify;
+          }
+        }
+
+        ion-buttons.notification-buttons {
+          margin-top: 0.5rem;
+          display: flex;
+          justify-content: space-evenly;
+        }
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+  }
+}

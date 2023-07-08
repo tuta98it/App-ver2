@@ -1,11 +1,18 @@
 {
-  "appId": "com.lamanh.mschool",
-  "appName": "mSchool",
+  "appId": "com.invivo.partner",
+  "appName": "Inivivo Connect",
   "webDir": "www",
   "bundledWebRuntime": false,
   "plugins": {
     "PushNotifications": {
       "presentationOptions": ["badge", "sound", "alert"]
     }
+  },
+  "cordova": {},
+  "ios": {
+    "minVersion": "11.0"
+  },
+  "android": {
+    "minVersion": "5.0.0"
   }
 }

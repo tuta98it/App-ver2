@@ -36,16 +36,22 @@ export class SafePipe implements PipeTransform {
   ): SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl {
     switch (type) {
       case 'html':
+        // eslint-disable-next-line no-underscore-dangle
         return this._sanitizer.bypassSecurityTrustHtml(value);
       case 'style':
+        // eslint-disable-next-line no-underscore-dangle
         return this._sanitizer.bypassSecurityTrustStyle(value);
       case 'script':
+        // eslint-disable-next-line no-underscore-dangle
         return this._sanitizer.bypassSecurityTrustScript(value);
       case 'url':
+        // eslint-disable-next-line no-underscore-dangle
         return this._sanitizer.bypassSecurityTrustUrl(value);
       case 'resourceUrl':
+        // eslint-disable-next-line no-underscore-dangle
         return this._sanitizer.bypassSecurityTrustResourceUrl(value);
       default:
+        // eslint-disable-next-line no-underscore-dangle
         return this._sanitizer.bypassSecurityTrustHtml(value);
     }
   }

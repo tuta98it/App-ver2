@@ -1,34 +1,77 @@
 {
   "project_info": {
-    "project_number": "825687385563",
-    "project_id": "mschool-de76f",
-    "storage_bucket": "mschool-de76f.appspot.com"
+    "project_number": "919108602480",
+    "project_id": "invivolab-d26fe",
+    "storage_bucket": "invivolab-d26fe.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:825687385563:android:054d211d552e3cdfb9b3fe",
+        "mobilesdk_app_id": "1:919108602480:android:4048e10b7966ad274642b5",
         "android_client_info": {
-          "package_name": "com.lamanhtech.mschool"
+          "package_name": "com.invivo.partner"
         }
       },
       "oauth_client": [
         {
-          "client_id": "825687385563-ju19q87vj1bru0ecsv8qeth0757n5t6r.apps.googleusercontent.com",
+          "client_id": "919108602480-sil4ohr5d96vfbac73hbc59508pc5ge1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAbKHUO78KElZBIW3omxXAIt5GGOlQaGGY"
+          "current_key": "AIzaSyAxuYbL2-h5YM4i2PZsa5XcYQ4sbAxlGO4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "825687385563-ju19q87vj1bru0ecsv8qeth0757n5t6r.apps.googleusercontent.com",
+              "client_id": "919108602480-sil4ohr5d96vfbac73hbc59508pc5ge1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "919108602480-1dh734dobdlvuon1thkbvot7hifpjvrh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mesoco.invivolab"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919108602480:android:53c0e558466be81d4642b5",
+        "android_client_info": {
+          "package_name": "com.mesoco.pmrlims"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919108602480-sil4ohr5d96vfbac73hbc59508pc5ge1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxuYbL2-h5YM4i2PZsa5XcYQ4sbAxlGO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919108602480-sil4ohr5d96vfbac73hbc59508pc5ge1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "919108602480-1dh734dobdlvuon1thkbvot7hifpjvrh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mesoco.invivolab"
+              }
             }
           ]
         }
