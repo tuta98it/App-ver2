@@ -139,4 +139,7 @@ export class UrlConstant {
 
   //Email
   public static readonly EMAIL = "/Email";
+
+  //ViewKQ
+  public static readonly VIEW_KETQUA = "/ViewKetQua";
 }

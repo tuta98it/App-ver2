@@ -3,14 +3,17 @@
 
 /** Ionic CSS Variables **/
 @font-face {
-  font-family: "sfprotext";
+  // font-family: "sfprotext";
+  font-family: "montserrat";
   font-weight: 400;
   src: url("/assets/fonts/SF-Pro-Text-Regular.woff");
 }
 :root {
-  --ion-font-family: 'sfprotext';
+  // --ion-font-family: 'sfprotext';
+  --ion-font-family: 'montserrat';
   /** primary **/
-  --ion-color-primary: #0353B4;
+  // --ion-color-primary: #0353B4;
+  --ion-color-primary: #026069;
   --ion-color-primary-rgb: 31, 45, 199;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;

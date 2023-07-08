@@ -164,11 +164,11 @@
         </ion-item>
 
         <!-- Số điện thoại -->
-        <ion-item lines="none" *ngIf="userInfoShow.phone">
+        <ion-item lines="none" *ngIf="userInfoShow.phoneNo">
           <ion-icon name="call" color="primary" slot="start"></ion-icon>
           <ion-label>
             <h3>Số điện thoại</h3>
-            <p>{{userInfoShow.phone}}</p>
+            <p>{{userInfoShow.phoneNo}}</p>
           </ion-label>
         </ion-item>
 
@@ -224,7 +224,7 @@
           <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 1.5rem; color: #0353B4;"></i>
           <ion-label>
             <h3>Twitter</h3>
-            <p>{{userInfoShow.socialNetwork.tiwtter}}</p>
+            <p>{{userInfoShow.socialNetwork.twitter}}</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -654,7 +654,7 @@
             Số điện thoại
           </ion-label>
           <!-- value="{{userInfo.phone}}" -->
-          <ion-input [(ngModel)]="userInfoEdit.phone" placeholder="888-888-8888" type='tel'></ion-input>
+          <ion-input [(ngModel)]="userInfoEdit.phoneNo" placeholder="888-888-8888" type='tel'></ion-input>
         </ion-item>
 
         <!-- Chỉnh sửa địa chỉ -->
@@ -704,7 +704,7 @@
             Twitter
           </ion-label>
           <!-- value="{{userInfo.socialNetwork.tiwtter}}" -->
-          <ion-input [(ngModel)]="userInfoEdit.socialNetwork.tiwtter" placeholder="Link twitter..."></ion-input>
+          <ion-input [(ngModel)]="userInfoEdit.socialNetwork.twitter" placeholder="Link twitter..."></ion-input>
         </ion-item>
       </ion-list>
     </ion-content>

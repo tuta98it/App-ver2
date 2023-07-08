@@ -8,6 +8,7 @@ import { Constant } from '../shared/constants/constant.class';
 @Injectable()
 export class GeneralService extends BaseService {
   //taikhoan
+
   getTaikhoan(): Observable<any[]> {
     return this.get(UrlConstant.LIST_TAIKHOAN);
   }
@@ -35,11 +36,17 @@ export class GeneralService extends BaseService {
     return this.post(UrlConstant.LIST_TAIKHOAN + '/AddGroup2User', item);
   }
 
-  getUserLogin(username, password): Observable<any[]> {
+  getUserLogin(username: any, password: any): Observable<any[]> {
     return this.get(
       '/test/getUserLogin?password=' + password + '&userId=' + username
     );
   }
+
+  // Upload UserInfo
+  uploadUserInfo(newUserInfo: any): Observable<any> {
+    return this.post('/User/UserInfoUpdate', newUserInfo);
+  }
+
 
   getDetailTaikhoan(id: number): Observable<any> {
     return this.get(UrlConstant.LIST_TAIKHOAN + '/' + id, null);
@@ -49,7 +56,7 @@ export class GeneralService extends BaseService {
     return this.get('/Login/getAllUsers');
   }
 
-  getUserByRoleId(roleId): Observable<any[]> {
+  getUserByRoleId(roleId: any): Observable<any[]> {
     return this.get(`/Login/GetUserByRole/${roleId}`);
   }
 
@@ -1812,5 +1819,14 @@ export class GeneralService extends BaseService {
   // Mail
   sendOTP2Email(payload: any): Observable<any> {
     return this.post(UrlConstant.EMAIL + '/SendOTP2Email', payload);
+  }
+
+  // ViewKetQua
+  viewKQ(payload: any): Observable<any> {
+    return this.post(UrlConstant.VIEW_KETQUA + '/ViewKQ', payload);
+  }
+
+  viewKQNoCode(payload: any): Observable<any> {
+    return this.post(UrlConstant.VIEW_KETQUA + '/ViewKQNoCode', payload);
   }
 }

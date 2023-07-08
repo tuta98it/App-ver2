@@ -6,10 +6,9 @@ import { LaboratoryPage } from './laboratory.page';
 import { ExploreContainerComponentModule } from '../../explore-container/explore-container.module';
 
 import { LaboratoryPageRoutingModule } from './laboratory-routing.module';
-import {AppVersion} from '@ionic-native/app-version/ngx';
-import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SharedModule } from 'src/app/shared/modules/share.module';
-import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   imports: [
@@ -18,9 +17,10 @@ import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
     FormsModule,
     ExploreContainerComponentModule,
     LaboratoryPageRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [AppVersion],
   declarations: [LaboratoryPage]
 })
-export class LaboratoryPageModule {}
+export class LaboratoryPageModule { }

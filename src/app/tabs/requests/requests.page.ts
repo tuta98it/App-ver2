@@ -784,6 +784,7 @@ export class RequestsPage implements OnInit {
       fromDate: this.filterInterval.pastTime,
       toDate: this.filterInterval.presentTime,
       phone: this.formFilterTestSheet.phoneNoPatient,
+      address: this.formFilterTestSheet.addressPatient,
       partnerId: this.userInfo.partnerId,
       // receiveUserId: null,
       // called: null,

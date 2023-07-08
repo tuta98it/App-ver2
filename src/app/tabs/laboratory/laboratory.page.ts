@@ -28,6 +28,7 @@ import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { OrderService } from 'src/app/services/order.service';
 import { GeneralService } from 'src/app/services/general-service';
 
+
 @Component({
   selector: 'app-laboratory',
   templateUrl: 'laboratory.page.html',
@@ -47,6 +48,7 @@ export class LaboratoryPage implements OnInit {
   instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
   numberOfNewPatients = 0;
   isModalOpenFormPatient = false;
+  isModalOpenViewPDF = false;
 
 
   validFormInput = {
@@ -177,6 +179,12 @@ export class LaboratoryPage implements OnInit {
     translucent: true,
   };
 
+  public zoom = '150%';
+  pdfUrls: string[] = [
+    'https://invivo.pmr.vn/Viewer/Media/27464/25052023-11626791.pdf',
+    'https://invivo.pmr.vn/Viewer/Media/27464/25052023-11626791_336HPVHQIAG.pdf',
+    'https://invivo.pmr.vn/Viewer/Media/27464/27464-5364-3394-nguyen-thi-thu-tra.pdf'
+  ];
 
   constructor(public photoService: PhotoService,
     private popoverController: PopoverController,
@@ -354,8 +362,8 @@ export class LaboratoryPage implements OnInit {
           console.log('this.listOrder : ', this.listOrder);
         }
       },
-      (error) => {
-        if (error.status === 403) {
+      (err) => {
+        if (err.status === 403) {
           this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
           this.router.navigate(['/login']);
         } else {
@@ -372,7 +380,7 @@ export class LaboratoryPage implements OnInit {
           this.listTypeOrder = res.filter(en => en.requestTypeCode === 'LM' || en.requestTypeCode === 'TM');
         }
       },
-      (error) => {
+      (err) => {
       }
     );
   }
@@ -415,7 +423,7 @@ export class LaboratoryPage implements OnInit {
       (res) => {
         this.listPartner = res;
       },
-      (error) => { }
+      (err) => { }
     );
   }
 
@@ -448,6 +456,9 @@ export class LaboratoryPage implements OnInit {
     this.setOpenModalAddPatient(true);
   }
 
+  setOpenModalViewPDF(isOpen: boolean) {
+    this.isModalOpenViewPDF = isOpen;
+  }
   restartValidFormAddPatient() {
     this.validFormInput.isEmptyAdress = false;
     this.validFormInput.isEmptyFullName = false;
@@ -561,7 +572,7 @@ export class LaboratoryPage implements OnInit {
             this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi : ${res.errors[0].errorMessage}`);
           }
         },
-        (error: any) => {
+        (err: any) => {
           this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi  xảy ra`);
         },
         (ret: any) => {
@@ -843,6 +854,41 @@ export class LaboratoryPage implements OnInit {
 
     this.modalFormFilterLab.dismiss();
   }
+
+  showResultTest(order: any) {
+    const payload = {
+      sid: order.code,
+    };
+    if (order.status === 4) {
+      this.generalService.viewKQNoCode(payload).subscribe(
+        (res: any) => {
+          if (res.isValid) {
+            if (this.isEmpty(res.errors)) {
+              if (!this.isEmpty(res.allFile)) {
+                this.notificationService.showMessage(Constant.SUCCESS, `Phiếu xét nghiệm có mã ${order.code} đã có kết quả.`);
+                this.pdfUrls = res.allFile;
+                this.setOpenModalViewPDF(true);
+              } else {
+                this.notificationService.showMessage(Constant.WARNING, `Không tồn tại kết quả xét nghiệm có mã ${order.code} trên hệ thống. Ví dụ`);
+                this.setOpenModalViewPDF(true);
+              }
+            } else {
+              this.notificationService.showMessage(Constant.DANGER, 'Đã có lỗi xảy ra!');
+            }
+          } else {
+            this.notificationService.showMessage(Constant.DANGER, res.error.errorMessage);
+          }
+        },
+        (err: any) => {
+          this.notificationService.showMessage(Constant.DANGER, 'Đã có lỗi xảy ra!');
+        }
+      );
+    }
+  }
+
+
+
+
 
 
   restartFormFilter() {

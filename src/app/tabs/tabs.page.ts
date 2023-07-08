@@ -10,7 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 import { Constant } from '../shared/constants/constant.class';
 import { MenuController } from '@ionic/angular';
-
+import { GeneralService } from 'src/app/services/general-service';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-tabs',
@@ -90,13 +91,13 @@ export class TabsPage implements AfterViewInit {
     linkAvatar: 'https://i.pravatar.cc/300?u=z',
     fullname: 'Nguyễn Văn Vở',
     code: '9167',
-    phone: '0934686465',
+    phoneNo: '0934686465',
     address: 'Mỹ Đình, Nam Từ Liêm, Hà Nội',
     socialNetwork: {
       facebook: 'https://www.facebook.com/khongsovo',
       zalo: 'https://www.zalo.com/nocnhanhe',
       telegram: 'https://www.telegram.com/thoidibanoi',
-      tiwtter: 'https://www.tiwtter.com/banlanhat'
+      twitter: 'https://www.tiwtter.com/banlanhat'
     },
   };
 
@@ -105,13 +106,13 @@ export class TabsPage implements AfterViewInit {
     linkAvatar: '',
     fullname: '',
     code: '',
-    phone: '',
+    phoneNo: '',
     address: '',
     socialNetwork: {
       facebook: '',
       zalo: '',
       telegram: '',
-      tiwtter: ''
+      twitter: ''
     },
   };
 
@@ -126,7 +127,9 @@ export class TabsPage implements AfterViewInit {
     private changeDetectorRef: ChangeDetectorRef,
     private renderer: Renderer2,
     private httpClient: HttpClient,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private generalService: GeneralService,
+    private notificationService: NotificationService,
   ) {
 
   }
@@ -169,6 +172,22 @@ export class TabsPage implements AfterViewInit {
     this.localStorage.getSelectedUser().then((res: any) => {
       // console.log('getSelectedUser', res);
       this.userInfo = res;
+
+      // Ghép vào userInfoShow để hiện thị
+      this.userInfoShow = {
+        username: this.userInfo.username,
+        linkAvatar: this.userInfo.linkAvatar,
+        fullname: this.userInfo.fullname,
+        code: this.userInfo.staffCode,
+        phoneNo: this.userInfo.phoneNo,
+        address: this.userInfo.address,
+        socialNetwork: {
+          facebook: this.userInfo.facebook,
+          zalo: this.userInfo.zalo,
+          telegram: this.userInfo.telegram,
+          twitter: this.userInfo.twitter
+        },
+      };
     });
 
     // this.loadContentAbout();
@@ -589,12 +608,32 @@ export class TabsPage implements AfterViewInit {
     if (isOpen) {
       this.titleApp = 'Chỉnh sửa TT cá nhân';
     }
-    this.userInfoEdit = this.userInfoShow;
+    this.userInfoEdit = JSON.parse(JSON.stringify(this.userInfoShow));
   }
 
   saveModalFormEditInfoUser() {
     this.isModalOpenFormEditInfoUser = false;
-    this.userInfoShow = this.userInfoEdit;
+    //
+    const newUserInfo = {
+      id: this.userInfo.id,
+      fullname: this.userInfoEdit.fullname,
+      phoneNo: this.userInfoEdit.phoneNo,
+      address: this.userInfoEdit.address,
+      linkAvatar: this.userInfoEdit.linkAvatar,
+      facebook: this.userInfoEdit.socialNetwork.facebook,
+      zalo: this.userInfoEdit.socialNetwork.zalo,
+      telegram: this.userInfoEdit.socialNetwork.telegram,
+      twitter: this.userInfoEdit.socialNetwork.twitter
+    };
+    this.generalService.uploadUserInfo(newUserInfo).subscribe(
+      (res: any) => {
+        this.notificationService.showMessage(Constant.SUCCESS, `Cập nhận hồ sơ thành công`);
+        this.userInfoShow = JSON.parse(JSON.stringify(this.userInfoEdit));
+      },
+      (error: any) => {
+
+      }
+    );
   }
 
 

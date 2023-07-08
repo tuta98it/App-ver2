@@ -82,8 +82,8 @@
                     <ion-icon name="person-outline"></ion-icon>
                     Tên bệnh nhân
                   </ion-label>
-                  <ion-input placeholder="Nhập tên bệnh nhân ..."
-                    [(ngModel)]="formFilterTestSheet.namePatient" clearInput="true" clearOnEdit="true"></ion-input>
+                  <ion-input placeholder="Nhập tên bệnh nhân ..." [(ngModel)]="formFilterTestSheet.namePatient"
+                    clearInput="true" clearOnEdit="true"></ion-input>
                 </ion-item>
 
                 <ion-item style="font-size: small;">
@@ -91,8 +91,8 @@
                     <ion-icon name="call-outline"></ion-icon>
                     Số điện thoại
                   </ion-label>
-                  <ion-input type="tel" placeholder="Nhập SĐT ..."
-                    [(ngModel)]="formFilterTestSheet.phoneNoPatient" clearInput="true" clearOnEdit="true"></ion-input>
+                  <ion-input type="tel" placeholder="Nhập SĐT ..." [(ngModel)]="formFilterTestSheet.phoneNoPatient"
+                    clearInput="true" clearOnEdit="true"></ion-input>
                 </ion-item>
 
                 <ion-item style="font-size: small;">
@@ -271,18 +271,27 @@
   </div>
 </ion-header>
 <!-- <ion-label>formFilterTestSheet value: {{ formFilterTestSheet | json }}</ion-label> -->
+
+<!-- <ion-content>
+  <ng-container *ngFor="let url of pdfUrls">
+    <ngx-extended-pdf-viewer [src]="url" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true"
+      [mobileFriendlyZoom]="zoom">></ngx-extended-pdf-viewer>
+  </ng-container>
+</ion-content> -->
+
 <ion-content class="ion-padding">
   <!-- Nội dung -->
+
+
+
   <div>
-
-
     <!-- Nội dung -->
     <div class="content-laboratory">
       <ion-list>
 
         <!-- Danh các đối tác -->
         <ion-item *ngFor="let order of listOrder; let i = index" [button]="order.status === 4"
-          [detail]="order.status === 4" detailIcon="reader-outline">
+          (click)="showResultTest(order)" [detail]="order.status === 4" detailIcon="reader-outline">
           <!-- Thông tin bệnh nhân -->
           <ion-label>
             <!-- Tên bệnh nhân -->
@@ -478,6 +487,45 @@
       </div>
 
 
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+<ion-modal [isOpen]="isModalOpenViewPDF">
+  <ng-template>
+    <!-- Tiêu đề -->
+    <ion-header>
+      <ion-toolbar color="primary">
+        <!-- Nút huỷ modal -->
+        <ion-buttons slot="end">
+          <ion-button (click)="setOpenModalViewPDF(false)">Đóng</ion-button>
+        </ion-buttons>
+
+        <!-- Tiêu đề Modal -->
+        <ion-title>{{'Kết quả phiếu xét nghiệm'}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <!-- Nội dung -->
+    <!-- <p>{{itemPatientFormModalLab | json}}</p> -->
+    <ion-content class="ion-padding">
+      <!-- <ng-container *ngFor="let url of pdfUrls">
+        <ngx-extended-pdf-viewer [src]="url" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true"
+          [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+          [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
+
+      </ng-container> -->
+      <!-- <ngx-extended-pdf-viewer [src]="pdfUrls[0]" [useBrowserLocale]="true" [textLayer]="true"
+        [showHandToolButton]="true" [showPresentationModeButton]="true"
+        [showDownloadButton]="false"></ngx-extended-pdf-viewer> -->
+      <ngx-extended-pdf-viewer [src]="pdfUrls[1]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true" id="1" itemid="a"
+        [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+        [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
+
+      <ngx-extended-pdf-viewer [src]="pdfUrls[0]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true" id="2" itemid="b"
+        [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+        [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
     </ion-content>
   </ng-template>
 </ion-modal>
