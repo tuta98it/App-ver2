@@ -32,3 +32,4 @@ npm-debug.log*
 /www
 ios/App/App.ipa
 ios/App/App.app.dSYM.zip
+ios/App/fastlane/report.xml

@@ -1,6 +1,6 @@
 {
   "appId": "com.invivo.partner",
-  "appName": "Inivivo Partner",
+  "appName": "Inivivo Connect",
   "webDir": "www",
   "bundledWebRuntime": false,
   "plugins": {
