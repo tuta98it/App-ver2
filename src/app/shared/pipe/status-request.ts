@@ -9,24 +9,25 @@ export class StatusRequestPipe implements PipeTransform {
 
   }
   transform(request: any): string {
-    if (this.isEmpty(request.receiveTime)) {
-      return 'Chưa nhận yêu cầu';
-    }
+    // if (this.isEmpty(request.receiveTime)) {
+    //   return 'Chưa nhận yêu cầu';
+    // }
 
     if (this.isEmpty(request.arriveTime)) {
-      return 'Đã nhận yêu cầu và đang xử lý';
+      return 'Đã nhận yêu cầu';
     }
 
     if (this.isEmpty(request.completeTime)) {
-      return 'Đã nhận yêu cầu và đang xử lý';
+      return 'Đang xử lý';
     }
 
     if (this.isEmpty(request.arriveLaboTime)) {
-      return 'Đã nhận yêu cầu và đang xử lý';
+      return 'Đã lấy mẫu';
     }
 
-    return 'Đã nhận yêu cầu và đang xử lý';
+    return 'Đã lấy mẫu';
   }
+
 
   private isEmpty(value: any): boolean {
     if (value === null || value === undefined) {
@@ -66,3 +67,45 @@ export class StatusRequestPipe implements PipeTransform {
 
   // return false;
 }
+
+
+// transform(request: any): string {
+//   if (this.isEmpty(request.receiveTime)) {
+//     return 'Chưa nhận yêu cầu';
+//   }
+
+//   if (this.isEmpty(request.arriveTime)) {
+//     return 'Đã nhận yêu cầu';
+//   }
+
+//   if (this.isEmpty(request.completeTime)) {
+//     return 'Đã đến nơi lấy mẫu';
+//   }
+
+//   if (this.isEmpty(request.arriveLaboTime)) {
+//     return 'Đã lấy mẫu';
+//   }
+
+//   return 'Đã nộp mẫu cho lab';
+// }
+
+
+// transform(request: any): string {
+//   if (this.isEmpty(request.receiveTime)) {
+//     return 'Chưa nhận yêu cầu';
+//   }
+
+//   if (this.isEmpty(request.arriveTime)) {
+//     return 'Đã nhận yêu cầu và đang xử lý';
+//   }
+
+//   if (this.isEmpty(request.completeTime)) {
+//     return 'Đã nhận yêu cầu và đang xử lý';
+//   }
+
+//   if (this.isEmpty(request.arriveLaboTime)) {
+//     return 'Đã nhận yêu cầu và đang xử lý';
+//   }
+
+//   return 'Đã nhận yêu cầu và đang xử lý';
+// }
