@@ -395,6 +395,7 @@ export class TabsPage implements AfterViewInit {
 
   logoutAccount() {
     localStorage.removeItem(Constant.TOKEN);
+    this.localStorage.removeInfoUserStorage();
     this.router.navigate(['/login']);
   }
 
@@ -629,6 +630,7 @@ export class TabsPage implements AfterViewInit {
       (res: any) => {
         this.notificationService.showMessage(Constant.SUCCESS, `Cập nhận hồ sơ thành công`);
         this.userInfoShow = JSON.parse(JSON.stringify(this.userInfoEdit));
+        this.updateUserInfo(res);
       },
       (error: any) => {
 
@@ -636,6 +638,33 @@ export class TabsPage implements AfterViewInit {
     );
   }
 
+
+  updateUserInfo(data: any) {
+    this.userInfo.username = this.userInfoShow.username;
+    this.userInfo.linkAvatar = this.userInfoShow.linkAvatar;
+    this.userInfo.fullname = this.userInfoShow.fullname;
+    this.userInfo.phoneNo = this.userInfoShow.phoneNo;
+    this.userInfo.address = this.userInfoShow.address;
+    this.userInfo.facebook = this.userInfoShow.socialNetwork.facebook;
+    this.userInfo.zalo = this.userInfoShow.socialNetwork.zalo;
+    this.userInfo.telegram = this.userInfoShow.socialNetwork.telegram;
+    this.userInfo.twitter = this.userInfoShow.socialNetwork.twitter;
+
+    this.localStorage.set(Constant.STORAGE_USERINFO, this.userInfo).then(
+      (res) => {
+        if (res) {
+          console.log('Update UserInfo Local Storage Thành công!!!');
+        } else {
+          console.log('Update UserInfo Local Storage không thành công!!!');
+        }
+        // this.navCtrl.navigateRoot(['/main/requests']);
+      },
+      (err: any) => {
+        console.log('Đã có lỗi xảy ra khi update UserInfo Local Storage');
+      }
+    );
+
+  }
 
   openTabService() {
     this.selectedTab = 'services';

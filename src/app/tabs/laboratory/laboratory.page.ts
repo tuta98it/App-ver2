@@ -866,7 +866,7 @@ export class LaboratoryPage implements OnInit {
             if (this.isEmpty(res.errors)) {
               if (!this.isEmpty(res.allFile)) {
                 this.notificationService.showMessage(Constant.SUCCESS, `Phiếu xét nghiệm có mã ${order.code} đã có kết quả.`);
-                this.pdfUrls = res.allFile;
+                this.pdfUrls = res.allFile; // Lấy link file KQ xét nghiệm trả về
                 this.setOpenModalViewPDF(true);
               } else {
                 this.notificationService.showMessage(Constant.WARNING, `Không tồn tại kết quả xét nghiệm có mã ${order.code} trên hệ thống. Ví dụ`);
