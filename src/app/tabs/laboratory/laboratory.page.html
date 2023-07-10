@@ -510,22 +510,32 @@
     <!-- Nội dung -->
     <!-- <p>{{itemPatientFormModalLab | json}}</p> -->
     <ion-content class="ion-padding">
+
+
+
+      <ng-container>
+        <ngx-extended-pdf-viewer [src]="pdfUrls[0]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true"
+          [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+          [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
+      </ng-container>
+
       <!-- <ng-container *ngFor="let url of pdfUrls">
         <ngx-extended-pdf-viewer [src]="url" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true"
           [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
           [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
-
       </ng-container> -->
+
       <!-- <ngx-extended-pdf-viewer [src]="pdfUrls[0]" [useBrowserLocale]="true" [textLayer]="true"
         [showHandToolButton]="true" [showPresentationModeButton]="true"
         [showDownloadButton]="false"></ngx-extended-pdf-viewer> -->
-      <ngx-extended-pdf-viewer [src]="pdfUrls[1]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true" id="1" itemid="a"
-        [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
-        [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
 
-      <ngx-extended-pdf-viewer [src]="pdfUrls[0]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true" id="2" itemid="b"
+      <!-- <ngx-extended-pdf-viewer [src]="pdfUrls[1]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true" id="1" itemid="a"
         [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
-        [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
+        [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer> -->
+
+      <!-- <ngx-extended-pdf-viewer [src]="pdfUrls[0]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true" id="2" itemid="b"
+        [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
+        [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer> -->
     </ion-content>
   </ng-template>
 </ion-modal>

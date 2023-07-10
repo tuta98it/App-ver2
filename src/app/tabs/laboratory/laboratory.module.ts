@@ -9,7 +9,6 @@ import { LaboratoryPageRoutingModule } from './laboratory-routing.module';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SharedModule } from 'src/app/shared/modules/share.module';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-
 @NgModule({
   imports: [
     IonicModule,
