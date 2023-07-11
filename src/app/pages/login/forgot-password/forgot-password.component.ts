@@ -147,8 +147,8 @@ export class ForgotPasswordComponent {
       console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', this.randomOTP);
 
       // const emailTo = 'tuta@pmr.vn';
-      // const emailTo = this.account.email;
-      const emailTo = 'thuylinh.lt97@gmail.com';
+      const emailTo = this.account.email;
+      // const emailTo = 'thuylinh.lt97@gmail.com';
       // const emailTo = 'tutran1998.tt@gmail.com';
       const infoPayload = {
         toEmail: emailTo,
