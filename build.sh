@@ -43,10 +43,10 @@ case $mode in
         ionic build
         ionic cap sync
         cd ios/App
-        fastlane beta
+        fastlane deploy
 
         cd ../../android
-        fastlane beta
+        fastlane deploy
         ;;
     *)
         show_help
