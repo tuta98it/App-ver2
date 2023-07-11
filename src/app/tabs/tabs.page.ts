@@ -87,7 +87,6 @@ export class TabsPage implements AfterViewInit {
 
 
   userInfoShow = {
-    username: 'admin',
     linkAvatar: 'https://i.pravatar.cc/300?u=z',
     fullname: 'Nguyễn Văn Vở',
     code: '9167',
@@ -102,7 +101,6 @@ export class TabsPage implements AfterViewInit {
   };
 
   userInfoEdit = {
-    username: '',
     linkAvatar: '',
     fullname: '',
     code: '',
@@ -169,13 +167,68 @@ export class TabsPage implements AfterViewInit {
 
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   async ngOnInit() {
+    // this.localStorage.getSelectedUser().then((res: any) => {
+    //   // console.log('getSelectedUser', res);
+    //   this.userInfo = res;
+
+
+
+    //   console.log('ngOnInit tabs.page.ts');
+
+    //   // Ghép vào userInfoShow để hiện thị
+    //   this.userInfoShow = {
+    //     linkAvatar: this.userInfo.linkAvatar,
+    //     fullname: this.userInfo.fullname,
+    //     code: this.userInfo.staffCode,
+    //     phoneNo: this.userInfo.phoneNo,
+    //     address: this.userInfo.address,
+    //     socialNetwork: {
+    //       facebook: this.userInfo.facebook,
+    //       zalo: this.userInfo.zalo,
+    //       telegram: this.userInfo.telegram,
+    //       twitter: this.userInfo.twitter
+    //     },
+    //   };
+    // });
+
+    // this.loadContentAbout();
+
+    // this.loadWebsiteContent();
+  }
+
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad');
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave');
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave');
+  }
+
+  ionViewWillUnload() {
+    console.log('ionViewWillUnload');
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+  }
+
+  async ionViewWillEnter() {
+    console.log('ionViewWillEnter');
     this.localStorage.getSelectedUser().then((res: any) => {
       // console.log('getSelectedUser', res);
       this.userInfo = res;
 
+
+
+      console.log('ngOnInit tabs.page.ts');
+
       // Ghép vào userInfoShow để hiện thị
       this.userInfoShow = {
-        username: this.userInfo.username,
         linkAvatar: this.userInfo.linkAvatar,
         fullname: this.userInfo.fullname,
         code: this.userInfo.staffCode,
@@ -189,11 +242,9 @@ export class TabsPage implements AfterViewInit {
         },
       };
     });
-
-    // this.loadContentAbout();
-
-    // this.loadWebsiteContent();
   }
+
+
 
   loadContentAbout() {
     this.httpClient
@@ -375,15 +426,11 @@ export class TabsPage implements AfterViewInit {
     this.renderer.setProperty(this.barChart, 'width', 500);
   }
 
-  ionViewDidEnter() {
-  }
 
   tabClicked($event) {
     this.selectedTab = $event.tab;
   }
-  ionViewDidLeave() {
-    // console.log('tab changed');
-  }
+
   ionTabsDidChange() {
     // console.log('tab ionTabsDidChange');
     // Stuff to switch icon from filled to outline and vice versa
@@ -640,7 +687,6 @@ export class TabsPage implements AfterViewInit {
 
 
   updateUserInfo(data: any) {
-    this.userInfo.username = this.userInfoShow.username;
     this.userInfo.linkAvatar = this.userInfoShow.linkAvatar;
     this.userInfo.fullname = this.userInfoShow.fullname;
     this.userInfo.phoneNo = this.userInfoShow.phoneNo;
