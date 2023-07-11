@@ -1,0 +1,4 @@
+Ứng dụng dành cho đối tác của phòng xét nghiệm
+- Lên lịch hẹn lấy mẫu
+- Quản lý thông tin bệnh nhân, kết quả xét nghiệm
+- Cập nhật nhanh chóng chương trình, chính sách khuyến mãi

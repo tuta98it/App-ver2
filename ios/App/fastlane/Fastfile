@@ -53,11 +53,11 @@ platform :ios do
         gym(scheme: "App", export_method: "app-store", export_xcargs: "-allowProvisioningUpdates", clean: true, silent: true)
         appstore(
             skip_screenshots: true,
-            submit_for_review: false,
+            submit_for_review: true,
             force: true,
             precheck_include_in_app_purchases: false,
             submission_information: { add_id_info_uses_idfa: false },
-            automatic_release: true
+            automatic_release: true,
         )
         sh("echo", api_key)
     end
