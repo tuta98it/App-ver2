@@ -34,7 +34,7 @@ platform :ios do
                 token: '320bacf980e20e7b058be2d77154dc53',
                 channel_key: 'f4833dcb260293a5523bfd1aa4a896fd',
                 file: '../ios/App/App.ipa',
-                changelog: ''
+                changelog: last_git_commit[:message]
             )
         end
         # appbox(
