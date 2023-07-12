@@ -777,7 +777,7 @@ export class RequestsPage implements OnInit {
   }
 
   onSearchByFormFilter() {
-    const payload = {
+    const payload1 = {
       page: 1,
       pageSize: 100,
       textSearch: this.keywordSearch,
@@ -796,6 +796,15 @@ export class RequestsPage implements OnInit {
       // userCreated: null,
       // canceled: false
     };
+
+    let payload2: object;
+    switch (this.formFilterTestSheet.orderStatus) {
+      case 1: payload2 = { called: true }; break;
+      case 2: payload2 = { arrived: true }; break;
+      case 3: payload2 = { arrivedLabo: true }; break;
+    }
+
+    const payload = { ...payload1, ...payload2 };
 
     this.getListRequestByPayload(payload, true);
 
