@@ -95,7 +95,7 @@
                     clearInput="true" clearOnEdit="true"></ion-input>
                 </ion-item>
 
-                <ion-item style="font-size: small;">
+                <!-- <ion-item style="font-size: small;">
                   <ion-label position="stacked">
                     <ion-icon name="send-outline"></ion-icon>
                     Trạng thái chỉ định
@@ -106,11 +106,8 @@
                     (ionChange)="handleChangeSelectOrderStatus($event)">
                     <ion-select-option *ngFor="let order of orderStatus" style="font-size: small;"
                       [value]="order.id">{{order.name}}</ion-select-option>
-                    <!-- <ion-select-option  style="font-size: small;" value="0">Chưa nhận yêu cầu</ion-select-option>
-                    <ion-select-option  style="font-size: small;" value="1">Đã nhận yêu cầu và đang xử lý</ion-select-option>
-                    <ion-select-option  style="font-size: small;" value="2">Đã trả kết quả</ion-select-option> -->
                   </ion-select>
-                </ion-item>
+                </ion-item> -->
               </ion-list>
               <ion-buttons style="display: flex; justify-content: space-evenly ; margin-top: 0.5rem;">
                 <!-- <ion-button size="small" fill="outline" color="medium" title="Huỷ"
