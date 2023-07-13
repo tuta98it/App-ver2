@@ -7,7 +7,8 @@
         <div class="title-menu-partner">
           <ion-chip color="dark" (click)="setOpenModalUser(true)">
             <ion-avatar>
-              <img alt="Avatar của bạn" [src]="userInfoShow?.linkAvatar?  userInfoShow.linkAvatar : linkAvatarDefault" />
+              <img alt="Avatar của bạn"
+                [src]="userInfoShow?.linkAvatar?  userInfoShow.linkAvatar : linkAvatarDefault" />
             </ion-avatar>
             <ion-label>{{userInfo?.username? userInfo.username : 'Anonymous' }}</ion-label>
           </ion-chip>
@@ -195,10 +196,11 @@
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
           <!-- <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px;"></i> -->
           <!-- <ion-icon name="megaphone-outline" slot="start"></ion-icon> -->
-          <img width="26" height="26" src="https://img.icons8.com/color/50/zalo.png" alt="zalo" style="color: #026069;"
-            style="margin-inline: 0px 1.3rem;" />
+          <!-- <img width="26" height="26" src="https://img.icons8.com/color/50/zalo.png" alt="zalo" style="color: #026069;"
+            style="margin-inline: 0px 1.3rem;" /> -->
           <!-- <ion-img src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" style="margin-inline: 0px 1.3rem;"/> -->
           <!-- <img src="/src/assets/icon/zalo.svg"> -->
+          <ion-icon style="margin-inline-end: 32px;" src="./assets/icon/zalo.svg"></ion-icon>
           <ion-label>
             <h3>Zalo</h3>
             <p>{{userInfoShow.socialNetwork.zalo}}</p>
@@ -638,7 +640,7 @@
         </ion-item>
 
         <!-- Chỉnh sửa mã khách hàng -->
-        <ion-item >
+        <ion-item>
           <ion-label position="stacked">
             <ion-icon name="barcode-outline"></ion-icon>
             Mã KH
