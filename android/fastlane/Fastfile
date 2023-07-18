@@ -36,9 +36,9 @@ platform :android do
     )
     Dir.chdir ".." do
         zealot(
-            endpoint: 'https://log4test.pmr.vn',
+            endpoint: 'https://apptest.pmr.vn',
             token: '320bacf980e20e7b058be2d77154dc53',
-            channel_key: '936a41e85a77900f1903bc6f48ca932f',
+            channel_key: 'c8d434c02613519b9ce06f58a147f9dd',
             file: Dir.pwd + '/../android/app/build/outputs/apk/release/app-release.apk',
             changelog: last_git_commit[:message]
         )

@@ -30,9 +30,9 @@ platform :ios do
 
         Dir.chdir ".." do
             zealot(
-                endpoint: 'https://log4test.pmr.vn',
+                endpoint: 'https://apptest.pmr.vn',
                 token: '320bacf980e20e7b058be2d77154dc53',
-                channel_key: 'f4833dcb260293a5523bfd1aa4a896fd',
+                channel_key: 'c8d434c02613519b9ce06f58a147f9dd',
                 file: '../ios/App/App.ipa',
                 changelog: last_git_commit[:message]
             )
