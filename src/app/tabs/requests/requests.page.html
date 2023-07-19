@@ -187,15 +187,15 @@
                   [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
                   placeholder="Trạng thái yêu cầu" [value]="formFilterTestSheet.orderStatus"
                   (ionChange)="handleChangeSelectOrderStatus($event)">
-                  <!-- <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
-                        [value]="order.id">{{order.name}}
-                      </ion-select-option> -->
-                  <ion-select-option style="font-size: small;" [value]=1>Đã nhận yêu cầu
+                  <ion-select-option *ngFor="let requestStatus of listRequestStatus" style="font-size: small;"
+                        [value]="requestStatus.id">{{requestStatus.name}}
+                      </ion-select-option>
+                  <!-- <ion-select-option style="font-size: small;" [value]=1>Đã nhận yêu cầu
                   </ion-select-option>
                   <ion-select-option style="font-size: small; white-space: break-spaces;" [value]=2>Đang xử lý
                   </ion-select-option>
                   <ion-select-option style="font-size: small;" [value]=3>Đã lấy mẫu
-                  </ion-select-option>
+                  </ion-select-option> -->
                 </ion-select>
               </ion-item>
             </ion-list>
@@ -334,7 +334,6 @@
   </ion-datetime> -->
           <span style="font-size: small;">Đến ngày: </span>
           <ion-datetime-button style="font-size: small;" datetime="toDatetime"></ion-datetime-button>
-
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
 
@@ -353,7 +352,6 @@
             </ng-template>
           </ion-modal>
         </ion-item>
-
       </ion-list>
 
     </div>
@@ -364,8 +362,6 @@
 <ion-content class="ion-padding">
   <!-- Nội dung -->
   <div>
-
-
     <!-- Nội dung -->
     <div class="content-laboratory">
       <ion-list>
@@ -413,7 +409,7 @@
             </div>
 
             <!-- Tình trạng mẫu xét nghiệm *ngIf="(request?.requestType)"-->
-            <div class="status" [ngStyle]="
+            <div *ngIf="(request?.newStatus)" class="status" [ngStyle]="
                 {
                   'color' : request.arriveTime === null? '#885dff' : (request.completeTime === null? '#e5ba00' :  '#00e4e2'),
                   'background-color' : request.arriveTime === null ?  '#f5f1ff':  (request.completeTime === null? '#fffbe7' : '#f0ffff')
@@ -421,7 +417,7 @@
               ">
               <!-- <h3>{{initDatas? (request.partner.status | orderStatus : initDatas?.orderStatus) : request.partner.status}}</h3> -->
               <!-- <h3>{{request.requestType ? request.requestType.requestTypeName : 'Lấy mẫu'}}</h3> -->
-              <h3>{{request | statusRequestPipe}}</h3>
+              <h3>{{request.newStatus | statusRequestPipe}}</h3>
             </div>
           </ion-label>
         </ion-item>

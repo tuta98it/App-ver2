@@ -47,7 +47,16 @@ export class GeneralService extends BaseService {
     return this.post('/User/UserInfoUpdate', newUserInfo);
   }
 
+  // Gửi mã OPT / Send code OTP
+  forgotPassword(payload: any): Observable<any> {
+    return this.post('/forgot_password', payload);
+  }
 
+  sendCodeOTPByGmail(email: any): Observable<any> {
+    return this.post(`/identify?email=${email}`, null);
+  }
+
+  //
   getDetailTaikhoan(id: number): Observable<any> {
     return this.get(UrlConstant.LIST_TAIKHOAN + '/' + id, null);
   }
@@ -1829,4 +1838,6 @@ export class GeneralService extends BaseService {
   viewKQNoCode(payload: any): Observable<any> {
     return this.post(UrlConstant.VIEW_KETQUA + '/ViewKQNoCode', payload);
   }
+
+
 }

@@ -27,7 +27,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { OrderService } from 'src/app/services/order.service';
 import { GeneralService } from 'src/app/services/general-service';
-
+import { VariablesConstant } from 'src/app/shared/constants/variables';
 @Component({
   selector: 'app-requests',
   templateUrl: 'requests.page.html',
@@ -127,7 +127,7 @@ export class RequestsPage implements OnInit {
     namePatient: '',
     phoneNoPatient: '',
     addressPatient: '',
-    orderStatus: 0,
+    orderStatus : 0,
   };
 
   filterInterval = {
@@ -143,6 +143,8 @@ export class RequestsPage implements OnInit {
     translucent: true,
   };
 
+
+  listRequestStatus = VariablesConstant.listRequestStatus;
 
   constructor(public photoService: PhotoService,
     private popoverController: PopoverController,
@@ -596,7 +598,8 @@ export class RequestsPage implements OnInit {
       // received: null,
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
       // userCreated: null,
-      // canceled: false
+      // canceled: false.
+      newStatus: this.formFilterTestSheet.orderStatus,
     };
 
     this.getListRequestByPayload(payload, false);
@@ -728,7 +731,8 @@ export class RequestsPage implements OnInit {
       // received: null,
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
       // userCreated: null,
-      // canceled: false
+      // canceled: false,
+      newStatus: this.formFilterTestSheet.orderStatus,
     };
 
     this.getListRequestByPayload(payload, true);
@@ -758,6 +762,7 @@ export class RequestsPage implements OnInit {
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
       // userCreated: null,
       // canceled: false
+      newStatus: this.formFilterTestSheet.orderStatus,
     };
 
     this.getListRequestByPayload(payload, false);
@@ -777,7 +782,7 @@ export class RequestsPage implements OnInit {
   }
 
   onSearchByFormFilter() {
-    const payload1 = {
+    const payload = {
       page: 1,
       pageSize: 100,
       textSearch: this.keywordSearch,
@@ -795,16 +800,17 @@ export class RequestsPage implements OnInit {
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
       // userCreated: null,
       // canceled: false
+      newStatus: this.formFilterTestSheet.orderStatus,
     };
 
-    let payload2: object;
-    switch (this.formFilterTestSheet.orderStatus) {
-      case 1: payload2 = { called: true }; break;
-      case 2: payload2 = { arrived: true }; break;
-      case 3: payload2 = { arrivedLabo: true }; break;
-    }
+    // let payload2: object;
+    // switch (this.formFilterTestSheet.orderStatus) {
+    //   case 1: payload2 = { called: true }; break;
+    //   case 2: payload2 = { arrived: true }; break;
+    //   case 3: payload2 = { arrivedLabo: true }; break;
+    // }
 
-    const payload = { ...payload1, ...payload2 };
+    // const payload = { ...payload1, ...payload2 };
 
     this.getListRequestByPayload(payload, true);
 

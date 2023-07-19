@@ -180,11 +180,16 @@ export class LaboratoryPage implements OnInit {
   };
 
   public zoom = '150%';
+
   pdfUrls: string[] = [
     'https://invivo.pmr.vn/Viewer/Media/27464/25052023-11626791.pdf',
     'https://invivo.pmr.vn/Viewer/Media/27464/25052023-11626791_336HPVHQIAG.pdf',
     'https://invivo.pmr.vn/Viewer/Media/27464/27464-5364-3394-nguyen-thi-thu-tra.pdf'
   ];
+
+  // options: DocumentViewerOptions = {
+  //   title: 'My PDF'
+  // };
 
   constructor(public photoService: PhotoService,
     private popoverController: PopoverController,
@@ -204,6 +209,7 @@ export class LaboratoryPage implements OnInit {
     private loadingCtrl: LoadingController,
     private datePipe: DatePipe,
     private generalService: GeneralService,
+    // private document: DocumentViewer
   ) {
     this.now = new Date();
 
@@ -237,6 +243,8 @@ export class LaboratoryPage implements OnInit {
       }
     ];
   }
+
+
 
 
   onKeyUpInputNamePatient() {
@@ -458,6 +466,7 @@ export class LaboratoryPage implements OnInit {
 
   setOpenModalViewPDF(isOpen: boolean) {
     this.isModalOpenViewPDF = isOpen;
+    // this.document.viewDocument(this.pdfUrls[0], 'application/pdf', this.options);
   }
   restartValidFormAddPatient() {
     this.validFormInput.isEmptyAdress = false;

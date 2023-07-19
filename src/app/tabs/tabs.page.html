@@ -103,11 +103,13 @@
         [name]="selectedTab !== 'laboratory' ? 'clipboard-outline' : 'clipboard'" name="clipboard-outline"></ion-icon>
       <ion-label>Kết quả</ion-label>
     </ion-tab-button>
+
     <ion-tab-button tab="services" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông tin dịch vụ'">
       <ion-icon [color]="selectedTab !== 'services' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'services' ? 'prism-outline' : 'prism'" name="prism-outline"></ion-icon>
       <ion-label>Dịch vụ</ion-label>
     </ion-tab-button>
+
     <ion-tab-button tab="notifications" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông báo'">
       <ion-icon [color]="selectedTab !== 'notifications' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'notifications' ? 'notifications-outline' : 'notifications'"
@@ -194,13 +196,13 @@
         <!-- Zalo -->
         <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.zalo">
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
-          <!-- <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 20px;"></i> -->
+          <!-- <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 2rem;"></i> -->
           <!-- <ion-icon name="megaphone-outline" slot="start"></ion-icon> -->
           <!-- <img width="26" height="26" src="https://img.icons8.com/color/50/zalo.png" alt="zalo" style="color: #026069;"
             style="margin-inline: 0px 1.3rem;" /> -->
           <!-- <ion-img src="https://img.icons8.com/ios-filled/50/zalo.png" alt="zalo" style="margin-inline: 0px 1.3rem;"/> -->
           <!-- <img src="/src/assets/icon/zalo.svg"> -->
-          <ion-icon style="margin-inline-end: 32px;" src="./assets/icon/zalo.svg"></ion-icon>
+          <ion-icon style="margin-inline: 0px 2rem;" src="./assets/icon/zalo.svg"></ion-icon>
           <ion-label>
             <h3>Zalo</h3>
             <p>{{userInfoShow.socialNetwork.zalo}}</p>
@@ -209,7 +211,7 @@
 
         <!-- Telegram -->
         <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.telegram">
-          <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 1.3rem; color: #026069;"></i>
+          <i class="fa-brands fa-telegram fa-xl" style="margin-inline: 0px 2rem; color: #026069;"></i>
           <!-- <ion-icon name="fa-brands fa-telegram" slot="start"></ion-icon> -->
           <!-- <ion-icon slot="start"><i class="fa-brands fa-telegram"></i></ion-icon> -->
           <ion-label>
@@ -223,7 +225,7 @@
         <!-- Twitter -->
         <ion-item lines="none" *ngIf="userInfoShow.socialNetwork.telegram">
           <!-- <ion-icon name="globe-outline" slot="start"></ion-icon> -->
-          <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 1.5rem; color: #026069;"></i>
+          <i class="fa-brands fa-twitter fa-lg" style="margin-inline: 0px 2rem; color: #026069;"></i>
           <ion-label>
             <h3>Twitter</h3>
             <p>{{userInfoShow.socialNetwork.twitter}}</p>

@@ -7,6 +7,7 @@ import { AlertController } from '@ionic/angular';
 import { OtpService } from 'src/app/shared/services/otp.service';
 import { StringsService } from 'src/app/shared/services/strings.service';
 import { GeneralService } from 'src/app/services/general-service';
+import { COLOR_REGEX } from 'cordova-res/dist/resources';
 // import * as nodemailer from 'nodemailer';
 @Component({
   selector: 'app-forgot-password',
@@ -26,12 +27,22 @@ export class ForgotPasswordComponent {
   };
   randomOTP: any;
   inputOTPCode: any;
+  inputEmail: any;
+  inputNewPassword: any;
+  inputConfirmNewPassword: any;
   isOpenModalConfirmAddressSendOTP: boolean;
   isOpenModalResetNewPassword: boolean;
   isOpenModalInputOTPCode: boolean;
 
   validInputOTPCode = false;
+  validInputEmail = false;
+  validInputNewPassword = false;
+  validInputConfirmNewPassword = false;
+
   textErrorInputOTPCode = 'Bạn nhập sai mã OTP, vui lòng nhập lại';
+  textErrorInputEmail = 'Địa chị Email không hợp lệ, vui lòng nhập lại';
+  textErrorInputNewPassword = 'Mật khẩu mới không hợp lệ, vui lòng nhập lại';
+  textErrorInputConfirmNewPassword = 'Mật khẩu mới không hợp lệ, vui lòng nhập lại';
   constructor(
     private router: Router,
     private generalService: GeneralService,
@@ -143,26 +154,38 @@ export class ForgotPasswordComponent {
     this.randomOTP = this.otpService.generateOTP(6);
 
     if (this.compareStrings(this.valueAddressSendOTPCode, 'email')) {
-      // Gửi mã OTP đến địa chỉ Email người dùng
-      console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', this.randomOTP);
+      // // Gửi mã OTP đến địa chỉ Email người dùng
+      // console.log('Gửi mã đến địa chỉ Email: ', this.account.email, 'Mã OTP: ', this.randomOTP);
 
-      // const emailTo = 'tuta@pmr.vn';
-      const emailTo = this.account.email;
-      // const emailTo = 'thuylinh.lt97@gmail.com';
-      // const emailTo = 'tutran1998.tt@gmail.com';
-      const infoPayload = {
-        toEmail: emailTo,
-        subject: 'Mã xác thực OTP từ phòng xét nghiệm INVIVOLAB',
-        content: `Mã OTP: ${this.randomOTP}`
-      };
-      this.generalService.sendOTP2Email(infoPayload).subscribe((res) => {
-        if (res.isValid) {
-          this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến địa chỉ Email: ${this.account.email}`);
-        } else {
-          this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi khi gửi mã OTP đến địa chị ${this.account.email}`);
+      // // const emailTo = 'tuta@pmr.vn';
+      // const emailTo = this.account.email;
+      // // const emailTo = 'thuylinh.lt97@gmail.com';
+      // // const emailTo = 'tutran1998.tt@gmail.com';
+      // const infoPayload = {
+      //   toEmail: emailTo,
+      //   subject: 'Mã xác thực OTP từ phòng xét nghiệm INVIVOLAB',
+      //   content: `Mã OTP: ${this.randomOTP}`
+      // };
+      // this.generalService.sendOTP2Email(infoPayload).subscribe((res) => {
+      //   if (res.isValid) {
+      //     this.notificationService.showMessage(Constant.SUCCESS, `Gửi mã OTP đến địa chỉ Email: ${this.account.email}`);
+      //   } else {
+      //     this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi khi gửi mã OTP đến địa chị ${this.account.email}`);
+      //   }
+      // });
+      // this.setIsOpenModalInputOTPCode(true);
+
+      this.generalService.sendCodeOTPByGmail(this.account.email).subscribe(
+        (res) => {
+          if (res.isValid) {
+            this.notificationService.showMessage(Constant.SUCCESS, res.jsonData);
+            this.setIsOpenModalInputOTPCode(true);
+          } else {
+            this.notificationService.showMessage(Constant.DANGER, res.errors[0].errorMessage);
+          }
         }
-      });
-      this.setIsOpenModalInputOTPCode(true);
+      );
+
     } else if (this.compareStrings(this.valueAddressSendOTPCode, 'phone')) {
       // Gửi mã OTP đến số điện thoại người dùng
       console.log('Gửi mã đến số điện thoại: ', this.account.phoneNo, 'Mã OTP: ', this.randomOTP);
@@ -240,21 +263,56 @@ export class ForgotPasswordComponent {
   onKeyUpInputOTPCode(event: any) {
     this.inputOTPCode = event.target.value;
     this.validInputOTPCode = this.isEmpty(this.inputOTPCode);
-    this.textErrorInputOTPCode = 'Mã OTP không được để trống';
+    this.textErrorInputOTPCode = 'Mã OTP không được để trống!';
   }
 
-  confirmOTPCode() {
+  onKeyUpInputEmail(event: any) {
+    this.inputEmail = event.target.value;
+    this.validInputEmail = this.isEmpty(this.inputEmail);
+    this.textErrorInputEmail = 'Đ/C Email không được để trống!';
+  }
+
+
+  onKeyUpInputNewPassword(event: any) {
+    this.inputNewPassword = event.target.value;
+    this.validInputNewPassword = this.isEmpty(this.inputNewPassword);
+    this.textErrorInputNewPassword = 'Mật khẩu không được để trống!';
+  }
+
+  onKeyUpInputConfirmNewPassword(event: any) {
+    this.inputConfirmNewPassword = event.target.value;
+    this.validInputConfirmNewPassword = this.isEmpty(this.inputConfirmNewPassword);
+    this.textErrorInputConfirmNewPassword = 'Mật khẩu không được để trống!';
+  }
+
+  confirmForgotPassword() {
     if (this.isEmpty(this.inputOTPCode)) {
       this.validInputOTPCode = true;
       this.textErrorInputOTPCode = 'Mã OTP không được để trống';
     } else {
-      if (this.compareStrings(this.inputOTPCode, this.randomOTP)) {
-        this.validInputOTPCode = false;
-        this.setIsOpenModalResetNewPassword(true);
-      } else {
-        this.validInputOTPCode = true;
-        this.textErrorInputOTPCode = 'Bạn nhập sai mã OTP, vui lòng nhập lại';
-      }
+
+      const payload = {
+        code: this.inputOTPCode,
+        email: this.inputEmail,
+        password: this.passwords.newPassword,
+        repassword: this.passwords.confirmNewPassword,
+      };
+
+      this.generalService.forgotPassword(payload).subscribe((res) => {
+        if (res.isValid) {
+          this.notificationService.showMessage(Constant.SUCCESS, res.jsonData);
+          this.presentAlertRestNewPasswordSussces();
+        } else {
+          this.notificationService.showMessage(Constant.DANGER, res.errors[0].errorMessage);
+        }
+      });
+      // if (this.compareStrings(this.inputOTPCode, this.randomOTP)) {
+      //   this.validInputOTPCode = false;
+      //   this.setIsOpenModalResetNewPassword(true);
+      // } else {
+      //   this.validInputOTPCode = true;
+      //   this.textErrorInputOTPCode = 'Bạn nhập sai mã OTP, vui lòng nhập lại';
+      // }
     }
   }
 
