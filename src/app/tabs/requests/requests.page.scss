@@ -235,6 +235,10 @@
       flex-direction: column;
 
       ion-label {
+        background: linear-gradient(135deg, #d2e9f3, #f6feff);
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
 
         // h3.name-patient {
         //   font-weight: 600;
@@ -244,20 +248,23 @@
         div.appointment-date {
           display: flex;
           justify-content: space-between;
-          justify-items: center;
+          flex-direction: row;
+          align-items: center;
+
 
           div.request-type {
             display: inline-block;
-            padding: 0.25rem;
-            margin-top: 0.25rem;
-            border-radius: 0.25rem;
-            background-color: #35b6cd;
-            color: #fff;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            color: #333333;
+            // border: 1px solid #35b6cd;
+            // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
           }
         }
 
         div.info {
           display: flex;
+          align-items: center;
           padding: 0.25rem;
 
           h3 {
@@ -281,6 +288,7 @@
           margin-top: 0.25rem;
           border-radius: 0.25rem;
           background-color: #b5e0ff;
+
         }
       }
     }

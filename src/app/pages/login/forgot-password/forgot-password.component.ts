@@ -298,7 +298,7 @@ export class ForgotPasswordComponent {
 
       if (this.isEmpty(this.inputEmail)) {
         this.validInputEmail = true;
-        this.textErrorInputEmail = 'ĐC không được để trống!';
+        this.textErrorInputEmail = 'ĐC Email không được để trống!';
       }
 
       if (this.isEmpty(this.inputNewPassword)) {

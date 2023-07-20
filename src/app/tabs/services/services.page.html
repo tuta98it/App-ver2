@@ -6,7 +6,8 @@
       <div class="search-filter">
 
         <!-- Tìm kiếm -->
-        <ion-searchbar style="padding-top: 15px;" placeholder="Tìm kiếm ..." (ionChange)="handleChangeSearch($event)"></ion-searchbar>
+        <ion-searchbar style="padding-top: 15px;" placeholder="Tìm kiếm ..."
+          (ionChange)="handleChangeSearch($event)"></ion-searchbar>
 
         <!-- Lọc -->
         <ion-buttons (click)="presentPopoverFillter($event)" slot="start">
@@ -24,8 +25,8 @@
                   Nhóm bệnh phẩm
                 </ion-label>
                 <ion-select style="font-size: small;" label="Nhóm bệnh phẩm" [interfaceOptions]="customPopoverOptions"
-                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ..."
-                  (ionChange)="handleChangeTypeGroup($event)">
+                  interface="alert" label-placement="floating" placeholder="Chọn nhóm ..." clearText="Xoá"
+                  doneText="Xong" cancelText="Huỷ" (ionChange)="handleChangeTypeGroup($event)">
 
                   <!-- <ion-select-option *ngFor="let order of initDatas.orderStatus" style="font-size: small;"
                     [value]="order.id">{{order.name}}</ion-select-option> -->
@@ -61,6 +62,7 @@
         <!-- DS Dịch vụ -->
         <ion-item *ngFor="let item of items; let i = index" class="service-item" button
           (click)="clickItemService(item)">
+
           <ion-label class="service-designation">{{item.name}}</ion-label>
           <ion-label class="service-price" slot="end">{{item.price | currency :
             'VND'}}</ion-label>
@@ -81,7 +83,7 @@
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
-       <ion-toolbar color="primary">
+      <ion-toolbar color="primary">
         <!-- Nút huỷ modal -->
         <ion-buttons slot="end" (click)="setOpenModalDetailItemService(false)">
           <ion-button>

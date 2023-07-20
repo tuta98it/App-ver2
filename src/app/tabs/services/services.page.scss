@@ -45,6 +45,12 @@ ion-content {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
           transition: transform 0.3s ease;
 
+          button.service-item {
+            background: linear-gradient(135deg, #d2e9f3, #f6feff);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+          }
+
           ion-label {
             &.service-designation {
               font-size: 0.75rem;

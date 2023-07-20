@@ -143,7 +143,7 @@
         <ion-list style="width: 100%;">
           <ion-item>
             <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
-            <ion-select aria-label="times" interface="alert" placeholder="Chọn khoảng thời gian lọc ..."
+            <ion-select aria-label="times" interface="alert" placeholder="Chọn khoảng thời gian lọc ..." clearText="Xoá" doneText="Xong" cancelText="Huỷ"
               (ionChange)="handleChangeFilterInterval($event)">
 
               <!-- <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [value]="time.id">
@@ -292,25 +292,19 @@
 
             <!-- Số điện thoại -->
             <div *ngIf="!(order.patient.phoneNo | isEmpty)" class="info">
-              <div>
-                <ion-icon name="call-outline"></ion-icon>
-              </div>
+              <ion-icon name="call-outline"></ion-icon>
               <h3 class="text">{{order.patient.phoneNo}}</h3>
             </div>
 
             <!-- Địa chỉ -->
             <div *ngIf="!(order.patient.address | isEmpty)" class="info">
-              <div>
-                <ion-icon name="location-outline"></ion-icon>
-              </div>
+              <ion-icon name="location-outline"></ion-icon>
               <h3 class="text address">{{order.patient.address}}</h3>
             </div>
 
             <!-- chỉ định -->
             <div *ngIf="!(order.chanDoan | isEmpty)" class="info">
-              <div>
-                <ion-icon name="pulse-outline"></ion-icon>
-              </div>
+              <ion-icon name="pulse-outline"></ion-icon>
               <h3 class="text">{{order.chanDoan}}</h3>
             </div>
 
@@ -505,9 +499,10 @@
 
 
       <ng-container>
-        <ngx-extended-pdf-viewer [src]="pdfUrls[0]" backgroundColor="#ffffff" [height]="'90vh'" [useBrowserLocale]="true"
-          [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true"
-          [showPresentationModeButton]="true" [showDownloadButton]="false"></ngx-extended-pdf-viewer>
+        <ngx-extended-pdf-viewer [src]="pdfUrls[0]" backgroundColor="#ffffff" [height]="'90vh'"
+          [useBrowserLocale]="true" [mobileFriendlyZoom]="zoom" [useBrowserLocale]="true" [textLayer]="true"
+          [showHandToolButton]="true" [showPresentationModeButton]="true"
+          [showDownloadButton]="false"></ngx-extended-pdf-viewer>
       </ng-container>
     </ion-content>
   </ng-template>

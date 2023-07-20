@@ -149,8 +149,8 @@
                   Loại yêu cầu
                 </ion-label>
                 <ion-select #requestType [interfaceOptions]="customAlertOptionsRequestType" style="font-size: small;"
-                  aria-label="parterns" placeholder="Chọn loại yêu cầu ..."
-                  (ionChange)="handleChangeRequestType($event)"
+                  aria-label="parterns" placeholder="Chọn loại yêu cầu ..." clearText="Xoá" doneText="Xong"
+                  cancelText="Huỷ" (ionChange)="handleChangeRequestType($event)"
                   [(ngModel)]="formFilterTestSheet.valueRequestTypePatient">
                   <ion-select-option *ngFor="let typeOrder of listTypeOrder"
                     [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
@@ -185,11 +185,11 @@
                 </ion-label>
                 <ion-select #orderStatusSelect style="font-size: small;" label="Trạng thái yêu cầu"
                   [interfaceOptions]="customPopoverOptions" interface="alert" label-placement="floating"
-                  placeholder="Trạng thái yêu cầu" [value]="formFilterTestSheet.orderStatus"
-                  (ionChange)="handleChangeSelectOrderStatus($event)">
+                  placeholder="Trạng thái yêu cầu" [value]="formFilterTestSheet.orderStatus" clearText="Xoá"
+                  doneText="Xong" cancelText="Huỷ" (ionChange)="handleChangeSelectOrderStatus($event)">
                   <ion-select-option *ngFor="let requestStatus of listRequestStatus" style="font-size: small;"
-                        [value]="requestStatus.id">{{requestStatus.name}}
-                      </ion-select-option>
+                    [value]="requestStatus.id">{{requestStatus.name}}
+                  </ion-select-option>
                   <!-- <ion-select-option style="font-size: small;" [value]=1>Đã nhận yêu cầu
                   </ion-select-option>
                   <ion-select-option style="font-size: small; white-space: break-spaces;" [value]=2>Đang xử lý
@@ -238,7 +238,7 @@
         <ion-item>
           <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
           <ion-select aria-label="times" interface="alert" value=0 placeholder="Chọn khoảng thời gian lọc ..."
-            (ionChange)="handleChangeFilterInterval($event)">
+            cancelText="Huỷ" (ionChange)="handleChangeFilterInterval($event)">
             <!-- <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [[value]]="time.id">
                   {{time.name}}
                 </ion-select-option> -->
@@ -369,16 +369,16 @@
         <!-- Danh các đối tác -->
         <ion-item *ngFor="let request of listRequest; let i = index">
           <!-- Thông tin bệnh nhân -->
-          <ion-label>
+          <ion-label
+            [style.background]="request.requestTypeId === 1 ?  'linear-gradient(135deg, #d2e9f3, #f6feff)' :  'linear-gradient(135deg, #eee4ce, #fcf8f0)'">
             <!-- Lịch hẹn -->
             <div class="appointment-date">
               <div *ngIf="(request?.phone)" class="info">
-                <div>
-                  <ion-icon name="time-outline"></ion-icon>
-                </div>
+                <ion-icon name="time-outline"></ion-icon>
                 <h3 class="text">{{request.appointmentDate | date : 'HH:mm dd/MM/YYYY'}}</h3>
               </div>
 
+              <!-- [style.color]="request.requestTypeId === 1 ?  '#dcb456' :  '#01606abf'" -->
               <div class="request-type">
                 <h3>{{request.requestTypeId | requestTypePipe : listTypeOrder}}</h3>
               </div>
@@ -386,25 +386,19 @@
 
             <!-- Số điện thoại -->
             <div *ngIf="(request?.phone)" class="info">
-              <div>
-                <ion-icon name="call-outline"></ion-icon>
-              </div>
+              <ion-icon name="call-outline"></ion-icon>
               <h3 class="text">{{request.phone}}</h3>
             </div>
 
             <!-- Địa chỉ -->
             <div *ngIf="(request?.address)" class="info">
-              <div>
-                <ion-icon name="location-outline"></ion-icon>
-              </div>
+              <ion-icon name="location-outline"></ion-icon>
               <h3 class="text address">{{request.address}}</h3>
             </div>
 
             <!-- Chỉ định -->
             <div *ngIf="(request?.comment)" class="info">
-              <div>
-                <ion-icon name="pulse-outline"></ion-icon>
-              </div>
+              <ion-icon name="pulse-outline"></ion-icon>
               <h3 class="text comment">{{request.comment}}</h3>
             </div>
 
@@ -472,8 +466,8 @@
               Loại yêu cầu <span style="color:red">*</span>
             </ion-label>
             <ion-select [interfaceOptions]="customAlertOptionsRequestType" aria-label="parterns"
-              placeholder="Chọn loại yêu cầu ..." (ionChange)="handleChangeRequestType($event)"
-              [(ngModel)]="itemPatientFormModalLab.valueRequestType">
+              placeholder="Chọn loại yêu cầu ..." clearText="Xoá" doneText="Xong" cancelText="Huỷ"
+              (ionChange)="handleChangeRequestType($event)" [(ngModel)]="itemPatientFormModalLab.valueRequestType">
               <ion-select-option *ngFor="let typeOrder of listTypeOrder"
                 [value]="typeOrder.requestTypeId">{{typeOrder.requestTypeName}}</ion-select-option>
             </ion-select>
@@ -533,8 +527,9 @@
               <ng-template>
                 <!-- [(ngModel)]="this.itemPatientFormModalLab.timeSample" -->
                 <ion-datetime [(ngModel)]="this.itemPatientFormModalLab.timeSample" size="small"
-                  [showDefaultTitle]="true" [showDefaultButtons]="true" locale="vi-VI" id="time"
-                  [showClearButton]="true" (ionChange)="handleChangeTimeSample($event)">
+                  [showDefaultTitle]="true" [showDefaultButtons]="true" locale="vi-VI" id="time" clearText="Xoá"
+                  doneText="Xong" cancelText="Huỷ" [showClearButton]="true"
+                  (ionChange)="handleChangeTimeSample($event)">
                   <span slot="title">TG Lấy mấu/Thu mẫu</span>
                 </ion-datetime>
               </ng-template>

@@ -235,13 +235,18 @@
       flex-direction: column;
 
       ion-label {
+        // background: linear-gradient(135deg, #d2e9f3, #f6feff);
+        // padding: 0.5rem;
+        // border-radius: 0.5rem;
         h3.name-patient {
           font-weight: 600;
           white-space: break-spaces;
+
         }
 
         div.info {
           display: flex;
+          align-items: center;
           padding: 0.25rem;
 
           h3 {
