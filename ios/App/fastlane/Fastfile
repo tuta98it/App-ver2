@@ -32,7 +32,7 @@ platform :ios do
             zealot(
                 endpoint: 'https://apptest.pmr.vn',
                 token: '320bacf980e20e7b058be2d77154dc53',
-                channel_key: 'c8d434c02613519b9ce06f58a147f9dd',
+                channel_key: '4c48439a8a48a6bc86802c474256c646',
                 file: '../ios/App/App.ipa',
                 changelog: last_git_commit[:message]
             )
