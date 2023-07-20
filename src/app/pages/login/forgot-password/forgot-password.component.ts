@@ -241,7 +241,7 @@ export class ForgotPasswordComponent {
 
   // Xác nhân mật khẩu mới
   confirmNewPassword() {
-    console.log('confirmNewPassword');
+
     if (this.isEmpty(this.passwords.newPassword) || this.isEmpty(this.passwords.confirmNewPassword)) {
       this.notificationService.showMessage(Constant.DANGER, 'Mật khẩu không được để trống');
     } else {
@@ -285,12 +285,32 @@ export class ForgotPasswordComponent {
     this.textErrorInputConfirmNewPassword = 'Mật khẩu không được để trống!';
   }
 
-  confirmForgotPassword() {
-    if (this.isEmpty(this.inputOTPCode)) {
-      this.validInputOTPCode = true;
-      this.textErrorInputOTPCode = 'Mã OTP không được để trống';
-    } else {
+  confirmChangeNewPassword() {
+    if (this.isEmpty(this.inputOTPCode)
+      || this.isEmpty(this.inputEmail)
+      || this.isEmpty(this.inputNewPassword)
+      || this.isEmpty(this.inputConfirmNewPassword)) {
 
+      if (this.isEmpty(this.inputOTPCode)) {
+        this.validInputOTPCode = true;
+        this.textErrorInputOTPCode = 'Mã OTP không được để trống!';
+      }
+
+      if (this.isEmpty(this.inputEmail)) {
+        this.validInputEmail = true;
+        this.textErrorInputEmail = 'ĐC không được để trống!';
+      }
+
+      if (this.isEmpty(this.inputNewPassword)) {
+        this.validInputNewPassword = true;
+        this.textErrorInputNewPassword = 'Mật khẩu không được để trống!';
+      }
+
+      if (this.isEmpty(this.inputConfirmNewPassword)) {
+        this.validInputConfirmNewPassword = true;
+        this.textErrorInputConfirmNewPassword = 'Mật khấu không được để trống!';
+      }
+    } else {
       const payload = {
         code: this.inputOTPCode,
         email: this.inputEmail,
