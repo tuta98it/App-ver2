@@ -637,16 +637,10 @@ export class TabsPage implements AfterViewInit {
 
   setOpenModalContact(isOpen: any) {
     this.isModalOpenContact = isOpen;
-    if (isOpen) {
-      this.titleContact = 'Liên hệ';
-    }
   }
 
   setOpenModalContentAbout(isOpen: any) {
     this.isModalOpenContentAbout = isOpen;
-    if (open) {
-      this.titleApp = 'About';
-    }
   }
 
 

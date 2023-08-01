@@ -143,7 +143,7 @@
         <ion-list style="width: 100%;">
           <ion-item>
             <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
-            <ion-select aria-label="times" interface="alert" placeholder="Chọn khoảng thời gian lọc ..." clearText="Xoá" doneText="Xong" cancelText="Huỷ"
+            <ion-select aria-label="times" interface="alert" [value]="1" placeholder="Chọn khoảng thời gian lọc ..." clearText="Xoá" doneText="Xong" cancelText="Huỷ"
               (ionChange)="handleChangeFilterInterval($event)">
 
               <!-- <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [value]="time.id">

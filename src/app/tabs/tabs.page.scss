@@ -32,6 +32,35 @@
   width: auto;
   display: flex;
   justify-content: center;
+
+  ion-chip {
+    background-color: #fff9ef7a;
+
+    &:hover {
+      transition: transform 0.2s ease-in-out;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #ffd2889c;
+      /* Màu tương phản sáng */
+    }
+
+    // &:focus {
+    //   transform: scale(1.05); /* Bạn có thể điều chỉnh giá trị để thay đổi độ lớn khi click */
+    //   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    //   background-color: #FFA500; /* Màu tương phản tối (màu cam) */
+    // }
+
+
+    &:active {
+      transform: scale(1.05);
+      /* Bạn có thể điều chỉnh giá trị để thay đổi độ lớn khi click */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      background-color: #ffbd43;
+      /* Màu tương phản tối (màu cam) */
+    }
+
+  }
+
+
 }
 
 .logout-button-wrapper {
@@ -96,4 +125,38 @@ ion-modal#avatar-modal {
   .wrapper {
     margin-bottom: 10px;
   }
+}
+
+
+ion-card-subtitle {
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+
+h2 {
+  display: flex;
+  justify-content: left;
+  font-size: large;
+  font-weight: 600;
+  color: #01606a;
+
+  ion-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+p {
+  white-space: break-spaces;
+  color: #363636;
+  // letter-spacing: 0.5px;
+  text-indent: 0.75rem;
+  // font-family: 'Times New Roman';
+  font-size: medium;
+  // line-height: 1.2rem;
+  text-align: justify;
+}
+
+ion-card-content {
+  line-height: normal;
 }

@@ -291,7 +291,7 @@ export class LaboratoryPage implements OnInit {
 
   async ngOnInit() {
     console.log('ngOnInit');
-    this.localStorage.getSelectedUser().then((res) => {
+    this.localStorage.getSelectedUser().then((res: any) => {
       this.userInfo = res;
     });
 
@@ -300,12 +300,18 @@ export class LaboratoryPage implements OnInit {
 
 
     // Lấy dữ liệu danh sách phiếu xét nghiệm
+    const pastTime = new Date();
+    const presentTime = pastTime;
+    pastTime.setHours(0, 0, 0, 0);
+    this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
+    this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
+
     const payload = {
       // barcode: '',
       // patient: '',
       // status: 0,
-      // fromDate: '',
-      // toDate: '',
+      fromDate: pastTime,
+      toDate: presentTime,
       // assignToUserId: 0,
       // counselors: null,
       // partnerId: 0,
@@ -319,25 +325,6 @@ export class LaboratoryPage implements OnInit {
     };
     await this.getListOrder(payload, true);
 
-    // Lấy dữ liệu danh sách yêu cầu xét nghiệm
-    // const payload = {
-    //   page: 1,
-    //   pageSize: 50,
-    //   fromDate: null,
-    //   toDate: null,
-    //   phone: null,
-    //   partnerId: null,
-    //   receiveUserId: null,
-    //   called: null,
-    //   arrived: null,
-    //   arrivedLabo: null,
-    //   warning: null,
-    //   received: null,
-    //   requestTypeId: null,
-    //   userCreated: null,
-    //   canceled: false
-    // };
-    // await this.getListRequestByPayload(payload, true);
 
     // Lấy danh sách loại yêu cầu
     await this.getListOrderType();
@@ -894,9 +881,6 @@ export class LaboratoryPage implements OnInit {
       );
     }
   }
-
-
-
 
 
 

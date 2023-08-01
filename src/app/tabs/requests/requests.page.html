@@ -237,7 +237,7 @@
       <ion-list style="width: 100%;">
         <ion-item>
           <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
-          <ion-select aria-label="times" interface="alert" value=0 placeholder="Chọn khoảng thời gian lọc ..."
+          <ion-select aria-label="times" interface="alert" [value]="1" placeholder="Chọn khoảng thời gian lọc ..."
             cancelText="Huỷ" (ionChange)="handleChangeFilterInterval($event)">
             <!-- <ion-select-option *ngFor="let time of initDatas.baoCaoDoanhSoType" [[value]]="time.id">
                   {{time.name}}
@@ -369,8 +369,8 @@
         <!-- Danh các đối tác -->
         <ion-item *ngFor="let request of listRequest; let i = index">
           <!-- Thông tin bệnh nhân -->
-          <ion-label
-            [style.background]="request.requestTypeId === 1 ?  'linear-gradient(135deg, #d2e9f3, #f6feff)' :  'linear-gradient(135deg, #eee4ce, #fcf8f0)'">
+          <!-- [style.background]="request.requestTypeId === 1 ?  'linear-gradient(135deg, #d2e9f3, #f6feff)' :  'linear-gradient(135deg, #eee4ce, #fcf8f0)'" -->
+          <ion-label>
             <!-- Lịch hẹn -->
             <div class="appointment-date">
               <div *ngIf="(request?.phone)" class="info">
@@ -379,7 +379,7 @@
               </div>
 
               <!-- [style.color]="request.requestTypeId === 1 ?  '#dcb456' :  '#01606abf'" -->
-              <div class="request-type">
+              <div *ngIf="(request?.requestTypeId)" [style.color]="request.requestTypeId === 1 ?  '#dcb456' :  '#01606abf'" class="request-type">
                 <h3>{{request.requestTypeId | requestTypePipe : listTypeOrder}}</h3>
               </div>
             </div>

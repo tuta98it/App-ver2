@@ -28,14 +28,14 @@ export class NotificationsPage implements OnInit {
       {
         title: 'Chương trình khuyến mãi',
         // eslint-disable-next-line max-len
-        content: 'Invivo Lab đang triển khai chương trình ưu đãi nhân ngày Gia Đình. Gói xét nghiệm tổng quát sẽ được giảm 35% cho mọi đối tượng từ ngày 01/04/2023 - 08/04/2023',
+        content: 'Invivo-Lab đang triển khai chương trình ưu đãi nhân ngày Gia Đình. Gói xét nghiệm tổng quát sẽ được giảm 35% cho mọi đối tượng từ ngày 01/04/2023 - 08/04/2023',
         time: new Date(),
         showButtons : false,
       },
       {
         title: 'Khảo sát',
         // eslint-disable-next-line max-len
-        content: 'Cảm ơn quý khách đã tin tưởng và đồng hành cùng Invivo Lab trong suốt 2 năm vừa qua. Để nâng cấp chất lượng dịch cụ, Invivo Lab xin mời quý khách làm một vài khảo sát nhỏ',
+        content: 'Cảm ơn quý khách đã tin tưởng và đồng hành cùng Invivo-Lab trong suốt 2 năm vừa qua. Để nâng cấp chất lượng dịch cụ, Invivo-Lab xin mời quý khách làm một vài khảo sát nhỏ',
         time: new Date(),
         showButtons : false,
       },
