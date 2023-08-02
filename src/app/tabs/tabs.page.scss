@@ -133,29 +133,85 @@ ion-card-subtitle {
   margin-top: 0.5rem;
 }
 
+ion-modal {
+  &.about {
+    ion-content {
+      div {
+        h2 {
+          display: flex;
+          justify-content: left;
+          font-size: large;
+          font-weight: 600;
+          color: #01606a;
 
-h2 {
-  display: flex;
-  justify-content: left;
-  font-size: large;
-  font-weight: 600;
-  color: #01606a;
+          ion-icon {
+            margin-right: 0.5rem;
+          }
+        }
 
-  ion-icon {
-    margin-right: 0.5rem;
+        p {
+          white-space: break-spaces;
+          color: #363636;
+          // letter-spacing: 0.5px;
+          text-indent: 0.75rem;
+          // font-family: 'Times New Roman';
+          font-size: medium;
+          // line-height: 1.2rem;
+          text-align: justify;
+        }
+      }
+    }
+  }
+
+  &.contact {
+    ion-content {
+      ion-list {
+        ion-item {
+
+
+          button {
+            font-weight: 600;
+            padding: 0.75rem 0 0.75rem 0;
+            border-radius: 0.5rem;
+            background-color: #dcb456;
+            color: #ffffff;
+
+            &:hover {
+              background-color: #ffffff;
+              color: #01606abf;
+              border: 1px solid #01606abf;
+            }
+
+            &:active {
+              background-color: #ffffff;
+              color: #01606abf;
+              border-color: 1px solid #01606abf;
+              ;
+            }
+          }
+
+          ion-button {
+            // --color: #ffffff;
+            --background: #dcb456;
+            // --border-color: #ffffff;
+            // --border-radius: 6px;
+
+            --color-hover: #01606abf;
+            --border-color-hover: #01606abf;
+            --background-hover: #f5f6f9;
+
+            --color-activated: #01606abf;
+            --border-color-activated: #01606abf;
+            --background-activated: #f5f6f9;
+          }
+
+        }
+      }
+    }
   }
 }
 
-p {
-  white-space: break-spaces;
-  color: #363636;
-  // letter-spacing: 0.5px;
-  text-indent: 0.75rem;
-  // font-family: 'Times New Roman';
-  font-size: medium;
-  // line-height: 1.2rem;
-  text-align: justify;
-}
+
 
 ion-card-content {
   line-height: normal;

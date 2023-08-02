@@ -11,20 +11,7 @@ export class NotificationsPage implements OnInit {
 
   ngOnInit() {
     this.listNotifi = [
-      {
-        title: 'Tình trạng chỉ định',
-        // eslint-disable-next-line max-len
-        content: 'Bệnh nhân Nguyễn Văn A đã có kết quả xét nghiệm gồm <u><i>5 chỉ thị</i></u> đã có kết quả xét nghiệm là 2.345.000đ. Bạn đã nhận được phí tư vấn chưa?',
-        time: new Date(),
-        showButtons : true,
-      },
-      {
-        title: 'Tình trạng chỉ định',
-        // eslint-disable-next-line max-len
-        content: 'Invivolab đã tới lấy mẫu xét nghiệm của bệnh nhân Trần Thị Lý bao gồm <u><i>7 chỉ định</i></u>. Kết quả xét nghiệm của bệnh nhân Trần Thị Lý sẽ có sau khoảng 6h.',
-        time: new Date(),
-        showButtons : false,
-      },
+
       {
         title: 'Chương trình khuyến mãi',
         // eslint-disable-next-line max-len

@@ -40,25 +40,27 @@
       </div>
     </div>
   </div>
+
+  <!-- Label header-->
+  <div class="service-header">
+    <!-- Tiêu đề -->
+    <ion-list>
+      <ion-item class="title-service">
+        <ion-label style="margin-left: 1rem;"><strong>Chỉ định</strong> </ion-label>
+        <ion-label  slot="end"> <strong>Giá</strong> </ion-label>
+      </ion-item>
+    </ion-list>
+    <!-- <ion-progress-bar [value]="progress" color="medium"></ion-progress-bar> -->
+  </div>
 </ion-header>
 
 <ion-content class="ion-padding">
   <!-- Nội dung -->
-  <div class="service-header">
-
-    <!-- Tiêu đề -->
-    <ion-item class="title-service">
-      <ion-label class="title-designation"><strong>Chỉ định</strong> </ion-label>
-      <ion-label class="title-price" slot="end"> <strong>Giá</strong> </ion-label>
-    </ion-item>
-    <!-- <ion-progress-bar [value]="progress" color="medium"></ion-progress-bar> -->
-
-  </div>
 
   <!-- Nội dung -->
   <div class="service-content">
     <div class="service-list-content">
-      <ion-list>
+      <ion-list >
         <!-- DS Dịch vụ -->
         <ion-item *ngFor="let item of items; let i = index" class="service-item" button
           (click)="clickItemService(item)">

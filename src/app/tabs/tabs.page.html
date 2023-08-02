@@ -279,7 +279,7 @@
           <ion-icon slot="start" name="calendar-clear-outline" color="primary"></ion-icon>
           <ion-select aria-label="Fruit" interface="popover" placeholder="Chọn khoảng thời gian lọc">
             <ion-select-option value="all">
-              --Tất Cả--
+              --Tất cả--
             </ion-select-option>
             <ion-select-option value="today">
               Hôm nay
@@ -334,7 +334,7 @@
 </ion-modal>
 
 <!-- Liên hệ-->
-<ion-modal [isOpen]="isModalOpenContact">
+<ion-modal [isOpen]="isModalOpenContact" class="contact">
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
@@ -353,16 +353,16 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item>
-          <ion-button size="medium" color="medium" expand="block" fill="outline" style="width: 100%;"
-            (click)="presentAlertContactSalesStaff()">Nhân viên kinh doanh</ion-button>
+          <button size="medium" expand="block" fill="solid" style="width: 100%;"
+            (click)="presentAlertContactSalesStaff()">Nhân viên kinh doanh</button>
         </ion-item>
         <ion-item>
-          <ion-button size="medium" color="medium" expand="block" fill="outline" style="width: 100%;"
-            (click)="presentAlertContactSwitchboard()">Tổng đài</ion-button>
+          <button size="medium" expand="block" fill="solid" style="width: 100%;"
+            (click)="presentAlertContactSwitchboard()">Tổng đài</button>
         </ion-item>
         <ion-item>
-          <ion-button size="medium" color="medium" expand="block" fill="outline" style="width: 100%;"
-            (click)="presentAlertContactPaymentDepartment()">Bộ phận thanh toán</ion-button>
+          <button size="medium" expand="block" fill="solid" style="width: 100%;"
+            (click)="presentAlertContactPaymentDepartment()">Bộ phận thanh toán</button>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -370,7 +370,7 @@
 </ion-modal>
 
 <!-- About - Về chúng tôi-->
-<ion-modal [isOpen]="isModalOpenContentAbout">
+<ion-modal [isOpen]="isModalOpenContentAbout" class="about">
   <ng-template>
     <!-- Tiêu đề -->
     <ion-header>
@@ -395,13 +395,13 @@
           <h2 style="justify-content: center; color: #d69b12;">
             GIỚI THIỆU
           </h2>
-          <p>
+          <p style="margin: 0.5rem 0 0rem 0;">
             Invivo-Lab lấy chất lượng và sự chuyên nghiệp làm giá trị cốt lõi cho sự phát triển bền vững.
           </p>
         </ion-label>
       </div>
 
-      <div style="margin: 1rem 0 1rem 0;">
+      <div style="margin: 2rem 0 2rem 0;">
         <h2>
           <ion-icon name="send-outline"></ion-icon>
           Trung tâm xét nghiệm Invivo-Lab
@@ -420,35 +420,40 @@
         </ion-label>
       </div>
 
-      <div style="margin: 1rem 0 1rem 0;">
-        <ion-label>
-          <h2>
-            <ion-icon name="send-outline"></ion-icon>
-            Tầm nhìn của chúng tôi
-          </h2>
-          <p>
-            Trở thành hệ thống trung tâm xét nghiệm uy tín và tiên phong trong việc đầu tư, phát triển công nghệ hiện
-            đại. Invivo-Lab hướng đến việc xây dựng nền tảng dữ liệu cho đối tác và khách hàng nhằm trở thành người đồng
-            hành trong quản trị sức khỏe người dân Việt Nam.
-          </p>
-        </ion-label>
-      </div>
-      <ion-img src="https://invivolab.vn/wp-content/uploads/2023/04/talent_mission_resize.webp"
-        alt="Tầm nhìn và sứ mệnh"></ion-img>
-      <div style="margin: 1rem 0 1rem 0;">
-        <ion-label>
-          <h2>
-            <ion-icon name="send-outline"></ion-icon>
-            Sứ mệnh của chúng tôi
-          </h2>
-          <p>
-            Xây dựng thói quen cho khách hàng trong việc quản trị sức khỏe thông qua công nghệ xét nghiệm hiện đại để
-            phát hiện dấu hiệu bệnh sớm nhất và phòng bệnh kịp thời, làm cho việc phòng bệnh trở nên đơn giản.
-          </p>
-        </ion-label>
+      <!-- Tầm nhìn và sứ mệnh -->
+      <div>
+        <div style="margin: 1rem 0 1rem 0;">
+          <ion-label>
+            <h2>
+              <ion-icon name="send-outline"></ion-icon>
+              Tầm nhìn của chúng tôi
+            </h2>
+            <p>
+              Trở thành hệ thống trung tâm xét nghiệm uy tín và tiên phong trong việc đầu tư, phát triển công nghệ hiện
+              đại. Invivo-Lab hướng đến việc xây dựng nền tảng dữ liệu cho đối tác và khách hàng nhằm trở thành người
+              đồng
+              hành trong quản trị sức khỏe người dân Việt Nam.
+            </p>
+          </ion-label>
+        </div>
+        <ion-img src="https://invivolab.vn/wp-content/uploads/2023/04/talent_mission_resize.webp"
+          alt="Tầm nhìn và sứ mệnh"></ion-img>
+
+        <div style="margin: 2rem 0 1rem 0;">
+          <ion-label>
+            <h2>
+              <ion-icon name="send-outline"></ion-icon>
+              Sứ mệnh của chúng tôi
+            </h2>
+            <p>
+              Xây dựng thói quen cho khách hàng trong việc quản trị sức khỏe thông qua công nghệ xét nghiệm hiện đại để
+              phát hiện dấu hiệu bệnh sớm nhất và phòng bệnh kịp thời, làm cho việc phòng bệnh trở nên đơn giản.
+            </p>
+          </ion-label>
+        </div>
       </div>
 
-      <div style="margin: 1rem 0 1rem 0;">
+      <div style="margin: 2rem 0 2rem 0;">
         <ion-label>
           <h2>
             <ion-icon name="send-outline"></ion-icon>
@@ -506,7 +511,7 @@
       </div>
 
 
-      <div style="margin: 1rem 0 1rem 0;">
+      <div style="margin: 2rem 0 2rem 0;">
         <ion-label>
           <h2>
             <ion-icon name="send-outline"></ion-icon>
@@ -551,7 +556,7 @@
         </ion-list>
       </div>
 
-      <div style="margin: 1rem 0 1rem 0;">
+      <div style="margin: 2rem 0 2rem 0;">
         <ion-label>
           <h2>
             <ion-icon name="send-outline"></ion-icon>
@@ -572,7 +577,7 @@
         </ion-label>
       </div>
 
-      <div style="margin: 1rem 0 1rem 0;">
+      <div style="margin: 2rem 0 2rem 0;">
         <ion-label>
           <h2>
             <ion-icon name="send-outline"></ion-icon>

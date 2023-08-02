@@ -12,24 +12,21 @@ ion-header {
       }
     }
   }
+
+  div.service-header {
+    ion-item {
+      // margin-left: 1rem;
+      display: flex;
+      justify-content: space-evenly;
+
+      &.title-service {
+        // display: flex;
+      }
+    }
+  }
 }
 
-
 ion-content {
-  div.service-header {
-    position: sticky;
-    top: -1rem;
-    z-index: 1;
-    background-color: white;
-
-
-
-    ion-item.title-service {
-      font-size: 1rem;
-    }
-
-  }
-
   div.service-content {
     div.service-list-content {
 
@@ -37,7 +34,6 @@ ion-content {
       // max-height: calc(100vh - 17rem);
 
       ion-list {
-
         ion-item.service-item {
           display: flex;
           flex-direction: column;
@@ -68,6 +64,5 @@ ion-content {
         }
       }
     }
-
   }
 }
