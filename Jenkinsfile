@@ -10,10 +10,35 @@ pipeline {
 
     stage('beta') {
       steps {
-        sh '''cd ios/App
-fastlane beta'''
-        sh '''cd android
-fastlane beta'''
+        script {
+            if (env.BRANCH_NAME == 'dev')
+            {
+                sh '''cd ios/App
+                    fastlane beta'''
+                sh '''cd android
+                    fastlane beta'''
+            }
+            else {
+                echo "====++++ nothing to do ++++===="
+            }
+        }
+      }
+    }
+
+    stage('deploy') {
+      steps {
+        script {
+            if (env.BRANCH_NAME == 'release')
+            {
+                sh '''cd ios/App
+                    fastlane deploy'''
+                sh '''cd android
+                    fastlane deploy'''
+            }
+            else {
+                echo "====++++ nothing to do ++++===="
+            }
+        }
       }
     }
 
