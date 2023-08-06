@@ -42,38 +42,54 @@
   </div>
 
   <!-- Label header-->
-  <div class="service-header">
-    <!-- Tiêu đề -->
-    <ion-list>
-      <ion-item class="title-service">
+  <!-- <div class="service-header"> -->
+  <!-- Tiêu đề -->
+  <!-- <ion-list style="display: flex; justify-content: center;">
+      <ion-item class="title-service" lines="none" style="width: 91.5%; border: 1px solid #ccc;">
         <ion-label style="margin-left: 1rem;"><strong>Chỉ định</strong> </ion-label>
-        <ion-label  slot="end"> <strong>Giá</strong> </ion-label>
+        <ion-label slot="end"> <strong>Giá</strong> </ion-label>
       </ion-item>
-    </ion-list>
-    <!-- <ion-progress-bar [value]="progress" color="medium"></ion-progress-bar> -->
-  </div>
+    </ion-list> -->
+  <!-- <ion-progress-bar [value]="progress" color="medium"></ion-progress-bar> -->
+  <!-- </div> -->
 </ion-header>
+
+
 
 <ion-content class="ion-padding">
   <!-- Nội dung -->
 
+
+
   <!-- Nội dung -->
   <div class="service-content">
     <div class="service-list-content">
-      <ion-list >
+      <ion-list>
+        <!-- Tiêu đề -->
+        <div class="service-title">
+          <ion-item >
+            <ion-label class="service-designation">Chỉ định</ion-label>
+            <ion-label class="service-price" slot="end">Giá</ion-label>
+          </ion-item>
+        </div>
+
+
         <!-- DS Dịch vụ -->
         <ion-item *ngFor="let item of items; let i = index" class="service-item" button
           (click)="clickItemService(item)">
 
-          <ion-label class="service-designation">{{item.name}}</ion-label>
+          <div>
+            <ion-label class="service-designation">{{item.name}}</ion-label>
+          </div>
+
           <ion-label class="service-price" slot="end">{{item.price | currency :
             'VND'}}</ion-label>
         </ion-item>
       </ion-list>
+
       <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" style="height: 0.5rem;">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-
     </div>
   </div>
 

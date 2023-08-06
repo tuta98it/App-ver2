@@ -14,10 +14,7 @@ ion-header {
   }
 
   div.service-header {
-    ion-item {
-      // margin-left: 1rem;
-      display: flex;
-      justify-content: space-evenly;
+    ion-item.service-title {
 
       &.title-service {
         // display: flex;
@@ -28,35 +25,65 @@ ion-header {
 
 ion-content {
   div.service-content {
+    border: 2px solid #ccc;
+    border-top: none;
+
     div.service-list-content {
 
       // overflow: auto;
       // max-height: calc(100vh - 17rem);
 
       ion-list {
+        div.service-title {
+          position: sticky;
+          top: -1.05rem;
+          z-index: 2;
+          background-color: white;
+          border-top: 1px solid #ccc;
+
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+          ion-item {
+
+          }
+        }
+
+
+
         ion-item.service-item {
-          display: flex;
-          flex-direction: column;
           background-color: #f1f1f1;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
           transition: transform 0.3s ease;
 
-          button.service-item {
+          button {
             background: linear-gradient(135deg, #d2e9f3, #f6feff);
             padding: 0.5rem;
             border-radius: 0.5rem;
           }
 
-          ion-label {
-            &.service-designation {
-              font-size: 1rem;
-              white-space: break-spaces;
-            }
+          div {
+            border-right: 1px solid #ccc;
+            height: 100%;
+            width: 12rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
 
+            ion-label {
+              &.service-designation {
+                padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+                font-size: 1rem;
+                white-space: break-spaces;
+              }
+            }
+          }
+
+          ion-label {
             &.service-price {
               font-size: 1rem;
             }
           }
+
 
           &:hover {
             transform: translateY(-5px);
