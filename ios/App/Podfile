@@ -29,4 +29,5 @@ end
 
 post_install do |installer|
   assertDeploymentTarget(installer)
+  system('sed -i \'\' \'44s/readlink/readlink -f/\' \'Pods/Target Support Files/Pods-App/Pods-App-frameworks.sh\'')
 end
