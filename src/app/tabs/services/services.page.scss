@@ -12,15 +12,6 @@ ion-header {
       }
     }
   }
-
-  div.service-header {
-    ion-item.service-title {
-
-      &.title-service {
-        // display: flex;
-      }
-    }
-  }
 }
 
 ion-content {
@@ -44,7 +35,7 @@ ion-content {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
           ion-item {
-
+            --background : #f1f1f1;
           }
         }
 
@@ -64,7 +55,7 @@ ion-content {
           div {
             border-right: 1px solid #ccc;
             height: 100%;
-            width: 12rem;
+            width: 10rem;
             display: flex;
             justify-content: flex-start;
             align-items: center;
