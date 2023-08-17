@@ -19,13 +19,19 @@ default_platform(:ios)
 
 platform :ios do
     lane :beta do
+        # uncomment below if need add new device, add udid
         # register_devices(
         #     devices: {
-        #       "Huong" => ""
-        #     }
-        #   )
-        match(type: "adhoc", api_key_path: "/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/Store_AuthKey_H3K2K79VVJ.json")
-
+        #         "Linh Le" => "00008101-0005749E3A69003A"
+        #     },
+        #     api_key_path: "/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/Store_AuthKey_H3K2K79VVJ.json"
+        # )
+        # end add device
+        match(
+            type: "adhoc",
+            api_key_path: "/Users/hoanganh/Library/Mobile Documents/com~apple~CloudDocs/Store_AuthKey_H3K2K79VVJ.json",
+            force_for_new_devices: false # TODO: edit to true if need add new device
+            )
         gym(scheme: "App", export_method: "ad-hoc", export_xcargs: "-allowProvisioningUpdates", clean: true, silent: true)
 
         Dir.chdir ".." do
