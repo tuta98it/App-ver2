@@ -13,4 +13,16 @@ export class VariablesConstant {
       name: 'Đã lấy mẫu'
     }
   ];
+
+
+  public static readonly paymentType = [
+    {
+      id: 1,
+      name: 'TT trực tiếp'
+    },
+    {
+      id: 2,
+      name: 'TT theo tháng'
+    }
+  ]
 }
