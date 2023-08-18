@@ -11,10 +11,10 @@ import { Device } from '@capacitor/device';
 import { Constant } from './shared/constants/constant.class';
 import { App } from '@capacitor/app';
 
-let activeTime = {
+const activeTime = {
   startTime: Date.now(),
   endTime: Date.now(),
-}
+};
 
 App.addListener('appStateChange', ({ isActive }) => {
   console.log('App state changed. Is active? root', isActive);
@@ -24,7 +24,6 @@ App.addListener('appStateChange', ({ isActive }) => {
     activeTime.endTime = Date.now();
     console.log('activeTime.startTime : ', activeTime.startTime , 'activeTime.endTime: ', activeTime.endTime);
   }
-  
 });
 
 App.addListener('appUrlOpen', data => {
