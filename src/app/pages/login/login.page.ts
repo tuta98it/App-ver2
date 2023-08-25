@@ -89,7 +89,7 @@ export class LoginPage implements OnInit {
     this.generalService.getAllUser().subscribe((res: any) => {
       if (res !== null) {
         this.allUsers = res;
-        console.log('this.allUsers : ', this.allUsers);
+        // console.log('this.allUsers : ', this.allUsers);
       }
     });
 

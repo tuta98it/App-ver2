@@ -14,6 +14,9 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import {DatePipe} from '@angular/common';
 import { GeneralService } from 'src/app/services/general-service';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CalendarModule } from 'ion2-calendar';
+
+
 /*https://www.npmjs.com/package/ngx-ionic-image-viewer*/
 // @ts-ignore
 @NgModule({
@@ -25,6 +28,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     NgxExtendedPdfViewerModule,
+    CalendarModule
   ],
   providers: [DatePipe, {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AppVersion, GeneralService],
   bootstrap: [AppComponent],

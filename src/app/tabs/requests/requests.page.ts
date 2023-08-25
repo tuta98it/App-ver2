@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { PhotoService } from '../../services/photo.service';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import {
   AlertController,
   IonSelect,
   LoadingController,
+  ModalController,
   NavController,
   PickerController,
   Platform,
@@ -28,6 +29,9 @@ import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { OrderService } from 'src/app/services/order.service';
 import { GeneralService } from 'src/app/services/general-service';
 import { VariablesConstant } from 'src/app/shared/constants/variables';
+import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult, CalendarComponentOptions } from "ion2-calendar";
+import { CalendarController } from 'ion2-calendar';
+import { fakeAsync } from '@angular/core/testing';
 @Component({
   selector: 'app-requests',
   templateUrl: 'requests.page.html',
@@ -37,8 +41,11 @@ export class RequestsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('popoverFormFilter') popoverFormFilter;
   @ViewChild('modalFormFilterRequest') modalFormFilterRequest;
+  @ViewChild('modalFilterInterval') modalFilterInterval: IonModal;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
   @ViewChild('requestType') requestType: IonSelect;
+  @ViewChild('selectFillterInterval') selectFillterInterval: IonSelect;
+
   now: any;
   userInfo: any;
   isPopoverOpenFilter = false;
@@ -76,34 +83,7 @@ export class RequestsPage implements OnInit {
     notes: '',
   };
 
-  listPatientLab = [
-    {
-      name: '1234-1643 Trần Văn A',
-      phone: '0981123574',
-      address: 'CT6 Khu đô thị Việt Hưng, Long Biên, Hà Nội',
-      conditon: 'Viêm loét dạ dày tá tràng',
-      status: 'Chưa nhận yêu cầu',
-      notes: '',
-    },
 
-    {
-      name: '1234 - 2341 Trần Thị Lý',
-      phone: '0234538592',
-      address: '257 Giải phóng, Hai Bà Trưng, Hà Nội',
-      conditon: 'Sốt xuất huyết',
-      status: 'Đã nhận yêu cầu và đang xử lý',
-      notes: '',
-    },
-
-    {
-      name: '1234 - 1643 Lý Thuỳ Linh',
-      phone: '0903245394',
-      address: '40 Phường Liệt, Thanh Xuân, Hà Nội',
-      conditon: 'Viêm gan A',
-      status: 'Đã trả kết quả',
-      notes: '',
-    }
-  ];
 
   // Chức dữ liệu cơ sở, khởi tạo ban đầu.
   initDatas: any;
@@ -114,8 +94,7 @@ export class RequestsPage implements OnInit {
   // Danh sách yêu cầu Xét nghiệm
   listRequest: any[] = [];
 
-  // Danh sách đối tác
-  listPartner = [];
+
   partnerByID: any;
 
   // Danh sách các loại yêu cầu
@@ -146,6 +125,24 @@ export class RequestsPage implements OnInit {
 
   listRequestStatus = VariablesConstant.listRequestStatus;
 
+
+  dateRange: { from: string; to: string; };
+  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
+  optionsRange: CalendarModalOptions = {
+    pickMode: 'range',
+    // from: new Date('1990-01-01'),
+    weekdays: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+    // title: `Thời gian lọc ${} - ${}`,
+    title: `Thời gian lọc`,
+    canBackwardsSelected: true,
+    closeIcon: true,
+    closeLabel: "Huỷ",
+    doneIcon: true,
+    doneLabel: 'Ok',
+    monthFormat: 'MM-YYYY'
+  };
+
+
   constructor(public photoService: PhotoService,
     private popoverController: PopoverController,
     private router: Router,
@@ -164,38 +161,13 @@ export class RequestsPage implements OnInit {
     private loadingCtrl: LoadingController,
     private datePipe: DatePipe,
     private generalService: GeneralService,
+    public modalCtrl: ModalController,
+    public calendarConTroller: CalendarController,
+    public cdr: ChangeDetectorRef
+
   ) {
     this.now = new Date();
 
-
-    this.listPatientLab = [
-      {
-        name: '1234-1643 Trần Văn A',
-        phone: '0981123574',
-        address: 'CT6 Khu đô thị Việt Hưng, Long Biên, Hà Nội',
-        conditon: 'Viêm loét dạ dày tá tràng',
-        status: 'Chưa nhận yêu cầu',
-        notes: '',
-      },
-
-      {
-        name: '1234 - 2341 Trần Thị Lý',
-        phone: '0234538592',
-        address: '257 Giải phóng, Hai Bà Trưng, Hà Nội',
-        conditon: 'Sốt xuất huyết',
-        status: 'Đã nhận yêu cầu và đang xử lý',
-        notes: '',
-      },
-
-      {
-        name: '1234 - 1643 Lý Thuỳ Linh',
-        phone: '0903245394',
-        address: '40 Phường Liệt, Thanh Xuân, Hà Nội',
-        conditon: 'Viêm gan A',
-        status: 'Đã trả kết quả',
-        notes: '',
-      }
-    ];
   }
 
 
@@ -235,53 +207,23 @@ export class RequestsPage implements OnInit {
     console.log('ionViewDidEnter');
   }
 
+
+
   async ionViewWillEnter() {
     console.log('ionViewWillEnter');
   }
 
   async ngOnInit() {
-
-
-
     // console.log('ngOnInit');
     this.localStorage.getSelectedUser().then((res: any) => {
       this.userInfo = res;
-      console.log('this.userInfo: ', this.userInfo);
-
-
       this.getPartnerByID(this.userInfo.partnerId);
-      console.log('this.partnerByID: ', this.partnerByID);
-
       // Lấy dữ liệu danh sách yêu cầu xét nghiệm
       this.getListRequestInOneDay();
     });
 
-
-
-    // Lấy dữ liệu cho biến DS Dữ liệu khởi tạo
-    // await this.getListInitialData();
-
-
-    // Lấy dữ liệu danh sách phiếu xét nghiệm
-    // await this.getListOrder();
-
-
     // Lấy danh sách loại yêu cầu
     await this.getListOrderType();
-
-
-    // Lấy dữ liệu danh sách các đối tác
-    // await this.getListPartner();
-  }
-
-
-  getListPartner() {
-    this.generalService.getListPartner().subscribe(
-      (res) => {
-        this.listPartner = res;
-      },
-      (error) => { }
-    );
   }
 
 
@@ -303,44 +245,6 @@ export class RequestsPage implements OnInit {
     loading.present();
   }
 
-  getListOrder() {
-    // Show thông báo delay thời gian chờ loading dữ liệu
-    this.showLoading();
-
-    const payload = {
-      barcode: '',
-      patient: '',
-      status: 0,
-      fromDate: '',
-      toDate: '',
-      assignToUserId: 0,
-      counselors: null,
-      partnerId: 0,
-      isSendSMS: null,
-      isPrintResult: null,
-      patientAge: null,
-      phoneNo: null,
-      keyword: '',
-      pageSize: 50,
-      page: 1,
-    };
-    this.orderService.getOrders(payload).subscribe(
-      (res) => {
-        if (res != null) {
-          this.listOrder = res.data;
-          // console.log('this.listOrder : ', this.listOrder);
-        }
-      },
-      (error) => {
-        if (error.status === 403) {
-          this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
-          this.router.navigate(['/login']);
-        } else {
-          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
-        }
-      });
-
-  }
 
   getListOrderType() {
     this.generalService.getListRequestType().subscribe(
@@ -370,13 +274,12 @@ export class RequestsPage implements OnInit {
       },
       (error) => {
         if (error.status === 403) {
-          this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
+          this.notificationService.showMessage(Constant.DANGER, `Người dùng không có quyền truy cập`);
           this.router.navigate(['/login']);
         } else {
-          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
+          this.notificationService.showMessage(Constant.DANGER, `Đã gặp lỗi khi trả về dữ liệu`);
         }
       });
-
   }
 
 
@@ -389,20 +292,8 @@ export class RequestsPage implements OnInit {
     const payload = {
       page: 1,
       pageSize: 100,
-      // textSearch: null,
       fromDate: pastTime,
       toDate: presentTime,
-      // phone: null,
-      // partnerId: null,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
-      // requestTypeId: null,
-      // userCreated: null,
-      // canceled: false
     };
     this.getListRequestByPayload(payload, true);
   }
@@ -412,33 +303,14 @@ export class RequestsPage implements OnInit {
     const payload = {
       page: 1,
       pageSize: 100,
-      // textSearch: null,
-      // fromDate: null,
-      // toDate: null,
-      // phone: null,
-      // partnerId: null,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
-      // requestTypeId: null,
-      // userCreated: null,
-      // canceled: false
     };
     this.getListRequestByPayload(payload, true);
   }
-
-  // getListInitialData() {
-  //   this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
-  // }
 
   presentModalFilter(e: Event) {
     // this.modalFormFilterRequest.event = e;
     this.isPopoverOpenFilter = true;
   }
-
 
 
   showProfile() {
@@ -474,7 +346,6 @@ export class RequestsPage implements OnInit {
 
   restartValidFormAddPatient() {
     this.validFormInput.isEmptyAdress = false;
-    // this.validFormInput.isEmptyFullName = false;
     this.validFormInput.isEmptyNumberPhone = false;
     this.validFormInput.isEmptyRequestType = false;
 
@@ -482,13 +353,12 @@ export class RequestsPage implements OnInit {
 
   cancelModalAddPatient() {
     this.setOpenModalAddPatient(false);
-    // this.modal.dismiss(null, 'cancel');
+
   }
 
 
   confirmPatientModal() {
-    // const isName = !this.isEmpty(this.itemPatientFormModalLab.name);
-    // this.validFormInput.isEmptyFullName = !isName;
+
 
     const isPhone = !this.isEmpty(this.itemPatientFormModalLab.phone);
     this.validFormInput.isEmptyNumberPhone = !isPhone;
@@ -510,8 +380,6 @@ export class RequestsPage implements OnInit {
   saveModalAddRequest() {
     if (this.confirmPatientModal()) {
       // Thêm mới một item Patient
-      this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
-
       const PARTNER_ID = 4;
       const item = {
         partnerId: PARTNER_ID,
@@ -552,8 +420,6 @@ export class RequestsPage implements OnInit {
   nextModalPatient() {
     if (this.confirmPatientModal()) {
       // Thêm mới một item Patient
-      this.listPatientLab.push(JSON.parse(JSON.stringify(this.itemPatientFormModalLab)));
-
       // Thêm +1 bệnh nhân thành công. Tăng biến đếm số lượng bệnh nhân thêm mới thành công lên 1
       this.numberOfNewPatients++;
 
@@ -600,15 +466,7 @@ export class RequestsPage implements OnInit {
       toDate: this.filterInterval.presentTime,
       phone: this.formFilterTestSheet.phoneNoPatient,
       partnerId: this.userInfo.partnerId,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
-      // userCreated: null,
-      // canceled: false.
       newStatus: this.formFilterTestSheet.orderStatus,
     };
 
@@ -623,7 +481,15 @@ export class RequestsPage implements OnInit {
 
 
   handleChangeFilterInterval(event: any) {
+
+    console.log('change');
+
     const value = event.target.value;
+
+    if (value != 10) {
+      this.modalFilterInterval.dismiss();
+    }
+
     // let isShowFilterInterval = this.filterInterval.isShow;
     const pastTime = new Date();
     const presentTime = new Date();
@@ -635,94 +501,101 @@ export class RequestsPage implements OnInit {
     // Subtract the number of days elapsed in the current week
     let daysToSubtract: any;
     switch (value) {
-      case 1:
+      case 0:
+        this.filterInterval.pastTime = '';
+        this.filterInterval.presentTime = '';
         this.filterInterval.isShow = false;
+        break;
+      case 1:
         daysToSubtract = 0;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
+        this.filterInterval.isShow = false;
         // console.log('Đầu ngày hôm nay', pastTime);
         break;
       case 2:
         // Subtract 1 day
-        this.filterInterval.isShow = false;
         daysToSubtract = 1;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         // console.log('Cách đây 1 ngày trước', pastTime);
+        this.filterInterval.isShow = false;
         break;
       case 3:
         // Subtract 7 day
-        this.filterInterval.isShow = false;
         daysToSubtract = 7;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         // console.log('Cách đây 7 ngày', pastTime);
+        this.filterInterval.isShow = false;
+
         break;
       case 4:
-        // Subtract 14 day
-        this.filterInterval.isShow = false;
+        // Subtract 14 da
         daysToSubtract = 14;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         // console.log('Cách đây 14 ngày', pastTime);
+        this.filterInterval.isShow = false;
+
         break;
       case 5:
         // Subtract 30 day
-        this.filterInterval.isShow = false;
         daysToSubtract = 30;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         // console.log('Cách đây 30 ngày', pastTime);
+        this.filterInterval.isShow = false;
+
         break;
       case 6:
         // Đầu tuần này
-        this.filterInterval.isShow = false;
-
         daysToSubtract = currentDay === 0 ? 6 : currentDay - 1;
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         // console.log('Đầu tuần này', pastTime);
+        this.filterInterval.isShow = false;
         break;
       case 7:
         // Đầu tuần trước
-        this.filterInterval.isShow = false;
-
         daysToSubtract = currentDay + 7 - 1;
         // console.log('daysToSubtract', daysToSubtract);
         pastTime.setDate(pastTime.getDate() - daysToSubtract);
         // console.log(' Đầu tuần trước', pastTime);
+        this.filterInterval.isShow = false;
         break;
       case 8:
         // Đầu tháng này
-        this.filterInterval.isShow = false;
-
         pastTime.setDate(1);
         // console.log('Đầu tháng này', pastTime);
+        this.filterInterval.isShow = false;
         break;
       case 9:
         // Đầu tháng trước
-        this.filterInterval.isShow = false;
-
         // Set the date to the first day of the current mounth
         pastTime.setDate(1);
-
         // Subtract one month from the date
         pastTime.setMonth(pastTime.getMonth() - 1);
-
+        this.filterInterval.isShow = false;
         // console.log('Đầu tháng trước ', pastTime);
         break;
       case 10:
         // Hiện calender cho hai thời điểm lọc dữ liệu.
+        this.modalFilterInterval.present();
         this.filterInterval.isShow = true;
+        return;
         break;
       default:
+        this.filterInterval.pastTime = '';
+        this.filterInterval.presentTime = '';
         this.filterInterval.isShow = false;
         break;
     }
     // Định dạng khoảng thời gian lọc
-    if (value >= 1 && value <= 10) {
 
-      this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
 
-      this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
-    } else {
+
+
+    if (value == 0) {
       this.filterInterval.pastTime = '';
-
       this.filterInterval.presentTime = '';
+    } else {
+      this.filterInterval.pastTime = this.datePipe.transform(pastTime, 'yyyy-MM-ddTHH:mm:ss');
+      this.filterInterval.presentTime = this.datePipe.transform(presentTime, 'yyyy-MM-ddTHH:mm:ss');
     }
 
     const payload = {
@@ -733,15 +606,7 @@ export class RequestsPage implements OnInit {
       toDate: this.filterInterval.presentTime,
       phone: this.formFilterTestSheet.phoneNoPatient,
       partnerId: this.userInfo.partnerId,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
-      // userCreated: null,
-      // canceled: false,
       newStatus: this.formFilterTestSheet.orderStatus,
     };
 
@@ -749,12 +614,8 @@ export class RequestsPage implements OnInit {
   }
 
   async handleChangeFilterIntervalCustomByUser(event: any) {
-    // console.log('handleChangeFilterIntervalCustomByUser event', event);
     const pastTime = this.filterInterval.pastTime;
-    // console.log('pastTime: ',pastTime);
     const presentTime = this.filterInterval.presentTime;
-    // console.log('presentTime: ',presentTime);
-
     const payload = {
       page: 1,
       pageSize: 100,
@@ -763,15 +624,7 @@ export class RequestsPage implements OnInit {
       toDate: this.filterInterval.presentTime,
       phone: this.formFilterTestSheet.phoneNoPatient,
       partnerId: this.userInfo.partnerId,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
-      // userCreated: null,
-      // canceled: false
       newStatus: this.formFilterTestSheet.orderStatus,
     };
 
@@ -779,12 +632,8 @@ export class RequestsPage implements OnInit {
   }
 
   handleChangeRequestType(event: any) {
-
-    // console.log('handleChangePartner event: ', event);
     const value = event.target.value;
-    // this.itemPatientFormModalLab.valueRequestType = value;
     this.validFormInput.isEmptyRequestType = (value === 0);
-
   }
 
   handleChangeTimeSample(event: any) {
@@ -801,26 +650,9 @@ export class RequestsPage implements OnInit {
       phone: this.formFilterTestSheet.phoneNoPatient,
       address: this.formFilterTestSheet.addressPatient,
       partnerId: this.userInfo.partnerId,
-      // receiveUserId: null,
-      // called: null,
-      // arrived: null,
-      // arrivedLabo: null,
-      // warning: null,
-      // received: null,
       requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
-      // userCreated: null,
-      // canceled: false
       newStatus: this.formFilterTestSheet.orderStatus,
     };
-
-    // let payload2: object;
-    // switch (this.formFilterTestSheet.orderStatus) {
-    //   case 1: payload2 = { called: true }; break;
-    //   case 2: payload2 = { arrived: true }; break;
-    //   case 3: payload2 = { arrivedLabo: true }; break;
-    // }
-
-    // const payload = { ...payload1, ...payload2 };
 
     this.getListRequestByPayload(payload, true);
 
@@ -836,15 +668,55 @@ export class RequestsPage implements OnInit {
     this.orderStatusSelect.value = 0;
   }
 
-  pushLog(msg) {
-    // console.log(msg);
-  }
+
 
   cancelFormFilter() {
     this.modalFormFilterRequest.dismiss();
   }
 
+
+  filterIntervalt() {
+    const from = new Date(this.dateRange.from);
+    const to = new Date(this.dateRange.to);
+    this.filterInterval.pastTime = this.datePipe.transform(from, 'yyyy-MM-ddTHH:mm:ss');
+    this.filterInterval.presentTime = this.datePipe.transform(to, 'yyyy-MM-ddTHH:mm:ss');
+    const payload = {
+      page: 1,
+      pageSize: 100,
+      textSearch: this.keywordSearch,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
+      phone: this.formFilterTestSheet.phoneNoPatient,
+      partnerId: this.userInfo.partnerId,
+      requestTypeId: this.formFilterTestSheet.valueRequestTypePatient,
+      newStatus: this.formFilterTestSheet.orderStatus,
+    };
+    this.getListRequestByPayload(payload, true);
+    this.modalFilterInterval.dismiss();
+  }
+
+  pushLog(msg) {
+    console.log(msg);
+  }
+
+  clickFilterInterval(event: any) {
+    const value = event.target.value;
+    if (value == 10) {
+      this.modalFilterInterval.present();
+    }
+  }
+
+  cancelFilterInterval(event: any) {
+    const value = event.target.value;
+    if (value == 10) {
+      this.modalFilterInterval.dismiss();
+    }
+  }
+
+
+
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);
   }
+
 }

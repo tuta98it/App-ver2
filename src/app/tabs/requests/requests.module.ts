@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/modules/share.module';
 import { OrderStatusPipe } from 'src/app/shared/pipe/order-status.pipe';
 import { StatusRequestPipe } from 'src/app/shared/pipe/status-request';
 import { RequestTypePipe } from 'src/app/shared/pipe/request-type';
+import { CalendarModule } from 'ion2-calendar';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { RequestTypePipe } from 'src/app/shared/pipe/request-type';
     FormsModule,
     ExploreContainerComponentModule,
     RequestsPageRoutingModule,
-    SharedModule
+    SharedModule,
+    CalendarModule
   ],
   providers: [AppVersion],
   declarations: [RequestsPage]

@@ -10,35 +10,8 @@ import { Device } from '@capacitor/device';
 // import {StatusBar, Style} from '@capacitor/status-bar';
 import { Constant } from './shared/constants/constant.class';
 import { App } from '@capacitor/app';
+import { GeneralService } from 'src/app/services/general-service';
 
-const activeTime = {
-  startTime: Date.now(),
-  endTime: Date.now(),
-};
-
-App.addListener('appStateChange', ({ isActive }) => {
-  console.log('App state changed. Is active? root', isActive);
-  if(isActive){
-    activeTime.startTime = Date.now();
-  } else {
-    activeTime.endTime = Date.now();
-    console.log('activeTime.startTime : ', activeTime.startTime , 'activeTime.endTime: ', activeTime.endTime);
-  }
-});
-
-App.addListener('appUrlOpen', data => {
-  console.log('App opened with URL:', data);
-});
-
-App.addListener('appRestoredResult', data => {
-  console.log('Restored state:', data);
-});
-
-const checkAppLaunchUrl = async () => {
-  const { url } = await App.getLaunchUrl();
-
-  console.log('App opened with URL: ' + url);
-};
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -50,15 +23,34 @@ export class AppComponent {
     private router: Router,
     private notificationService: NotificationService,
     private localStorage: StorageService,
+    private generalService: GeneralService,
     /*private badge: Badge*/
   ) {
   }
 
   async ngOnInit() {
 
-    // App.addListener('appStateChange', ({ isActive }) => {
-    //   console.log('App state changed. Is active? local', isActive);
-    // });
+    App.addListener('appStateChange', ({ isActive }) => {
+      console.log('App state changed. Is active? root', isActive);
+      const payload = {
+        type: 0
+      }
+      let status = ''
+      if(isActive){
+        payload.type = 1;
+        status = 'mở';
+      } else {
+        payload.type = 2;
+        status = 'đóng';
+      }
+      this.generalService.addTrackingLog(payload).subscribe((res) => {
+        if(res.isValid){
+          // this.notificationService.showMessage(Constant.WARNING, `Hệ thống đã ghi lại thời điểm ${status} app!`);
+        }else{
+          // this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi xảy ra khi ghi lại thời điểm ${status} app!`);
+        }
+      });
+    });
 
 
     // try {
@@ -87,76 +79,67 @@ export class AppComponent {
       // Request permission to use push notifications
       // iOS will prompt user and return if they granted permission or not
       // Android will just grant without prompting
-      PushNotifications.requestPermissions().then(result => {
-        if (result.receive === 'granted') {
-          // Register with Apple / Google to receive push via APNS/FCM
-          // console.log('granted', this.platform.platforms());
-          PushNotifications.register().then(en => {
-            // console.log('PushNotifications.register()');
-          });
-        } else {
-          // Show some error
-        }
-      });
+      // PushNotifications.requestPermissions().then(result => {
+      //   if (result.receive === 'granted') {
+      //     PushNotifications.register().then(en => {
+      //     });
+      //   } else {
+      //     // Show some error
+      //   }
+      // });
 
-      PushNotifications.addListener('registration', (token: Token) => {
-        /*console.log('token', token.value);
-        alert('Push registration success, token: ' + token.value);
-        console.log('mSchool token:', token.value);*/
-        this.localStorage.set('fcmToken', token.value).then(res => {
-          // alert('saved token success: ' + token.value);
-          // console.log('saved token success');
-        });
-      });
+      // PushNotifications.addListener('registration', (token: Token) => {
+      //   this.localStorage.set('fcmToken', token.value).then(res => {
+      //   });
+      // });
 
-      PushNotifications.addListener('registrationError', (error: any) => {
-        // console.log('Error on registration: ' + JSON.stringify(error));
-      });
-      PushNotifications.addListener(
-        'pushNotificationReceived',
-        (notification: PushNotificationSchema) => {
-          // alert('Push received: ' + JSON.stringify(notification));
-        },
-      );
+      // PushNotifications.addListener('registrationError', (error: any) => {
+      //   // console.log('Error on registration: ' + JSON.stringify(error));
+      // });
+      
+      // PushNotifications.addListener(
+      //   'pushNotificationReceived',
+      //   (notification: PushNotificationSchema) => {
+      //     // alert('Push received: ' + JSON.stringify(notification));
+      //   },
+      // );
 
-      PushNotifications.addListener(
-        'pushNotificationActionPerformed',
-        (notification: ActionPerformed) => {
-          //alert('Push action performed: ' + JSON.stringify(notification)); //JSON.stringify(notification));
-          // console.log('pushNotificationActionPerformed', JSON.stringify(notification));
-          // console.log('notification', notification.notification.data);
-          // console.log('tap', notification.actionId);
-          //
-          let notiType = +notification.notification.data['gcm.notification.messageType'];
-          if (!notiType) {
-            notiType = +notification.notification.data.messageType;
-          }
-          /*
-          Message = 0,
-          Announcement = 1,
-          Score = 2,
-          Feedback = 3,
-          Attendent = 4,
-          Review = 5,
-          Polling = 6,
-          RequestPermission = 7*/
-          if (notiType === Constant.NOTIFICATION_TYPE_SMS || notiType === Constant.NOTIFICATION_TYPE_MEDIA) {
-            let messageId = notification.notification.data['gcm.notification.messageId'];
-            if (!messageId) {
-              messageId = notification.notification.data.messageId;
-            }
-            this.router.navigateByUrl(`/student-message/${messageId}/${notiType}`);
-          } else if (notiType === Constant.NOTIFICATION_TYPE_CONVERSATION) {
-            this.router.navigate(['/main/tab4']);
-          } else if (notiType === Constant.NOTIFICATION_TYPE_POLLING) {
-            this.router.navigate(['/student-polling']);
-          } else if (notiType === Constant.NOTIFICATION_TYPE_HOMEWORK) {
-            this.router.navigate(['/student-homework']);
-          }
-        },
-      );
+      // PushNotifications.addListener(
+      //   'pushNotificationActionPerformed',
+      //   (notification: ActionPerformed) => {
+      //     //alert('Push action performed: ' + JSON.stringify(notification)); //JSON.stringify(notification));
+      //     // console.log('pushNotificationActionPerformed', JSON.stringify(notification));
+      //     // console.log('notification', notification.notification.data);
+      //     // console.log('tap', notification.actionId);
+      //     //
+      //     let notiType = +notification.notification.data['gcm.notification.messageType'];
+      //     if (!notiType) {
+      //       notiType = +notification.notification.data.messageType;
+      //     }
+      //     /*
+      //     Message = 0,
+      //     Announcement = 1,
+      //     Score = 2,
+      //     Feedback = 3,
+      //     Attendent = 4,
+      //     Review = 5,
+      //     Polling = 6,
+      //     RequestPermission = 7*/
+      //     if (notiType === Constant.NOTIFICATION_TYPE_SMS || notiType === Constant.NOTIFICATION_TYPE_MEDIA) {
+      //       let messageId = notification.notification.data['gcm.notification.messageId'];
+      //       if (!messageId) {
+      //         messageId = notification.notification.data.messageId;
+      //       }
+      //       this.router.navigateByUrl(`/student-message/${messageId}/${notiType}`);
+      //     } else if (notiType === Constant.NOTIFICATION_TYPE_CONVERSATION) {
+      //       this.router.navigate(['/main/tab4']);
+      //     } else if (notiType === Constant.NOTIFICATION_TYPE_POLLING) {
+      //       this.router.navigate(['/student-polling']);
+      //     } else if (notiType === Constant.NOTIFICATION_TYPE_HOMEWORK) {
+      //       this.router.navigate(['/student-homework']);
+      //     }
+      //   },
+      // );
     }
-
-
   }
 }

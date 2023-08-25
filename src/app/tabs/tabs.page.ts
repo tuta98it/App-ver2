@@ -222,11 +222,6 @@ export class TabsPage implements AfterViewInit {
     this.localStorage.getSelectedUser().then((res: any) => {
       // console.log('getSelectedUser', res);
       this.userInfo = res;
-
-
-
-      console.log('ngOnInit tabs.page.ts');
-
       // Ghép vào userInfoShow để hiện thị
       this.userInfoShow = {
         linkAvatar: this.userInfo.linkAvatar,
@@ -257,11 +252,7 @@ export class TabsPage implements AfterViewInit {
   async loadWebsiteContent() {
     try {
       const response = await axios.get('https://invivolab.vn/gioi-thieu/');
-      console.log('response : ', response);
-      const websiteContent = response.data;
-
-      // Xử lý nội dung trang web ở đây
-      console.log('websiteContent: ', websiteContent);
+      const websiteContent = response.data;;
     } catch (error) {
       // Xử lý lỗi khi tải nội dung trang web
       console.error(error);

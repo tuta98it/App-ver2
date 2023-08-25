@@ -359,10 +359,10 @@ export class LaboratoryPage implements OnInit {
       },
       (err) => {
         if (err.status === 403) {
-          this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
+          this.notificationService.showMessage(Constant.DANGER, `Người dùng không có quyền truy cập`);
           this.router.navigate(['/login']);
         } else {
-          this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
+          this.notificationService.showMessage(Constant.DANGER, `Đã gặp lỗi khi trả về dữ liệu`);
         }
       });
   }
@@ -380,33 +380,6 @@ export class LaboratoryPage implements OnInit {
     );
   }
 
-  // getListRequestByPayload(payload: any, isLoading: boolean) {
-  //   // Show thông báo delay thời gian chờ loading dữ liệu
-  //   if (isLoading) {
-  //     this.showLoading();
-  //   }
-
-  //   this.generalService.getRequest(payload).subscribe(
-  //     (res: any) => {
-  //       if (res != null) {
-  //         this.listRequest = res.data;
-  //         console.log('this.listRequest : ', this.listRequest);
-  //       }
-  //     },
-  //     (error) => {
-  //       if (error.status === 403) {
-  //         this.notificationService.showMessage(Constant.DANGER, `Người dùng có quyền truy cập`);
-  //         this.router.navigate(['/login']);
-  //       } else {
-  //         this.notificationService.showMessage(Constant.DANGER, `Dữ liệu trả về đã có lỗi xảy ra`);
-  //       }
-  //     });
-
-  // }
-
-  // getListInitialData() {
-  //   this.initDatas = JSON.parse(localStorage.getItem(Constant.INIT_DATA));
-  // }
 
   presentPopoverFilter(e: Event) {
     // this.modalFormFilterLab.event = e;
@@ -558,8 +531,6 @@ export class LaboratoryPage implements OnInit {
       this.generalService.createOrder(item).subscribe(
         (res: any) => {
           if (res.isValid) {
-            // console.log('generalService res', res );
-            // Reset form model lab
             this.resetFormModalPatient();
             this.notificationService.showMessage(Constant.SUCCESS, `Đã tạo phiếu xét nghiệm cho BN ${this.itemPatientFormModalLab.name}`);
             // Đóng modal

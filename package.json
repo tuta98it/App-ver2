@@ -43,6 +43,8 @@
     "cordova-plugin-app-version": "^0.1.14",
     "cordova-res": "^0.15.4",
     "crypto-js": "^4.1.1",
+    "ion2-calendar": "^3.5.0",
+    "moment": "^2.29.4",
     "ngx-extended-pdf-viewer": "^18.0.0-alpha.0",
     "ngx-ionic-image-viewer": "^0.7.5",
     "rxjs": "^7.8.1",

@@ -1840,4 +1840,8 @@ export class GeneralService extends BaseService {
   }
 
 
+  // AppTracking
+  addTrackingLog(payload: any): Observable<any> {
+    return this.post(UrlConstant.APPTRACKING + '/TrackingLog', payload);
+  }
 }
