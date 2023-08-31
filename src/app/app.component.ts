@@ -11,6 +11,7 @@ import { Device } from '@capacitor/device';
 import { Constant } from './shared/constants/constant.class';
 import { App } from '@capacitor/app';
 import { GeneralService } from 'src/app/services/general-service';
+import { Observable, timer, timeInterval } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { GeneralService } from 'src/app/services/general-service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  alive = true;
   constructor(private storage: Storage,
     private platform: Platform,
     private router: Router,
@@ -29,28 +31,6 @@ export class AppComponent {
   }
 
   async ngOnInit() {
-
-    App.addListener('appStateChange', ({ isActive }) => {
-      console.log('App state changed. Is active? root', isActive);
-      const payload = {
-        type: 0
-      }
-      let status = ''
-      if(isActive){
-        payload.type = 1;
-        status = 'mở';
-      } else {
-        payload.type = 2;
-        status = 'đóng';
-      }
-      this.generalService.addTrackingLog(payload).subscribe((res) => {
-        if(res.isValid){
-          // this.notificationService.showMessage(Constant.WARNING, `Hệ thống đã ghi lại thời điểm ${status} app!`);
-        }else{
-          // this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi xảy ra khi ghi lại thời điểm ${status} app!`);
-        }
-      });
-    });
 
 
     // try {
@@ -96,7 +76,7 @@ export class AppComponent {
       // PushNotifications.addListener('registrationError', (error: any) => {
       //   // console.log('Error on registration: ' + JSON.stringify(error));
       // });
-      
+
       // PushNotifications.addListener(
       //   'pushNotificationReceived',
       //   (notification: PushNotificationSchema) => {

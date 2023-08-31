@@ -12,6 +12,7 @@ import { Constant } from '../shared/constants/constant.class';
 import { MenuController } from '@ionic/angular';
 import { GeneralService } from 'src/app/services/general-service';
 import { NotificationService } from '../services/notification.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-tabs',
@@ -114,6 +115,8 @@ export class TabsPage implements AfterViewInit {
     },
   };
 
+  intervalId: any;
+
   constructor(
     public navCtrl: NavController,
     public badgeService: BadgeService,
@@ -142,58 +145,31 @@ export class TabsPage implements AfterViewInit {
   }
 
 
-  // async openDialog() {
-  //   const modal = await this.modalController.create({
-  //     component: ConfirmDialogComponent,
-  //     componentProps: {
-  //       title: "Xác nhận",
-  //       message: "Đăng xuất khỏi tài khoản của bạn?"
-  //     }
-  //   });
 
-  //   modal.onDidDismiss().then(result => {
-  //     if (result.data) {
-  //       // User clicked OK
-  //       console.log('User clicked OK');
-  //     } else {
-  //       // User clicked Cancel
-  //       console.log('User clicked Cancel');
-  //     }
-  //   });
-
-  //   return await modal.present();
-  // }
-
-
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   async ngOnInit() {
-    // this.localStorage.getSelectedUser().then((res: any) => {
-    //   // console.log('getSelectedUser', res);
-    //   this.userInfo = res;
+    console.log('ngOnInit');
 
-
-
-    //   console.log('ngOnInit tabs.page.ts');
-
-    //   // Ghép vào userInfoShow để hiện thị
-    //   this.userInfoShow = {
-    //     linkAvatar: this.userInfo.linkAvatar,
-    //     fullname: this.userInfo.fullname,
-    //     code: this.userInfo.staffCode,
-    //     phoneNo: this.userInfo.phoneNo,
-    //     address: this.userInfo.address,
-    //     socialNetwork: {
-    //       facebook: this.userInfo.facebook,
-    //       zalo: this.userInfo.zalo,
-    //       telegram: this.userInfo.telegram,
-    //       twitter: this.userInfo.twitter
-    //     },
-    //   };
-    // });
-
-    // this.loadContentAbout();
-
-    // this.loadWebsiteContent();
+    App.addListener('appStateChange', ({ isActive }) => {
+      // console.log('App state changed. Is active? root', isActive);
+      const payload = {
+        type: 0
+      }
+      let status = '';
+      if (isActive) {
+        payload.type = 1;
+        status = 'mở';
+      } else {
+        payload.type = 2;
+        status = 'đóng';
+      }
+      this.generalService.addTrackingLog(payload).subscribe((res) => {
+        if (res.isValid) {
+          // this.notificationService.showMessage(Constant.WARNING, `Hệ thống đã ghi lại thời điểm ${status} app!`);
+        } else {
+          // this.notificationService.showMessage(Constant.DANGER, `Đã có lỗi xảy ra khi ghi lại thời điểm ${status} app!`);
+        }
+      });
+    });
   }
 
 
@@ -207,14 +183,18 @@ export class TabsPage implements AfterViewInit {
 
   ionViewDidLeave() {
     console.log('ionViewDidLeave');
+    clearInterval(this.intervalId);
   }
 
   ionViewWillUnload() {
     console.log('ionViewWillUnload');
   }
 
+
+
   ionViewDidEnter() {
     console.log('ionViewDidEnter');
+    this.intervalId = setInterval(() => console.log('test'), 1000);
   }
 
   async ionViewWillEnter() {

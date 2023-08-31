@@ -32,6 +32,7 @@ import { VariablesConstant } from 'src/app/shared/constants/variables';
 import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult, CalendarComponentOptions } from "ion2-calendar";
 import { CalendarController } from 'ion2-calendar';
 import { fakeAsync } from '@angular/core/testing';
+
 @Component({
   selector: 'app-requests',
   templateUrl: 'requests.page.html',
@@ -141,6 +142,8 @@ export class RequestsPage implements OnInit {
     doneLabel: 'Ok',
     monthFormat: 'MM-YYYY'
   };
+
+  intervalId: number;
 
 
   constructor(public photoService: PhotoService,

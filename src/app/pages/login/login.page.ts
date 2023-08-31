@@ -10,6 +10,7 @@ import { NotificationService } from '../../services/notification.service';
 import { GeneralService } from 'src/app/services/general-service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { App } from '@capacitor/app';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -39,23 +40,12 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
-    // this.localStorage.getSelectedUser().then((res) => {
-    //   if (res) {
-    //     this.navCtrl.navigateRoot(['/main/laboratory']);
-    //   }
-    // });
+
     this.localStorage.get('deviceInfo').then(res => {
       this.deviceInfo = res;
       // console.log(this.deviceInfo);
     });
-
-    // this.localStorage.getSelectedUser().then((res: any) => {
-    //   this.userInfo = res;
-    //   console.log('this.userInfo: ', this.userInfo);
-    // });
-
-
-
+    
     // Xác thực người dùng
     this.authService.checkToken().subscribe((res: any) => {
       // console.log('this.authService.checkToken() res : ', res);
@@ -65,7 +55,7 @@ export class LoginPage implements OnInit {
         if (codeRes === 0) {
           // Success
           this.router.navigate(['/main/requests']);
-        } else if (codeRes === 401) {
+                  } else if (codeRes === 401) {
           // Code 401: Không xác thực được người dùng;
           this.localStorage.removeInfoUserStorage();
           localStorage.removeItem(Constant.TOKEN);
@@ -89,28 +79,15 @@ export class LoginPage implements OnInit {
     this.generalService.getAllUser().subscribe((res: any) => {
       if (res !== null) {
         this.allUsers = res;
-        // console.log('this.allUsers : ', this.allUsers);
       }
     });
-
-
-    // Set INIT_DATA for local-storage
-    // await this.setInitData();
   }
 
-  // setInitData() {
-  //   this.generalService.getInitialData().subscribe((resData: any) => {
-  //     if (resData !== null) {
-  //       localStorage.setItem(Constant.INIT_DATA, JSON.stringify(resData));
-  //     }
-  //   }, error => {
-  //     // console.log('Error Set INIT_DATA for local-storage');
-  //   });
-  // }
 
   showAlertPassword() {
     this.notificationService.showMessage(Constant.WARNING, 'Vui lòng liên hệ quản trị viên để cấp lại mật khẩu');
   }
+
   async doLogin() {
     if (!this.username) {
       this.notificationService.showMessage(Constant.DANGER, 'Tên đăng nhập không được để trống');
