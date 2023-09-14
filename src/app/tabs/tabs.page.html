@@ -12,9 +12,12 @@
             <ion-label>{{userInfo?.username? userInfo.username : 'Anonymous' }}</ion-label>
           </ion-chip>
         </div> -->
-        <div class="title-menu-partner">
+        <!-- <div class="title-menu-partner">
           <ion-label>Hi, {{userInfo?.username? userInfo.username : 'how are you?' }}</ion-label>
-        </div>
+        </div> -->
+
+        <ion-title style="font-size: larger;">Hi, {{userInfo?.username? userInfo.username : 'how are you?'
+          }}</ion-title>
 
         <!-- Nội dung menu -->
       </ion-toolbar>
@@ -22,10 +25,10 @@
     <ion-content class="ion-padding">
       <ion-list>
         <ion-item button detail="true" (click)="setOpenModalUser(true)">
-          <ion-icon  slot="start" name="person-outline"></ion-icon>
+          <ion-icon slot="start" name="person-outline"></ion-icon>
           <ion-label>Thông tin cá nhân</ion-label>
         </ion-item>
-        <ion-item button  (click)="setOpenModalContact(true)">
+        <ion-item button (click)="setOpenModalContact(true)">
           <ion-icon slot="start" name="call-outline"></ion-icon>
           <ion-label>Liên hệ</ion-label>
         </ion-item>
@@ -68,33 +71,16 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <!-- Tiêu đề -->
-      <ion-title>{{titleApp}}</ion-title>
+      <ion-title style="font-size: larger;">{{titleApp}}</ion-title>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="showNotifications()">
+          <ion-icon slot='icon-only' name="notifications-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-tab-bar slot="bottom" class="tab-bottom">
-    <!-- <ion-tab-button tab="tab1" color="secondary" class="ion-no-padding">
-      <ion-icon [color]="selectedTab !== 'tab1' ? 'medium' : 'primary'"
-        [name]="selectedTab !== 'tab1' ? 'home-outline' : 'home'" name="home-outline"></ion-icon>
-      <ion-label>Home</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="tab2" class="ion-no-padding">
-      <ion-icon [color]="selectedTab !== 'tab2' ? 'medium' : 'primary'"
-        [name]="selectedTab !== 'tab2' ? 'notifications-outline' : 'notifications'"></ion-icon>
-      <ion-label>Tab 1</ion-label>
-      <ion-badge color="danger">8</ion-badge>
-    </ion-tab-button>
-    <ion-tab-button tab="tab3" class="ion-no-padding">
-      <ion-icon [color]="selectedTab !== 'tab3' ? 'medium' : 'primary'"
-        [name]="selectedTab !== 'tab3' ? 'call-outline' : 'call'"></ion-icon>
-      <ion-label>Tab 2</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="feed" class="ion-no-padding">
-      <ion-icon [color]="selectedTab !== 'feed' ? 'medium' : 'primary'"
-        [name]="selectedTab !== 'feed' ? 'newspaper-outline' : 'newspaper'"></ion-icon>
-      <ion-label>Tab 3</ion-label>
-    </ion-tab-button> -->
-
-
     <ion-tab-button tab="requests" color="secondary" class="ion-no-padding" (click)="titleApp = 'Yêu cầu'">
       <ion-icon [color]="selectedTab !== 'requests' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'requests' ? 'git-pull-request-outline' : 'git-pull-request'"
@@ -114,11 +100,18 @@
       <ion-label>Dịch vụ</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="notifications" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông báo'">
+    <!-- <ion-tab-button tab="notifications" color="secondary" class="ion-no-padding" (click)="titleApp = 'Thông báo'">
       <ion-icon [color]="selectedTab !== 'notifications' ? 'medium' : 'primary'"
         [name]="selectedTab !== 'notifications' ? 'notifications-outline' : 'notifications'"
         name="notifications-outline"></ion-icon>
       <ion-label>Thông báo</ion-label>
+    </ion-tab-button> -->
+
+    <ion-tab-button tab="sales" color="secondary" class="ion-no-padding" (click)="titleApp = 'Doanh số'">
+      <ion-icon [color]="selectedTab !== 'sales' ? 'medium' : 'primary'"
+        [name]="selectedTab !== 'stats-chart' ? 'stats-chart-outline' : 'stats-chart'"
+        name="stats-chart-outline"></ion-icon>
+      <ion-label>Doanh số</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

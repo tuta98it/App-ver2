@@ -8,9 +8,6 @@ import { ActivePipe } from '../pipe/active.pipe';
 import { HidePhoneNumberPipe } from '../pipe/hide-phone-number.pipe';
 import { EmailMaskPipe } from '../pipe/email-mask.pipe';
 
-
-
-
 @NgModule({
   declarations: [
     IsEmptyPipe,

@@ -27,7 +27,7 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { IsEmptyPipe } from 'src/app/shared/pipe/is-empty.pipe';
 import { OrderService } from 'src/app/services/order.service';
 import { GeneralService } from 'src/app/services/general-service';
-
+import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult, CalendarComponentOptions } from "ion2-calendar";
 
 @Component({
   selector: 'app-laboratory',
@@ -38,28 +38,24 @@ export class LaboratoryPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('modalFormFilterLab') modalFormFilterLab;
   @ViewChild('orderStatusSelect') orderStatusSelect: IonSelect;
+  @ViewChild('modalFilterInterval') modalFilterInterval: IonModal;
+
   now: any;
   userInfo: any;
   isPopoverOpenFilter = false;
   keywordSearch: any;
-
-
   titleModalAddPatient = 'Thêm yêu cầu';
   instructionModalPatient = 'Mời nhập thông tin bệnh nhân đầu tiên:';
   numberOfNewPatients = 0;
   isModalOpenFormPatient = false;
   isModalOpenViewPDF = false;
-
-
   validFormInput = {
     // isEmptyRequestType: false,
     isEmptyFullName: false,
     isEmptyNumberPhone: false,
     isEmptyAdress: false,
   };
-
-
-
+  
   customPopoverOptions = {
     // header: 'Trạng thái chỉ định',
     subHeader: 'Chọn trạng thái chỉ định cần lọc',
@@ -190,6 +186,24 @@ export class LaboratoryPage implements OnInit {
   // options: DocumentViewerOptions = {
   //   title: 'My PDF'
   // };
+
+  dateRange: { from: string; to: string; };
+  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
+  optionsRange: CalendarModalOptions = {
+    pickMode: 'range',
+    // from: new Date('1990-01-01'),
+    weekdays: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+    // title: `Thời gian lọc ${} - ${}`,
+    title: `Thời gian lọc`,
+    canBackwardsSelected: true,
+    closeIcon: true,
+    closeLabel: "Huỷ",
+    doneIcon: true,
+    doneLabel: 'Ok',
+    monthFormat: 'MM-YYYY'
+  };
+
+  intervalId: number;
 
   constructor(public photoService: PhotoService,
     private popoverController: PopoverController,
@@ -626,6 +640,9 @@ export class LaboratoryPage implements OnInit {
 
   async handleChangeFilterInterval(event: any) {
     const value = event.target.value;
+    if (value != 10) {
+      this.modalFilterInterval.dismiss();
+    }
     // let isShowFilterInterval = this.filterInterval.isShow;
     const pastTime = new Date();
     const presentTime = new Date();
@@ -717,7 +734,9 @@ export class LaboratoryPage implements OnInit {
         break;
       case 10:
         // Hiện calender cho hai thời điểm lọc dữ liệu.
+        this.modalFilterInterval.present();
         this.filterInterval.isShow = true;
+        return;
         break;
       default:
         break;
@@ -751,9 +770,33 @@ export class LaboratoryPage implements OnInit {
       pageSize: 50,
       page: 1,
     };
-
-
     await this.getListOrder(payload, true);
+  }
+
+  filterIntervalt() {
+    const from = new Date(this.dateRange.from);
+    const to = new Date(this.dateRange.to);
+    this.filterInterval.pastTime = this.datePipe.transform(from, 'yyyy-MM-ddTHH:mm:ss');
+    this.filterInterval.presentTime = this.datePipe.transform(to, 'yyyy-MM-ddTHH:mm:ss');
+    const payload = {
+      // barcode: null,
+      patient: this.formFilterTestSheet.namePatient,
+      status: this.formFilterTestSheet.orderStatus,
+      fromDate: this.filterInterval.pastTime,
+      toDate: this.filterInterval.presentTime,
+      // assignToUserId: null,
+      // counselors: null,
+      partnerId: this.userInfo.partnerId,
+      // isSendSMS: null,
+      // isPrintResult: null,
+      // patientAge: null,
+      phoneNo: this.formFilterTestSheet.phoneNoPatient,
+      keyword: this.keywordSearch,
+      pageSize: 50,
+      page: 1,
+    };
+    this.getListOrder(payload, true);
+    this.modalFilterInterval.dismiss();
   }
 
   async handleChangeFilterIntervalCustomByUser(event: any) {
@@ -868,6 +911,22 @@ export class LaboratoryPage implements OnInit {
   cancelFormFilter() {
     this.modalFormFilterLab.dismiss();
   }
+
+  clickFilterInterval(event: any) {
+    const value = event.target.value;
+    if (value == 10) {
+      this.modalFilterInterval.present();
+    }
+  }
+
+  cancelFilterInterval(event: any) {
+    const value = event.target.value;
+    if (value == 10) {
+      this.modalFilterInterval.dismiss();
+    }
+  }
+
+ 
 
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);

@@ -691,6 +691,10 @@ export class TabsPage implements AfterViewInit {
     this.modalAvatar.dismiss();
   }
 
+  showNotifications(){
+    this.router.navigate(['/main/notifications']);
+  }
+
   isEmpty(value: any) {
     return new IsEmptyPipe().transform(value);
   }

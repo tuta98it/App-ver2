@@ -9,6 +9,7 @@ import { LaboratoryPageRoutingModule } from './laboratory-routing.module';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SharedModule } from 'src/app/shared/modules/share.module';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CalendarModule } from 'ion2-calendar';
 @NgModule({
   imports: [
     IonicModule,
@@ -17,7 +18,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ExploreContainerComponentModule,
     LaboratoryPageRoutingModule,
     SharedModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    CalendarModule,
   ],
   providers: [AppVersion],
   declarations: [LaboratoryPage]

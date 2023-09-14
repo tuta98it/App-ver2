@@ -5,72 +5,68 @@
     <ion-list lines="full">
       <!--  -->
 
+      <ion-item class="notification-item" [ngClass]="{'background-color-read-notification': true}">
+        <ion-icon *ngIf="true" name="ellipse" size="small" slot="end" color="medium"></ion-icon>
+        <div class="notification-box">
+          <div>
+            <ion-label>
+              <div class="notification-header">
+                <h3> <strong>{{ 'Tình trạng chỉ định' | uppercase }}</strong> </h3>
+                <span class="notification-time">{{ '23/07/2023' }}</span>
+              </div>
+              <!-- <p style="white-space: normal; text-align: justify; color: black;" [innerHTML]="notification.content"></p> -->
+              <div>
+                <p class="notification-note">Bệnh nhân Nguyễn Văn A đã có kết quả xét nghiệm gồm <i><a href="#">5 chỉ
+                      định</a></i> đã có kết quả xét nghiệm là 2.345.000đ. Bạn đã nhận được phí tư vấn chưa?</p>
+              </div>
+            </ion-label>
+
+            <ion-buttons *ngIf="true" class="notification-buttons">
+              <ion-button style="width: 5rem;" size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
+              <ion-button style="width: 5rem;" size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
+              <ion-button style="width: 5rem;" size="small" fill="solid" shape="round">Đã nhận</ion-button>
+            </ion-buttons>
+          </div>
+        </div>
+      </ion-item>
+
+
       <ion-item class="notification-item">
-        <!-- <ion-avatar slot="start">
-          <ion-icon name="alert-circle-outline"></ion-icon>
-        </ion-avatar> -->
         <div class="notification-box">
           <ion-label>
             <div class="notification-header">
               <h3> <strong>{{ 'Tình trạng chỉ định' | uppercase }}</strong> </h3>
-              <span class="notification-time">{{ '23/07/2023' | date:'dd/MM/yyyy' }}</span>
+              <span class="notification-time">{{ '23/07/2023' }}</span>
             </div>
-            <!-- <p style="white-space: normal; text-align: justify; color: black;" [innerHTML]="notification.content"></p> -->
-            <p class="notification-note" >Bệnh nhân Nguyễn Văn A đã có kết quả xét nghiệm gồm <i><a  href="#">5 chỉ định</a></i> đã có kết quả xét nghiệm là 2.345.000đ. Bạn đã nhận được phí tư vấn chưa?</p>
+            <p class="notification-note">Invivolab đã tới lấy mẫu xét nghiệm của bệnh nhân Trần Thị Lý bao gồm <i><a
+                  href="#">7 chỉ định</a></i>. Kết quả xét nghiệm của bệnh nhân Trần Thị Lý sẽ có sau khoảng 6h.</p>
           </ion-label>
 
           <ion-buttons *ngIf="true" class="notification-buttons">
-            <ion-button size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
-            <ion-button size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
-            <ion-button size="small" fill="solid" shape="round">Đã nhận</ion-button>
+            <ion-button style="width: 5rem;" size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
+            <ion-button style="width: 5rem;" size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
+            <ion-button style="width: 5rem;" size="small" fill="solid" shape="round">Đã nhận</ion-button>
           </ion-buttons>
         </div>
 
       </ion-item>
 
 
-      <ion-item class="notification-item">
-        <!-- <ion-avatar slot="start">
-          <ion-icon name="alert-circle-outline"></ion-icon>
-        </ion-avatar> -->
-        <div class="notification-box">
-          <ion-label>
-            <div class="notification-header">
-              <h3> <strong>{{ 'Tình trạng chỉ định' | uppercase }}</strong> </h3>
-              <span class="notification-time">{{ '23/07/2023' | date:'dd/MM/yyyy' }}</span>
-            </div>
-            <!-- <p style="white-space: normal; text-align: justify; color: black;" [innerHTML]="notification.content"></p> -->
-            <p class="notification-note" >Invivolab đã tới lấy mẫu xét nghiệm của bệnh nhân Trần Thị Lý bao gồm <i><a href="#">7 chỉ định</a></i>. Kết quả xét nghiệm của bệnh nhân Trần Thị Lý sẽ có sau khoảng 6h.</p>
-          </ion-label>
-
-          <ion-buttons *ngIf="true" class="notification-buttons">
-            <ion-button size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
-            <ion-button size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
-            <ion-button size="small" fill="solid" shape="round">Đã nhận</ion-button>
-          </ion-buttons>
-        </div>
-
-      </ion-item>
-
-
-      <ion-item *ngFor="let notification of listNotifi; let i = index" class="notification-item">
-        <!-- <ion-avatar slot="start">
-          <ion-icon name="alert-circle-outline"></ion-icon>
-        </ion-avatar> -->
-        <div class="notification-box">
+      <ion-item *ngFor="let notification of listNotifi; let i = index" class="notification-item" [ngClass]="{'background-color-read-notification': notification.isRead}" (click)="readNotifi(i)">
+        <ion-icon *ngIf="notification.isRead" name="ellipse" size="small" slot="end" color="medium"></ion-icon>
+        <div class="notification-box" >
           <ion-label>
             <div class="notification-header">
               <h3> <strong>{{ notification.title | uppercase }}</strong> </h3>
               <span class="notification-time">{{ notification.time | date:'dd/MM/yyyy' }}</span>
             </div>
-            <!-- <p style="white-space: normal; text-align: justify; color: black;" [innerHTML]="notification.content"></p> -->
-            <p class="notification-note" [innerHTML]="notification.content" ></p>
+            <p class="notification-note" [innerHTML]="notification.content"></p>
           </ion-label>
 
           <ion-buttons *ngIf="notification.showButtons" class="notification-buttons">
-            <ion-button size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
-            <ion-button size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
-            <ion-button size="small" fill="solid" shape="round">Đã nhận</ion-button>
+            <ion-button style="width: 5rem;" size="small" fill="solid" shape="round" color="danger">Không có</ion-button>
+            <ion-button style="width: 5rem;" size="small" fill="solid" shape="round" color="warning">Chưa nhận</ion-button>
+            <ion-button style="width: 5rem;" size="small" fill="solid" shape="round">Đã nhận</ion-button>
           </ion-buttons>
         </div>
 
